@@ -1,0 +1,50 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="40" height="40" fill="#D5D5D5"/>
+<g id="Dashboard">
+<path d="M-352 -274C-352 -384.457 -262.457 -474 -152 -474H15675C15785.5 -474 15875 -384.457 15875 -274V4628C15875 4738.46 15785.5 4828 15675 4828H-152C-262.456 4828 -352 4738.46 -352 4628V-274Z" fill="#59330D"/>
+<path d="M-152 -473H15675V-475H-152V-473ZM15874 -274V4628H15876V-274H15874ZM15675 4827H-152V4829H15675V4827ZM-351 4628V-274H-353V4628H-351ZM-152 4827C-261.904 4827 -351 4737.9 -351 4628H-353C-353 4739.01 -263.009 4829 -152 4829V4827ZM15874 4628C15874 4737.9 15784.9 4827 15675 4827V4829C15786 4829 15876 4739.01 15876 4628H15874ZM15675 -473C15784.9 -473 15874 -383.905 15874 -274H15876C15876 -385.009 15786 -475 15675 -475V-473ZM-152 -475C-263.009 -475 -353 -385.009 -353 -274H-351C-351 -383.905 -261.905 -473 -152 -473V-475Z" fill="black" fill-opacity="0.1"/>
+<g id="1-Dashboard" clip-path="url(#clip0_9_324)">
+<rect width="1440" height="1471" transform="translate(-72 -178)" fill="#F8F8F8"/>
+<g id="countainer">
+<g id="charts+actions">
+<g id="actions+reports">
+<g id="actions">
+<g id="content" filter="url(#filter0_d_9_324)">
+<rect x="-40" y="-58" width="416" height="156" rx="24" fill="#FCFCFC" shape-rendering="crispEdges"/>
+<g id="vuesax/linear/message-time">
+<rect x="-16" y="-16" width="72" height="72" rx="36" fill="#FCE9EA"/>
+<g id="vuesax/linear/message-time_2">
+<g id="message-time">
+<path id="Vector" d="M36.6668 12.3831V22.3831C36.6668 24.8831 35.8335 26.9665 34.3668 28.4331C32.9168 29.8831 30.8335 30.7165 28.3335 30.7165V34.2665C28.3335 35.5998 26.8502 36.3999 25.7502 35.6665L18.3335 30.7165H14.8002C14.9335 30.2165 15.0002 29.6998 15.0002 29.1665C15.0002 27.4665 14.3502 25.8998 13.2835 24.7165C12.0835 23.3498 10.3002 22.4998 8.3335 22.4998C6.46683 22.4998 4.76684 23.2665 3.55017 24.5165C3.40017 23.8499 3.3335 23.1331 3.3335 22.3831V12.3831C3.3335 7.38314 6.66683 4.0498 11.6668 4.0498H28.3335C33.3335 4.0498 36.6668 7.38314 36.6668 12.3831Z" stroke="#CD2026" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Group">
+<path id="Vector_2" d="M15.0008 29.1667C15.0008 31.1667 14.1175 32.95 12.7342 34.1667C11.5508 35.2 10.0175 35.8333 8.33415 35.8333C4.65081 35.8333 1.66748 32.85 1.66748 29.1667C1.66748 27.0667 2.63415 25.1833 4.16748 23.9667C5.31748 23.05 6.76748 22.5 8.33415 22.5C12.0175 22.5 15.0008 25.4833 15.0008 29.1667Z" stroke="#CD2026" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M11.6676 29.1663C11.6676 31.0063 10.1743 32.4997 8.33431 32.4997C6.49431 32.4997 5.37098 30.6463 5.37098 30.6463M5.37098 30.6463H6.87764M5.37098 30.6463V32.313M5.00098 29.1663C5.00098 27.3263 6.48098 25.833 8.33431 25.833C10.5576 25.833 11.6676 27.6863 11.6676 27.6863M11.6676 27.6863V26.0197M11.6676 27.6863H10.1876" stroke="#CD2026" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_4" d="M14.1665 17.5H25.8332" stroke="#CD2026" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_9_324" x="-60" y="-78" width="460" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="6" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_9_324"/>
+<feOffset dx="2" dy="2"/>
+<feGaussianBlur stdDeviation="8"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.94902 0 0 0 0 0.94902 0 0 0 0 0.94902 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_9_324"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_9_324" result="shape"/>
+</filter>
+<clipPath id="clip0_9_324">
+<rect width="1440" height="1471" fill="white" transform="translate(-72 -178)"/>
+</clipPath>
+</defs>
+</svg>
