@@ -164,6 +164,7 @@ const Sidebar = () => {
                   src={logo}
                   alt='logo'
                   className='mt-10'
+                  loading='eager'
                 />
               )}
               <div className='w-full mt-10'>
