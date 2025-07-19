@@ -27,7 +27,6 @@ const initialFilters: any = {};
 
 columnsToFilter.forEach((col) => (initialFilters[col.key] = []));
 
-
 const tableHeading = [
   { label: 'رقم الشحنة', key: 'id' },
   { label: 'السائق', key: 'driver' },
@@ -49,19 +48,25 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
   const [filters, setFilters] = useState(initialFilters);
   const [showFilter, setShowFilter] = useState<any>({});
 
-  const filteredData = shipments.filter(
-    (shipment: any) =>
-      Object.keys(filters).every((key) => {
-        if (key === 'date') {
-          if (!filters[key] || filters[key].length === 0) return true;
-          return filters[key].includes(shipment.pickupDate);
-        }
-        return !filters[key] || filters[key].length === 0 || filters[key].includes(shipment[key]);
-      }));
+  const filteredData = shipments.filter((shipment: any) =>
+    Object.keys(filters).every((key) => {
+      if (key === 'date') {
+        if (!filters[key] || filters[key].length === 0) return true;
+        return filters[key].includes(shipment.pickupDate);
+      }
+      return !filters[key] || filters[key].length === 0 || filters[key].includes(shipment[key]);
+    }),
+  );
 
   const uniqueOptions: any = {};
   columnsToFilter.forEach((col) => {
-    let values = filteredData.map((shipment: any) => shipment[col.key]);
+    let values = filteredData.map((shipment: any) => {
+      if (col.key === 'status') {
+        return getShipmentStatusLabel(shipment[col.key]);
+      }
+      return shipment[col.key];
+    });
+
     if (col.key === 'date') {
       values = values.filter(Boolean).map((dateStr: string) => dateStr);
     }
@@ -69,36 +74,36 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
   });
 
   const sortedData = [...filteredData];
- 
-const parseDate = (dateStr: string): Date => {
-  if (dateStr.includes('/')) {
-    const [day, month, year] = dateStr.split('/');
-    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-  }
-  
-  const isoDate = arabicDateStringToISO(dateStr);
-  if (isoDate) {
-    return new Date(isoDate);
-  }
-  
-  return new Date(dateStr);
-};
 
-if (dateSort === 'asc') {
-  sortedData.sort((a, b) => {
-    const dateA = parseDate(a.pickupDate);
-    const dateB = parseDate(b.pickupDate);
-    return dateA.getTime() - dateB.getTime();
-  });
-}
+  const parseDate = (dateStr: string): Date => {
+    if (dateStr.includes('/')) {
+      const [day, month, year] = dateStr.split('/');
+      return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    }
 
-if (dateSort === 'desc') {
-  sortedData.sort((a, b) => {
-    const dateA = parseDate(a.pickupDate);
-    const dateB = parseDate(b.pickupDate);
-    return dateB.getTime() - dateA.getTime();
-  });
-}
+    const isoDate = arabicDateStringToISO(dateStr);
+    if (isoDate) {
+      return new Date(isoDate);
+    }
+
+    return new Date(dateStr);
+  };
+
+  if (dateSort === 'asc') {
+    sortedData.sort((a, b) => {
+      const dateA = parseDate(a.pickupDate);
+      const dateB = parseDate(b.pickupDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
+  if (dateSort === 'desc') {
+    sortedData.sort((a, b) => {
+      const dateA = parseDate(a.pickupDate);
+      const dateB = parseDate(b.pickupDate);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
 
   const paginatedData = sortedData.slice(
     (currentPage - 1) * itemsPerPage,

@@ -19,9 +19,7 @@ const AddEditItemDataSection = React.memo(
         return options?.find((option: any) => option.id === value[`${identifier}Id`]) || null;
       };
 
-      if (!section && !page) return null;
-
-      if (section && !page) {
+      if (section) {
         const citiesData = {
           options: cities,
           title: 'المدينة',
@@ -79,7 +77,7 @@ const AddEditItemDataSection = React.memo(
               selectedItem: getSelectedItem(recipients, 'recipient'),
             };
         }
-      } else if (page && !section) {
+      } else if (page) {
         const nationalitiesData = {
           identifier: 'nationality',
           options: nationalities,
@@ -155,7 +153,7 @@ const AddEditItemDataSection = React.memo(
     };
 
     const renderedShipmentPageSectionSelectMenu = () => {
-      if (section && !page) {
+      if (section) {
         if (selectMenuData && Array.isArray(selectMenuData)) {
           return selectMenuData.map((item, index) => (
             <AddEditItemSelectMenu
@@ -186,7 +184,7 @@ const AddEditItemDataSection = React.memo(
     };
 
     const renderedItemPageSelectMenu = () => {
-      if (page && !section) {
+      if (page) {
         if (selectMenuData && Array.isArray(selectMenuData)) {
           return selectMenuData.map((item, index) => (
             <AddEditItemSelectMenu
