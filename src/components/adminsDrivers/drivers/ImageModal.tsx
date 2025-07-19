@@ -44,6 +44,8 @@ export default function ImageModal({ image, fileName, status }: any) {
           <img
             src={image}
             alt='modal image'
+            loading='eager'
+            fetchPriority='high'
           />
         </Box>
       </Modal>

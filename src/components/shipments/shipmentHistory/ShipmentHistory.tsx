@@ -36,7 +36,7 @@ const getShipmentStatusDisplayTextStyles = (status: string) => {
   switch (status) {
     case 'shipping':
     case 'delayed':
-      return 'text-[#DD7E1F]';
+      return 'bg-[#DD7E1F] text-[#FCFCFC]';
     case 'delivered':
     case 'completed':
       return 'bg-[#D9F2DE] text-[#2E853F]';

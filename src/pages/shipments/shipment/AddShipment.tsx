@@ -161,7 +161,6 @@ const AddShipment = () => {
           value={formData}
           onChange={handleChange}
           totalCost={totalCost}
-          page='addShipment'
         />
         {/* <hr className='border-0 border-t-2 border-dashed border-[#666]' /> */}
         <button className='w-full py-3 rounded-lg text-xl bg-[#DD7E1F] text-[#FCFCFC] mt-4'>

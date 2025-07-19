@@ -156,7 +156,6 @@ const EditShipment = () => {
         className='border border-[#DD7E1F] rounded-lg p-8 mx-4 md:mx-0'
       >
         <AddEditItemDataSection
-          page='editShipment'
           section='driver'
           title='السائق'
           inputs={driverSectionInputsData}
@@ -166,7 +165,6 @@ const EditShipment = () => {
         <hr className='border-0 border-t-2 border-dashed border-[#666] my-12' />
 
         <AddEditItemDataSection
-          page='editShipment'
           section='shipment'
           title='الشحنة'
           inputs={shipmentSectionInputsData}

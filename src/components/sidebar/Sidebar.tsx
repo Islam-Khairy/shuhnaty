@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IoMdMenu } from 'react-icons/io';
 import logo from '/images/logo.svg';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -10,7 +10,7 @@ import truckIcon from '/images/truck.svg';
 import shippersIcon from '/images/sidebar/shippers.svg';
 import alertIcon from '/images/sidebar/alert.svg';
 import logOutIcon from '/images/sidebar/log-out.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { UseScreenSize } from '../../context/ScreenSizeProvider';
 import { UseSidebar } from '../../context/SidebarContext';
 
@@ -20,11 +20,10 @@ const items = [
   {
     nav: '/dashboard',
     name: 'لوحة المعلومات',
-    icon: (selectedItem: string) => (
+    icon: (
       <img
         src={statisticsIcon}
         alt='statistics'
-        className={`${selectedItem === 'dashboard' ? iconsStyles : ''}`}
       />
     ),
   },
@@ -53,7 +52,6 @@ const items = [
       nav: '/shipments/canceled',
       name: 'ملغية',
     },
-
     {
       nav: '/shipments/returned',
       name: 'مرتجعة',
@@ -62,44 +60,40 @@ const items = [
   {
     nav: '/admins',
     name: 'المستخدمين',
-    icon: (selectedItem: string) => (
+    icon: (
       <img
         src={usersIcon}
         alt='admins'
-        className={`${selectedItem === 'admins' ? iconsStyles : ''}`}
       />
     ),
   },
   {
     nav: '/drivers',
     name: 'السائقين',
-    icon: (selectedItem: string) => (
+    icon: (
       <img
         src={truckIcon}
         alt='drivers'
-        className={`${selectedItem === 'drivers' ? iconsStyles : ''}`}
       />
     ),
   },
   {
     nav: '/shippers',
     name: 'العملاء',
-    icon: (selectedItem: string) => (
+    icon: (
       <img
         src={shippersIcon}
         alt='shippers'
-        className={`${selectedItem === 'shippers' ? iconsStyles : ''}`}
       />
     ),
   },
   {
     nav: '/alert-messages',
     name: 'رسائل التنبيه',
-    icon: (selectedItem: string) => (
+    icon: (
       <img
         src={alertIcon}
         alt='alert-messages'
-        className={`${selectedItem === 'alert-messages' ? iconsStyles : ''}`}
       />
     ),
   },
@@ -107,9 +101,17 @@ const items = [
 
 const Sidebar = () => {
   const { isSidebarOpen, setIsSidebarOpen } = UseSidebar();
-  const [selectedItem, setSelectedItem] = useState('dashboard');
   const { isMediumScreen } = UseScreenSize();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isSelected = (navPath: string) => {
+    const currentPath = location.pathname;
+    if (navPath === '/dashboard') {
+      return currentPath === navPath;
+    }
+    return currentPath.startsWith(navPath);
+  };
 
   useEffect(() => {
     if (isMediumScreen && isSidebarOpen) {
@@ -129,10 +131,8 @@ const Sidebar = () => {
     <div className='h-full'>
       {isMediumScreen && !isSidebarOpen ? (
         <button
-          onClick={() => {
-            setIsSidebarOpen(true);
-          }}
-          className={`fixed top-4 right-4 z-50 p-2 bg-[#E6E6E6] rounded-md lg:hidden`}
+          onClick={() => setIsSidebarOpen(true)}
+          className='fixed top-4 right-4 z-50 p-2 bg-[#E6E6E6] rounded-md lg:hidden'
         >
           <IoMdMenu size={24} />
         </button>
@@ -140,17 +140,13 @@ const Sidebar = () => {
         <>
           {isSidebarOpen && <div className='fixed lg:hidden inset-0 bg-black/50 z-40' />}
           <aside
-            className={`bg-[#E6E6E6] transition-all duration-200 flex flex-col justify-between p-8 ${
+            className={`bg-[#E6E6E6] flex flex-col justify-between p-8 fixed lg:static z-50 h-full overflow-y-auto transition-[width,transform] duration-200 ease-in-out will-change-transform ${
               isSidebarOpen ? 'w-[278px] items-end' : 'w-[104px] items-center'
-            } fixed lg:static z-50 h-full overflow-y-auto`}
+            } ${isMediumScreen && !isSidebarOpen ? '-translate-x-full' : 'translate-x-0'}`}
           >
             <div className={`w-full flex flex-col ${isSidebarOpen ? 'items-end' : 'items-center'}`}>
               {isSidebarOpen ? (
-                <button
-                  onClick={() => {
-                    setIsSidebarOpen(false);
-                  }}
-                >
+                <button onClick={() => setIsSidebarOpen(false)}>
                   <IoCloseOutline size={24} />
                 </button>
               ) : (
@@ -178,24 +174,19 @@ const Sidebar = () => {
                       items={item}
                       isSidebarOpen={isSidebarOpen}
                       setIsSidebarOpen={setIsSidebarOpen}
-                      selectedItem={selectedItem}
-                      setSelectedItem={setSelectedItem}
+                      isSelected={isSelected}
                     />
                   ) : (
                     <Link
                       key={index}
                       to={item.nav}
-                      onClick={() => setSelectedItem(item.nav.substring(1))}
                       className={`flex items-center w-full gap-2 mb-4 ${
                         isSidebarOpen ? 'p-3' : 'p-2'
                       } transition-all duration-200 ${
                         isSidebarOpen ? 'justify-start' : 'justify-center'
-                      } ${
-                        selectedItem === item.nav.substring(1) &&
-                        'bg-[#DD7E1F] rounded-lg text-[#FCFCFC]'
-                      }`}
+                      } ${isSelected(item.nav) && 'bg-[#DD7E1F] rounded-lg text-[#FCFCFC]'}`}
                     >
-                      <span>{item.icon(selectedItem)}</span>
+                      <span className={isSelected(item.nav) ? iconsStyles : ''}>{item.icon}</span>
                       {isSidebarOpen && <span>{item.name}</span>}
                     </Link>
                   ),

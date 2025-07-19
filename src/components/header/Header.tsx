@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import avatar from '/images/avatar.jpg';
+import avatar from '/images/avatar.webp';
 import notification from '/images/notification.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa6';

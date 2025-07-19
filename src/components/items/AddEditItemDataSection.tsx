@@ -12,8 +12,6 @@ import {
   vehicles,
 } from '../../lib/data';
 
-const shipmentPages = ['addShipment', 'editShipment'];
-
 const AddEditItemDataSection = React.memo(
   ({ title, inputs, value, onChange, section, page }: any) => {
     const selectMenuData: any = useMemo(() => {
@@ -79,7 +77,7 @@ const AddEditItemDataSection = React.memo(
               selectedItem: getSelectedItem(recipients, 'recipient'),
             };
         }
-      } else if (page && !shipmentPages.includes(page)) {
+      } else if (page) {
         const nationalitiesData = {
           identifier: 'nationality',
           options: nationalities,
@@ -186,7 +184,7 @@ const AddEditItemDataSection = React.memo(
     };
 
     const renderedItemPageSelectMenu = () => {
-      if (page && !shipmentPages.includes(page)) {
+      if (page) {
         if (selectMenuData && Array.isArray(selectMenuData)) {
           return selectMenuData.map((item, index) => (
             <AddEditItemSelectMenu

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import MessagesHistoryBody from '../../components/messages/MessagesHistoryBody';
 import MessagesHistoryPanel from '../../components/messages/MessagesHistoryPanel';
 import NoSelectedMessages from '../../components/messages/NoSelectedMessages';
-import { UseSidebar } from '../../context/SidebarContext';
 
 const messageHistoryData = [
   {
@@ -335,7 +334,6 @@ import { useNavigate } from 'react-router-dom';
 import { drivers } from '../../lib/data';
 
 const AlertMessages = () => {
-  const { isSidebarOpen } = UseSidebar();
   const [selectedCategory, setSelectedCategory] = useState('once');
   const [selectedMessageIndex, setSelectedMessageIndex] = useState<null | number>(null);
   const [isRepeatMessageDialogVisible, setIsRepeatMessageDialogVisible] = useState(false);
@@ -387,9 +385,7 @@ const AlertMessages = () => {
             navigate('/alert-messages/select-recipients');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className={`p-3 rounded-full bg-[#DD7E1F] fixed bottom-12 transition-all duration-200 ${
-            isSidebarOpen ? 'lg:right-80' : 'lg:right-40'
-          }`}
+          className={`p-3 rounded-full bg-[#DD7E1F] fixed bottom-2 transition-all duration-200 lg:right-12`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'

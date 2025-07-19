@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SelectMenu from '../../components/SelectMenu';
 import SearchInput from '../../components/searchInput/SearchInput';
 import { useNavigate } from 'react-router-dom';
-import leftArrowIcon from '/images/arrow-left.png';
+import leftArrowIcon from '/images/arrow-left.svg';
 import { drivers } from '../../lib/data';
 import DriversTable from '../../components/adminsDrivers/drivers/DriversTable';
 

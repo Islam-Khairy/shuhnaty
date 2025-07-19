@@ -6,6 +6,7 @@ import MessageTitleAccordion from './MessageTitleAccordion';
 import repeatIcon from '/images/refresh-3.svg';
 import sendIcon from '/images/send.svg';
 import RepeatMessageDialog from './dialog/RepeatMessageDialog';
+import { toast } from 'sonner';
 
 const MessagesHistoryBody = ({
   data,
@@ -16,9 +17,24 @@ const MessagesHistoryBody = ({
 }: any) => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sendMessage = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success('تم إرسال الرسالة بنجاح');
+    }, 2000);
+  };
 
   return (
-    <div className='w-full lg:ps-16 py-2'>
+    <>
+      {isLoading && (
+        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
+          <span className='loader'></span>
+        </div>
+      )}
+      <div className='w-full lg:ps-16 py-2'>
         <div className='w-full flex justify-between items-center mb-4'>
           <span className='text-[#333333] text-base'>إرسال إلى:</span>
           <button
@@ -88,7 +104,10 @@ const MessagesHistoryBody = ({
                 />
               </button>
             )}
-            <button className='bg-[#DD7E1F] p-2 rounded-full'>
+            <button
+              className='bg-[#DD7E1F] p-2 rounded-full'
+              onClick={sendMessage}
+            >
               <img
                 src={sendIcon}
                 alt='send'
@@ -100,7 +119,8 @@ const MessagesHistoryBody = ({
           isDialogVisible={isDialogVisible}
           setIsDialogVisible={setIsDialogVisible}
         />
-    </div>
+      </div>
+    </>
   );
 };
 

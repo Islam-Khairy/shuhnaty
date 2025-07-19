@@ -22,7 +22,6 @@ const AddEditShipmentDataSection = ({
         value={value}
         onChange={onChange}
         setFormData={setFormData}
-        page={page}
       />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-10'>
         {['PrimaryPhoneNumber', 'SecondaryPhoneNumber'].map((type, index) => (
