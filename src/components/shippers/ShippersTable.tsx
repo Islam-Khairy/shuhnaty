@@ -2,9 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Pagination from '../pagination/Pagination';
 import { tableRowStyles } from '../../lib/utils';
-// import React from 'react';
-// import { ColumnFilterDropdown } from '../shipments/shipmentsTable/ColumnFilterDropdown';
-// import { TiFilter } from 'react-icons/ti';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -20,32 +17,6 @@ const ShippersTable = ({ data }: any) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
-  // const filterableColumns = [
-  // { key: 'name', label: 'الاسم' },
-  // { key: 'primaryPhoneNumber', label: 'رقم التواصل' },
-  // { key: 'email', label: 'البريد الالكتروني' },
-  // { key: 'address', label: 'الموقع' },
-  // ];
-
-  // const uniqueOptions: any = {};
-  // filterableColumns.forEach((col) => {
-  //   const values = data.map((item: any) => item[col.key]);
-  //   uniqueOptions[col.key] = Array.from(new Set(values)).filter(Boolean);
-  // });
-
-  // const initialFilters: any = {};
-  // filterableColumns.forEach((col: any) => (initialFilters[col.key] = []));
-
-  // const [filters, setFilters] = React.useState(initialFilters);
-  // const [showFilter, setShowFilter] = React.useState<any>({});
-
-  // const filteredData = data.filter((item: any) =>
-  //   Object.keys(filters).every((key) => {
-  //     if (!filters[key] || filters[key].length === 0) return true;
-  //     return filters[key].includes(item[key]);
-  //   }),
-  // );
 
   const paginatedData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -75,40 +46,6 @@ const ShippersTable = ({ data }: any) => {
                     }`}
                   >
                     {col.label}
-                    {/* {uniqueOptions[col.key] && (
-                    <button
-                      type='button'
-                      onClick={() =>
-                        setShowFilter((prev: any) => (prev[col.key] ? {} : { [col.key]: true }))
-                      }
-                    >
-                      <TiFilter
-                        size={22}
-                        className='text-gray-400 hover:text-gray-900'
-                      />
-                    </button>
-                  )}
-                  {showFilter[col.key] && (
-                    <div className='z-50'>
-                      <ColumnFilterDropdown
-                        options={uniqueOptions[col.key]}
-                        selectedValues={filters[col.key] || []}
-                        onChange={(vals: any) =>
-                          setFilters((f: any) => ({
-                            ...f,
-                            [col.key]: vals,
-                          }))
-                        }
-                        onClose={() =>
-                          setShowFilter((f: any) => ({
-                            ...f,
-                            [col.key]: false,
-                          }))
-                        }
-                        placeholder={`ابحث عن ${col.label}...`}
-                      />
-                    </div>
-                  )} */}
                   </div>
                 </th>
               ))}

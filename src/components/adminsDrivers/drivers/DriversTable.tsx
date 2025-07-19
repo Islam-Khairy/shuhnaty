@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { getAvailabilityStatusStyles, tableRowStyles } from '../../../lib/utils';
 import Pagination from '../../pagination/Pagination';
 import { useState } from 'react';
-// import { ColumnFilterDropdown } from '../shipments/shipmentsTable/ColumnFilterDropdown';
-// import { TiFilter } from 'react-icons/ti';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -24,45 +22,6 @@ const DriversTable = ({ selectedStatus, drivers, isSelectRecipientsPage = false 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
-
-  //   const columnsToFilter = [
-  //     { key: 'name', label: 'الاسم' },
-  //     { key: 'language', label: 'اللغة' },
-  //     { key: 'nationality', label: 'الجنسية' },
-  //     { key: 'identity_number', label: 'رقم الهوية' },
-  //     { key: 'phone_number', label: 'رقم الجوال' },
-  //     { key: 'vehicle_number', label: 'رقم الشاحنة' },
-  //     { key: 'status', label: 'الحالة' },
-  //   ];
-
-  //   const initialFilters: any = {};
-  //   columnsToFilter.forEach((col: any) => (initialFilters[col.key] = []));
-
-  //   const uniqueOptions: any = {};
-  //   columnsToFilter.forEach((col) => {
-  //     let values = data.map((item: any) => item[col.key]);
-  //     if (col.key === 'status') {
-  //       values = values.map((val: any) => (val === 'available' ? 'متاح' : 'غير متاح'));
-  //     }
-  //     uniqueOptions[col.key] = Array.from(new Set(values)).filter(Boolean);
-  //   });
-
-  //   const [filters, setFilters] = React.useState(initialFilters);
-  //   const [showFilter, setShowFilter] = React.useState<any>({});
-
-  //   const filteredData = data.filter(
-  //     (item: any) =>
-  //       Object.keys(filters).every((key) => {
-  //         if (!filters[key] || filters[key].length === 0) return true;
-  //         if (key === 'status') {
-  //           const statusText = item.status === 'available' ? 'متاح' : 'غير متاح';
-  //           return filters[key].includes(statusText);
-  //         }
-  //         return filters[key].includes(item[key]);
-  //       }) &&
-  //       (selectedStatus === 'الكل' ||
-  //         (item.status === 'available' ? 'متاح' : 'غير متاح') === selectedStatus),
-  //   );
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
@@ -126,40 +85,6 @@ const DriversTable = ({ selectedStatus, drivers, isSelectRecipientsPage = false 
                     }`}
                   >
                     {col.label}
-                    {/*  {uniqueOptions[col.key] && (
-                    <button
-                      type='button'
-                      onClick={() =>
-                        setShowFilter((prev: any) => (prev[col.key] ? {} : { [col.key]: true }))
-                      }
-                    >
-                      <TiFilter
-                        size={22}
-                        className='text-gray-400 hover:text-gray-900'
-                      />
-                    </button>
-                  )}
-                  {showFilter[col.key] && (
-                    <div className='z-50'>
-                      <ColumnFilterDropdown
-                        options={uniqueOptions[col.key]}
-                        selectedValues={filters[col.key] || []}
-                        onChange={(vals: any) =>
-                          setFilters((f: any) => ({
-                            ...f,
-                            [col.key]: vals,
-                          }))
-                        }
-                        onClose={() =>
-                          setShowFilter((f: any) => ({
-                            ...f,
-                            [col.key]: false,
-                          }))
-                        }
-                        placeholder={`ابحث عن ${col.label}...`}
-                      />
-                    </div>
-                  )} */}
                   </div>
                 </th>
               ))}

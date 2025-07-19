@@ -1,22 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import React from 'react';
-// import { ColumnFilterDropdown } from '../shipments/shipmentsTable/ColumnFilterDropdown';
-// import { TiFilter } from 'react-icons/ti';
 import { useNavigate } from 'react-router-dom';
 import { getAvailabilityStatusStyles, tableRowStyles } from '../../../lib/utils';
 import Pagination from '../../pagination/Pagination';
 import { useState } from 'react';
-
-// const columnsToFilter = [
-// { key: 'userName', label: 'اسم المستخدم' },
-// { key: 'name', label: 'الاسم' },
-// { key: 'email', label: 'البريد الالكتروني' },
-// { key: 'nationality', label: 'الجنسية' },
-// { key: 'status', label: 'الحالة' },
-// ];
-
-// const initialFilters: any = {};
-// columnsToFilter.forEach((col: any) => (initialFilters[col.key] = []));
 
 const tableHeading = [
   { key: 'id', label: '(ID)' },
@@ -32,28 +18,6 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  // const uniqueOptions: any = {};
-
-  // columnsToFilter.forEach((col) => {
-  //   let values = data.map((item: any) => item[col.key]);
-  //   if (col.key === 'status') {
-  //     values = values.map((val: any) => (val ? 'available' : 'notAvailable'));
-  //   }
-  //   uniqueOptions[col.key] = Array.from(new Set(values)).filter(Boolean);
-  // });
-
-  // const [filters, setFilters] = React.useState(initialFilters);
-  // const [showFilter, setShowFilter] = React.useState<any>({});
-
-  // const filteredData =
-  //   filters &&
-  //   data.filter(
-  //     (admin: any) =>
-  //       Object.keys(filters).every((key) => {
-  //         return !filters[key] || filters[key].length === 0 || filters[key].includes(admin[key]);
-  //       }) &&
-  //       (selectedStatus === 'all' || admin.status.toLowerCase() === selectedStatus.toLowerCase()),
-  //   );
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
@@ -75,9 +39,6 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
-
-  // const tableHeading = [{ key: 'id', label: '(ID)' }, ...columnsToFilter];
-
   return (
     <>
       <div className={`w-full overflow-x-auto`}>
@@ -95,40 +56,6 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
                     }`}
                   >
                     {col.label}
-                    {/* {{uniqueOptions[col.key] && (
-                    <button
-                      type='button'
-                      onClick={() =>
-                        setShowFilter((prev: any) => (prev[col.key] ? {} : { [col.key]: true }))
-                      }
-                    >
-                      <TiFilter
-                        size={22}
-                        className='text-gray-400 hover:text-gray-900'
-                      />
-                    </button>
-                  )}
-                  {showFilter[col.key] && (
-                    <div className='z-50'>
-                      <ColumnFilterDropdown
-                        options={uniqueOptions[col.key]}
-                        selectedValues={filters[col.key] || []}
-                        onChange={(vals: any) =>
-                          setFilters((f: any) => ({
-                            ...f,
-                            [col.key]: vals,
-                          }))
-                        }
-                        onClose={() =>
-                          setShowFilter((f: any) => ({
-                            ...f,
-                            [col.key]: false,
-                          }))
-                        }
-                        placeholder={`ابحث عن ${col.label}...`}
-                      />
-                    </div>
-                  )} */}
                   </div>
                 </th>
               ))}
