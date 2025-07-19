@@ -54,6 +54,13 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
         if (!filters[key] || filters[key].length === 0) return true;
         return filters[key].includes(shipment.pickupDate);
       }
+
+      if (key === 'status') {
+        if (!filters[key] || filters[key].length === 0) return true;
+        const arabicStatus = getShipmentStatusLabel(shipment[key]);
+        return filters[key].includes(arabicStatus);
+      }
+
       return !filters[key] || filters[key].length === 0 || filters[key].includes(shipment[key]);
     }),
   );

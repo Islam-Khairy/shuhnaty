@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IoMdMenu } from 'react-icons/io';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo.svg';
 import { IoCloseOutline } from 'react-icons/io5';
 import NavbarAccordion from './NavbarAccordion';
 import { PiPackageDuotone } from 'react-icons/pi';
