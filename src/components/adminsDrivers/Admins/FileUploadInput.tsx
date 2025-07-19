@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import cameraIcon from '../../../assets/images/camera.svg';
+import cameraIcon from '/images/camera.svg';
 
 interface FileUploadInputProps {
   title?: string;

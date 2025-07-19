@@ -1,8 +1,8 @@
-import driverIdCardImage from '../../assets/images/adminDriver/personalCard.svg';
-import locationIcon from '../../assets/images/adminDriver/location.svg';
-import callIcon from '../../assets/images/adminDriver/call.svg';
-import flagIcon from '../../assets/images/adminDriver/flag.svg';
-import truckIcon from '../../assets/images/truck.svg';
+import driverIdCardImage from '/images/adminDriver/personalCard.svg';
+import locationIcon from '/images/adminDriver/location.svg';
+import callIcon from '/images/adminDriver/call.svg';
+import flagIcon from '/images/adminDriver/flag.svg';
+import truckIcon from '/images/truck.svg';
 import { useParams } from 'react-router-dom';
 import { drivers } from '../../lib/data';
 import DeleteItem from '../../components/items/DeleteItem';

@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import avatar from '../../assets/images/avatar.jpg';
-import notification from '../../assets/images/notification.svg';
+import avatar from '/images/avatar.jpg';
+import notification from '/images/notification.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa6';
 
 const pageTitles: any = {
   '/dashboard': 'لوحة المعلومات',
   '/shipments/all': 'الشحنات',
-  '/shipments/': 'بيانات الشحنة',
   '/shipments/add': 'إضافة شحنة',
   '/shipments/edit': 'تعديل بيانات الشحنة',
   '/shipments/delete': 'حذف الشحنة',
-  '/admin/add': 'إضافة مستخدم',
+  '/shipments/': 'بيانات الشحنة',
+  '/admins/add': 'إضافة مستخدم',
+  '/admins/edit': 'تحديث بيانات المستخدم',
+  '/admins/delete': 'حذف المستخدم',
   '/admins/': 'بيانات المستخدم',
-  '/admin/edit': 'تحديث بيانات المستخدم',
-  '/admin/delete': 'حذف المستخدم',
   '/admins': 'المستخدمين',
   '/drivers/add': 'إضافة سائق',
   '/drivers/edit': 'تحديث بيانات السائق',
   '/drivers/delete': 'حذف السائق',
   '/drivers/': 'بيانات السائق',
   '/drivers': 'السائقين',
-  '/shippers/': 'بيانات العميل',
   '/shippers/add': 'إضافة عميل',
   '/shippers/edit': 'تحديث بيانات العميل',
   '/shippers/delete': 'حذف العميل',
+  '/shippers/': 'بيانات العميل',
   '/shippers': 'العملاء',
   '/alert-messages': 'رسائل النظام',
   '/alert-messages/select-recipients': 'تحديد مستلمين',
@@ -35,7 +35,7 @@ const backButtonPaths = [
   '/edit',
   '/delete',
   '/shipments/',
-  '/Admin/',
+  '/admins/',
   '/drivers/',
   '/shippers/',
   '/alert-messages/select-recipients',

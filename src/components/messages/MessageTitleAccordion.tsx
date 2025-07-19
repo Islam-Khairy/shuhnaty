@@ -1,7 +1,7 @@
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '../../assets/images/arrow.svg';
+import ExpandMoreIcon from '/images/arrow.svg';
 import { useState } from 'react';
 
 const messageTitleOptions = [

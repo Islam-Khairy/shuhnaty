@@ -2,8 +2,8 @@
 import RepeatMessageDialog from './dialog/RepeatMessageDialog';
 import MessagesHistoryBody from './MessagesHistoryBody';
 import MessageTitleAccordion from './MessageTitleAccordion';
-import repeatIcon from '../../assets/images/refresh-3.svg';
-import sendIcon from '../../assets/images/send.svg';
+import repeatIcon from '/images/refresh-3.svg';
+import sendIcon from '/images/send.svg';
 const MessagesAccordionAndHistoryBody = ({
   data,
   index,

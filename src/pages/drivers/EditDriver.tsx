@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import AddEditItemDataSection from '../../components/items/AddEditItemDataSection';
-import uploadImage from '../../assets/images/upload.svg';
-import infoIcon from '../../assets/images/info-circle.svg';
+import uploadImage from '/images/upload.svg';
+import infoIcon from '/images/info-circle.svg';
 import FileUploadInput from '../../components/adminsDrivers/Admins/FileUploadInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import { drivers } from '../../lib/data';
-import licenseBackSideImage from '../../assets/images/adminDriver/driver/license/16.jpg';
+import licenseBackSideImage from '/images/adminDriver/driver/license/16.jpg';
 import { toast } from 'sonner';
 
 const driverSectionInputsData = [

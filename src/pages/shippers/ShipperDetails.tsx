@@ -1,6 +1,6 @@
 import ActionsMenu from '../../components/actionsMenu/ActionsMenu';
-import editShipmentIcon from '../../assets/images/edit-shipment-icon.svg';
-import deleteShipmentIcon from '../../assets/images/delete-shipment-icon.svg';
+import editShipmentIcon from '/images/edit-shipment-icon.svg';
+import deleteShipmentIcon from '/images/delete-shipment-icon.svg';
 import ShipperBranchDetailsSection from '../../components/shippers/ShipperBranchDetailsSection';
 import { useParams } from 'react-router-dom';
 import { shippers } from '../../lib/data';

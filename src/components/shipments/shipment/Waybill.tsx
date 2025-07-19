@@ -128,7 +128,7 @@ const Waybill = React.memo(({ shipment, driver, shipper, recipient }: any) => {
         </div>
         <div>
           <img
-            src='/src/assets/images/truck-Logo.svg'
+            src='/images/truck-Logo.svg'
             alt='logo'
             className='w-24'
           />

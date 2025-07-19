@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import ShipmentStatus from '../../../components/shipments/shipmentDetails/shipmentStatus/ShipmentStatus';
 import ShipmentDetailsInfoSection from '../../../components/shipments/shipmentDetails/infoSection/ShipmentDetailsInfoSection';
-import editShipmentIcon from '../../../assets/images/edit-shipment-icon.svg';
-import deleteShipmentIcon from '../../../assets/images/delete-shipment-icon.svg';
+import editShipmentIcon from '/images/edit-shipment-icon.svg';
+import deleteShipmentIcon from '/images/delete-shipment-icon.svg';
 
 import ActionsMenu from '../../../components/actionsMenu/ActionsMenu';
 import { useParams } from 'react-router-dom';

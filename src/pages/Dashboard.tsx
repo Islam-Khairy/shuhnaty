@@ -2,9 +2,9 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import HorizontalChart from '../components/charts/HorizontalChart';
 import { UseSidebar } from '../context/SidebarContext';
-import boxSearch from '../assets/images/box-search.svg';
-import boxTime from '../assets/images/box-time.svg';
-import message from '../assets/images/message.svg';
+import boxSearch from '/images/box-search.svg';
+import boxTime from '/images/box-time.svg';
+import message from '/images/message.svg';
 import LineChartComponent from '../components/charts/LineChart';
 import PieChart from '../components/charts/PieChart';
 import { LuCalendarClock } from 'react-icons/lu';

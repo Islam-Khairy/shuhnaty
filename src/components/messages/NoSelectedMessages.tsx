@@ -1,4 +1,4 @@
-import noSelectedMessageIcon from '../../assets/images/no-selected-message.svg';
+import noSelectedMessageIcon from '/images/no-selected-message.svg';
 
 const NoSelectedMessages = () => {
   return (

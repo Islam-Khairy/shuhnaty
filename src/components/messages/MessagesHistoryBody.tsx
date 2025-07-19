@@ -3,8 +3,8 @@ import { useState } from 'react';
 import CustomSwitchComponent from './CustomizedSwitch';
 import { useNavigate } from 'react-router-dom';
 import MessageTitleAccordion from './MessageTitleAccordion';
-import repeatIcon from '../../assets/images/refresh-3.svg';
-import sendIcon from '../../assets/images/send.svg';
+import repeatIcon from '/images/refresh-3.svg';
+import sendIcon from '/images/send.svg';
 import RepeatMessageDialog from './dialog/RepeatMessageDialog';
 
 const MessagesHistoryBody = ({

@@ -3,8 +3,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { Link } from 'react-router-dom';
-import shipmentsIcon from '../../assets/images/box.svg';
-import arrowDownIcon from '../../assets/images/arrow-down.svg';
+import shipmentsIcon from '/images/box.svg';
+import arrowDownIcon from '/images/arrow-down.svg';
 import React from 'react';
 
 const NavbarAccordion = React.memo(

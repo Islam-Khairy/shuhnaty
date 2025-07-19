@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import repeatIcon from '../../assets/images/refresh-2.svg';
+import repeatIcon from '/images/refresh-2.svg';
 const Messages = ({
   messages,
   selectedMessageIndex,

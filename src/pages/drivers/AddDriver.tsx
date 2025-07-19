@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AddEditItemDataSection from '../../components/items/AddEditItemDataSection';
-import uploadImage from '../../assets/images/upload.svg';
-import infoIcon from '../../assets/images/info-circle.svg';
+import uploadImage from '/images/upload.svg';
+import infoIcon from '/images/info-circle.svg';
 import FileUploadInput from '../../components/adminsDrivers/Admins/FileUploadInput';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';

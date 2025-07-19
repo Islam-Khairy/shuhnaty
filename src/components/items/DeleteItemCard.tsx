@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CiLock } from 'react-icons/ci';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-import logo from '../../assets/images/truck-Logo.svg';
+import logo from '/images/truck-Logo.svg';
 import { useState } from 'react';
 
 const DeleteItemCard = ({ handleSubmit }: any) => {

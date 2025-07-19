@@ -3,7 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { CiLock } from 'react-icons/ci';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/truck-Logo.svg';
+import logo from '/images/truck-Logo.svg';
 
 const Login = () => {
   const navigate = useNavigate();

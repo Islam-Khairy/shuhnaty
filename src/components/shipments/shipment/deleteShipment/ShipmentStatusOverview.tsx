@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import truckIcon from '../../../../assets/images/truck-tick.svg';
-import arrowLeft from '../../../../assets/images/arrow-left-2.svg';
+import truckIcon from '/images/truck-tick.svg';
+import arrowLeft from '/images/arrow-left-2.svg';
 import { useNavigate } from 'react-router-dom';
 import { getShipmentStatusLabel } from '../../../../lib/utils';
 

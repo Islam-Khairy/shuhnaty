@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ShippingShipmentIcon from '../../../assets/images/shipmentStatus/shipping-shipment-truck.svg';
-import delayedShipmentIcon from '../../../assets/images/shipmentStatus/delayed-shipment-truck.svg';
-import deliveredShipmentIcon from '../../../assets/images/shipmentStatus/delivered-shipment-truck.svg';
-import CancelledShipmentIcon from '../../../assets/images/shipmentStatus/cancelled-shipment-truck.svg';
-import returnedShipmentIcon from '../../../assets/images/shipmentStatus/returned-shipment-truck.svg';
-import completedShipmentIcon from '../../../assets/images/shipmentStatus/completed-shipment-truck.svg';
+import ShippingShipmentIcon from '/images/shipmentStatus/shipping-shipment-truck.svg';
+import delayedShipmentIcon from '/images/shipmentStatus/delayed-shipment-truck.svg';
+import deliveredShipmentIcon from '/images/shipmentStatus/delivered-shipment-truck.svg';
+import CancelledShipmentIcon from '/images/shipmentStatus/cancelled-shipment-truck.svg';
+import returnedShipmentIcon from '/images/shipmentStatus/returned-shipment-truck.svg';
+import completedShipmentIcon from '/images/shipmentStatus/completed-shipment-truck.svg';
 import React from 'react';
 import { getShipmentStatusLabel } from '../../../lib/utils';
 

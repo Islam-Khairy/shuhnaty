@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import filterIcon from '../../assets/images/filter.svg';
-import searchIcon from '../../assets/images/search.svg';
+import searchIcon from '/images/search.svg';
 
 const SearchInput = ({ value, onChange, styles = '' }: any) => {
   return (

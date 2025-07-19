@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import addIcon from '../../assets/images/add.svg';
+import addIcon from '/images/add.svg';
 import AddEditShipperDataSection from '../../components/shippers/AddEditShipperDataSection';
 import AddShipmentTextArea from '../../components/shipments/addShipment/addShipmentInputs/AddShipmentTextArea';
-import trashIcon from '../../assets/images/trash.svg';
+import trashIcon from '/images/trash.svg';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
