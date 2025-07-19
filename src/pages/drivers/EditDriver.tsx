@@ -6,7 +6,7 @@ import infoIcon from '/images/info-circle.svg';
 import FileUploadInput from '../../components/adminsDrivers/Admins/FileUploadInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import { drivers } from '../../lib/data';
-import licenseBackSideImage from '/images/adminDriver/driver/license/16.jpg';
+import licenseBackSideImage from '/images/adminDriver/driver/license/16.webp';
 import { toast } from 'sonner';
 
 const driverSectionInputsData = [

@@ -11,7 +11,7 @@ import truckIcon from '/images/truck.svg';
 import editShipmentIcon from '/images/edit-shipment-icon.svg';
 import deleteShipmentIcon from '/images/delete-shipment-icon.svg';
 import ImageModal from '../../components/adminsDrivers/drivers/ImageModal';
-import licenseBackSideImage from '/images/adminDriver/driver/license/16.jpg';
+import licenseBackSideImage from '/images/adminDriver/driver/license/16.webp';
 import AdminDriverProfileCard from '../../components/adminsDrivers/adminDriverProfileCard/AdminDriverProfileCard';
 import { useParams } from 'react-router-dom';
 import { drivers, shipments } from '../../lib/data';
