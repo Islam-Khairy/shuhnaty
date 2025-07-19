@@ -165,6 +165,7 @@ const Sidebar = () => {
                   alt='logo'
                   className='mt-10'
                   loading='eager'
+                  fetchPriority='high'
                 />
               )}
               <div className='w-full mt-10'>
