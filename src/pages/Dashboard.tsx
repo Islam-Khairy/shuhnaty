@@ -276,7 +276,7 @@ const Dashboard = React.memo(() => {
                 <div className='flex items-end text-nowrap gap-1'>
                   <span
                     className={`${
-                      selectedRange === 'week' ? 'text-red-500' : 'text-green-500'
+                      selectedRange === 'month' ? 'text-red-500' : 'text-green-500'
                     } font-bold`}
                   >
                     {((lineChartData.sum / pieChartData.sum) * 100).toFixed(1)}%
