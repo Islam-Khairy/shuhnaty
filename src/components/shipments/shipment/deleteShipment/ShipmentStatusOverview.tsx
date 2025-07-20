@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import truckIcon from '/images/truck-tick.svg';
 import arrowLeft from '/images/arrow-left-2.svg';
 import { useNavigate } from 'react-router-dom';
-import { getShipmentStatusLabel } from '../../../../lib/utils';
+import { getShipmentStatusLabel, statusIcons } from '../../../../lib/utils';
 
 const ShipmentStatusOverview = ({ selectedShipment }: any) => {
   const navigate = useNavigate();
@@ -16,8 +15,9 @@ const ShipmentStatusOverview = ({ selectedShipment }: any) => {
         </div>
         <div className='col-span-1 flex flex-col items-center gap-2'>
           <img
-            src={truckIcon}
+            src={statusIcons[getShipmentStatusLabel(selectedShipment.status)]}
             alt='truck icon'
+            className='w-10 h-10'
           />
           <h1 className='text-[#4D4D4D] font-Rubik text-sm md:text-lg text-nowrap'>
             {getShipmentStatusLabel(selectedShipment?.status)}

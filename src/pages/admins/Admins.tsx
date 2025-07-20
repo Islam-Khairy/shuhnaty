@@ -12,7 +12,7 @@ const selectMenuOptions = [
   { label: 'غير متاح', value: 'notAvailable' },
 ];
 
-const fieldsToCheck = ['id', 'userName', 'name', 'email', 'nationality', 'status'];
+const fieldsToCheck = ['id', 'userName', 'firstName', 'lastName', 'email', 'nationality', 'status'];
 
 const Admins = () => {
   const [selectedAdminStatus, setSelectedAdminStatus] = useState('all');

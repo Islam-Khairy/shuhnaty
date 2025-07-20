@@ -1,3 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import ShippingShipmentIcon from '/images/shipmentStatus/shipping-shipment-truck.svg';
+import delayedShipmentIcon from '/images/shipmentStatus/delayed-shipment-truck.svg';
+import deliveredShipmentIcon from '/images/shipmentStatus/delivered-shipment-truck.svg';
+import CancelledShipmentIcon from '/images/shipmentStatus/cancelled-shipment-truck.svg';
+import returnedShipmentIcon from '/images/shipmentStatus/returned-shipment-truck.svg';
+import completedShipmentIcon from '/images/shipmentStatus/completed-shipment-truck.svg';
+
 export const formatDate = (dateString: string | null) => {
   if (!dateString) return '';
   return dateString.split(' ')[0];
@@ -101,4 +109,13 @@ export const getRangeDates = (range: string): { start: Date; end: Date } => {
 };
 
 export const tableRowStyles = 'py-2 px-4 text-nowrap text-right';
+
+export const statusIcons:any = {
+  'قيد الشحن': ShippingShipmentIcon,
+  متأخرة: delayedShipmentIcon,
+  'تم التوصيل': deliveredShipmentIcon,
+  ملغية: CancelledShipmentIcon,
+  مرتجعة: returnedShipmentIcon,
+  مكتملة: completedShipmentIcon,
+};
 
