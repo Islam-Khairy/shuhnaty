@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
-import { arabicDateStringToISO, getShipmentStatusLabel, getShipmentStatusStyles } from '../../lib/utils';
+import {
+  arabicDateStringToISO,
+  getShipmentStatusLabel,
+  getShipmentStatusStyles,
+} from '../../lib/utils';
 import Pagination from '../pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +12,6 @@ const tableRowStyles = 'py-2 px-4 text-right text-nowrap';
 const tableHeading = ['رقم الشحنة', 'المصدر', 'الوجهة', 'تاريخ التحميل'];
 
 const AdminDriverDetailsTable = React.memo(({ shipments }: any) => {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const navigate = useNavigate();

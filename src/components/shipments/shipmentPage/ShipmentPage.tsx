@@ -61,10 +61,8 @@ const ShipmentPage = React.memo(({ shipments, isAllShipmentsPage = false }: any)
 
   return (
     <>
-     {isLoading && (
-        <div
-          className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}
-        >
+      {isLoading && (
+        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
           <span className='loader'></span>
         </div>
       )}
