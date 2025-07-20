@@ -16,20 +16,23 @@ const HorizontalChart = React.memo(({ data }: any) => {
         // Two methods to ensure chart resizes properly
         window.dispatchEvent(new Event('resize'));
         setTimeout(() => {
-          chartRef.current?.updateOptions({
-            chart: {
-              width: '100%'
-            }
-          }, false, true);
+          chartRef.current?.updateOptions(
+            {
+              chart: {
+                width: '100%',
+              },
+            },
+            false,
+            true,
+          );
         }, 100);
       }
     };
 
     handleResize();
-    
-    // Add event listener for future manual resizes
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -48,10 +51,9 @@ const HorizontalChart = React.memo(({ data }: any) => {
       },
       events: {
         mounted: (chart) => {
-          // Store chart instance reference
           chartRef.current = chart;
-        }
-      }
+        },
+      },
     },
     plotOptions: {
       bar: {
@@ -93,6 +95,17 @@ const HorizontalChart = React.memo(({ data }: any) => {
     },
     tooltip: {
       enabled: true,
+      // followCursor: true,
+      fillSeriesColor: false,
+      onDatasetHover: {
+        highlightDataSeries: false,
+      },
+      x: {
+        show: false,
+      },
+      fixed: {
+        enabled: false,
+      },
       y: {
         formatter: function (val: number) {
           return val + ' شحنة';
@@ -125,11 +138,14 @@ const HorizontalChart = React.memo(({ data }: any) => {
   };
 
   return (
-    <div className="w-full pe-4" key={`chart-${isSidebarOpen}`}>
+    <div
+      className='w-full pe-4'
+      key={`chart-${isSidebarOpen}`}
+    >
       <ReactApexChart
         options={options}
         series={data.series}
-        type="bar"
+        type='bar'
         height={300}
       />
     </div>

@@ -199,10 +199,19 @@ input[type='number'] {
   -webkit-overflow-scrolling: touch;
   backface-visibility: hidden;
   perspective: 1000px;
+  height: 100dvh;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
