@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 const MessagesHistoryBody = ({
   data,
-  index,
+  selectedMessageId,
   selectedCategory,
   isDialogVisible,
   setIsDialogVisible,
@@ -26,6 +26,8 @@ const MessagesHistoryBody = ({
       toast.success('تم إرسال الرسالة بنجاح');
     }, 2000);
   };
+
+  const selectedMessage = data.find((message: any) => message.id === selectedMessageId);
 
   return (
     <>
@@ -47,9 +49,9 @@ const MessagesHistoryBody = ({
             تعديل
           </button>
         </div>
-        {data[index] && (
+        {selectedMessage && (
           <h1 className='overflow-hidden text-ellipsis whitespace-nowrap font-Rubik text-sm text-[#666666]'>
-            {data[index].drivers?.map((driver: any) => driver?.name).join('، ')}
+            {selectedMessage.drivers?.map((driver: any) => driver?.name).join('، ')}
           </h1>
         )}
         {selectedCategory === 'repeated' && (
@@ -67,8 +69,8 @@ const MessagesHistoryBody = ({
           </div>
         )}
         <div className='flex flex-col gap-6 text-[#FCFCFC] font-Rubik mt-8 bg-[#ECF8EF] sm:px-6 py-2'>
-          {data[index] &&
-            data[index].messages?.map((message: any, index: number) => {
+          {selectedMessage &&
+            selectedMessage.messages?.map((message: any, index: number) => {
               return (
                 <div
                   key={index}

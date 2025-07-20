@@ -3,8 +3,8 @@
 import repeatIcon from '/images/refresh-2.svg';
 const Messages = ({
   messages,
-  selectedMessageIndex,
-  setSelectedMessageIndex,
+  selectedMessageId,
+  setSelectedMessageId,
   setIsDialogVisible,
   selectedCategory,
 }: any) => {
@@ -14,10 +14,13 @@ const Messages = ({
         .filter((message: any) => message.category === selectedCategory)
         .map((message: any, index: number) => (
           <div
-            onClick={() => setSelectedMessageIndex(index)}
+            onClick={() => {
+              setSelectedMessageId(message?.id)
+              console.log(selectedMessageId)
+            }}
             key={index}
             className={`my-2 p-5 cursor-pointer flex flex-col rounded-lg ${
-              selectedMessageIndex === index && 'bg-[#F2F2F2]'
+              selectedMessageId === message?.id && 'bg-[#F2F2F2]'
             } transition-all duration-200`}
           >
             <div className='flex justify-between items-center mb-2'>

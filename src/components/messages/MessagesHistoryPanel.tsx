@@ -5,8 +5,8 @@ import Messages from './Messages';
 
 const MessagesHistoryPanel = ({
   data,
-  index,
-  setIndex,
+  selectedMessageId,
+  setSelectedMessageId,
   selectedCategory,
   setSelectedCategory,
   setIsDialogVisible,
@@ -40,8 +40,8 @@ const MessagesHistoryPanel = ({
       />
       <Messages
         messages={data}
-        selectedMessageIndex={index}
-        setSelectedMessageIndex={setIndex}
+        selectedMessageId={selectedMessageId}
+        setSelectedMessageId={setSelectedMessageId}
         selectedCategory={selectedCategory}
         setIsDialogVisible={setIsDialogVisible}
       />

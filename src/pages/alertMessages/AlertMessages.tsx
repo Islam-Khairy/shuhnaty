@@ -5,6 +5,7 @@ import NoSelectedMessages from '../../components/messages/NoSelectedMessages';
 
 const messageHistoryData = [
   {
+    id: 1,
     title: '  إغلاق طريق الدمام',
     date: '7/1/2025',
     drivers: drivers.slice(2, 11),
@@ -26,6 +27,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 2,
     title: 'تذكير بموعد الصيانة الدورية',
     date: '6/1/2025',
     drivers: drivers.slice(7, 15),
@@ -43,6 +45,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 3,
     title: 'تحديث نظام التتبع الإلكتروني',
     date: '5/1/2025',
     drivers: drivers.slice(11, 15),
@@ -60,6 +63,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 4,
     title: 'تنبيه أمني',
     date: '4/1/2025',
     category: 'repeated',
@@ -76,6 +80,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 5,
     title: 'تحذير من الأحوال الجوية',
     date: '3/1/2025',
     drivers: drivers.slice(0, 15),
@@ -96,6 +101,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 6,
     title: 'إجازة عيد الفطر المبارك',
     date: '2/1/2025',
     drivers: drivers.slice(10, 15),
@@ -112,6 +118,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 7,
     title: 'دورة تدريبية إلزامية',
     date: '1/1/2025',
     drivers: drivers.slice(4, 15),
@@ -132,6 +139,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 8,
     title: 'عطل فني',
     date: '31/12/2024',
     drivers: drivers.slice(9, 15),
@@ -148,6 +156,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 9,
     title: 'تحديث أسعار البنزين',
     date: '29/12/2024',
     drivers: drivers.slice(3, 15),
@@ -165,6 +174,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 10,
     title: 'مخالفة مرورية - تنبيه',
     date: '28/12/2024',
     drivers: drivers.slice(7, 8),
@@ -182,6 +192,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 11,
     title: 'صيانة طارئة',
     date: '27/12/2024',
     drivers: drivers.slice(10, 15),
@@ -198,6 +209,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 12,
     title: 'نقص في السائقين',
     date: '26/12/2024',
     drivers: drivers.slice(6, 13),
@@ -218,6 +230,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 13,
     title: 'تغيير في إجراءات التسليم',
     date: '4/1/2025',
     drivers: drivers.slice(3, 10),
@@ -238,6 +251,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 14,
     title: 'تهنئة - اليوم الوطني السعودي',
     date: '23/9/2024',
     drivers: drivers.slice(0, 15),
@@ -254,6 +268,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 15,
     title: 'تغيير موقع مستودع العميل',
     date: '25/12/2024',
     drivers: drivers.slice(0, 8),
@@ -274,6 +289,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 16,
     title: 'انتهاء صلاحية رخص القيادة',
     date: '24/12/2024',
     drivers: drivers.slice(12, 16),
@@ -290,6 +306,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 17,
     title: 'شحنة عاجلة - أولوية قصوى',
     date: '30/12/2024',
     drivers: drivers.slice(1, 2),
@@ -310,6 +327,7 @@ const messageHistoryData = [
     ],
   },
   {
+    id: 18,
     title: 'فواتير مفقودة - مطلوب عاجل',
     date: '2/1/2025',
     drivers: drivers.slice(8, 12),
@@ -335,7 +353,7 @@ import { drivers } from '../../lib/data';
 
 const AlertMessages = () => {
   const [selectedCategory, setSelectedCategory] = useState('once');
-  const [selectedMessageIndex, setSelectedMessageIndex] = useState<null | number>(null);
+  const [selectedMessageId, setSelectedMessageId] = useState<null | number>(null);
   const [isRepeatMessageDialogVisible, setIsRepeatMessageDialogVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -359,18 +377,18 @@ const AlertMessages = () => {
         <div className='col-span-1 lg:col-span-3 h-screen overflow-y-auto  lg:border-l border-[#DD7E1F] pe-2'>
           <MessagesHistoryPanel
             data={messageHistoryData}
-            index={selectedMessageIndex}
+            selectedMessageId={selectedMessageId}
             selectedCategory={selectedCategory}
-            setIndex={setSelectedMessageIndex}
+            setSelectedMessageId={setSelectedMessageId}
             setSelectedCategory={setSelectedCategory}
             setIsDialogVisible={setIsRepeatMessageDialogVisible}
           />
         </div>
         <div className='col-span-1 lg:col-span-9'>
-          {selectedMessageIndex !== null ? (
+          {selectedMessageId !== null ? (
             <MessagesHistoryBody
               data={messageHistoryData}
-              index={selectedMessageIndex}
+              selectedMessageId={selectedMessageId}
               selectedCategory={selectedCategory}
               isDialogVisible={isRepeatMessageDialogVisible}
               setIsDialogVisible={setIsRepeatMessageDialogVisible}
