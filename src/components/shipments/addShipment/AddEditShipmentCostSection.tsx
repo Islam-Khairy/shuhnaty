@@ -75,7 +75,7 @@ const AddEditShipmentCostSection = ({
               label='الخصم'
               type='number'
               name='deduct'
-              value={inputs.deduct}
+              value={value.deduct}
               onChange={onChange}
               required={false}
             />

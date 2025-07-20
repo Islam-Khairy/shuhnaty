@@ -121,7 +121,7 @@ const EditShipment = () => {
 
   const totalCost = useMemo(() => {
     const { baseCost, extraCost, stayedNights, costPerNight, deduct } = formData;
-    return Number(baseCost) + Number(extraCost) + stayedNights * costPerNight - deduct;
+    return Number(baseCost) + Number(extraCost) + Number(stayedNights) * Number(costPerNight) - deduct;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formData.baseCost,
