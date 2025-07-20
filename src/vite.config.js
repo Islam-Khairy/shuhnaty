@@ -20,12 +20,12 @@ export default defineConfig({
         description: 'Dashboard for Shuhnaty Transport management and operations.',
         icons: [
           {
-            src: '/icons/192.png',
+            src: '/192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icons/512.png',
+            src: '/512.png',
             sizes: '512x512',
             type: 'image/png',
           },

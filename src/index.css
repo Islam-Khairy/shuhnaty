@@ -192,6 +192,8 @@ input[type='number'] {
 }
 
 .scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
   transform: translateZ(0);
   will-change: scroll-position;
   -webkit-overflow-scrolling: touch;
