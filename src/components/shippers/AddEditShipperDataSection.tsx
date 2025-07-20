@@ -3,7 +3,6 @@ import PhoneNumberInput from '../shipments/addShipment/addShipmentInputs/phoneNu
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const AddEditShipperDataSection = ({ title, inputs, value, onChange }: any) => {
-  console.log('value: ', value)
   return (
     <>
       {title && <h1 className='font-bold text-xl sm:text-2xl'>{title}</h1>}

@@ -88,9 +88,6 @@ const AdminDetails = () => {
             if (!isoDate) return false;
 
             const shipmentDate = new Date(isoDate);
-            console.log('shipmentDate: ', new Date(arabicDateStringToISO(shipment.pickupDate)));
-            console.log('start: ', start);
-            console.log('end: ', end);
             return shipmentDate >= start && shipmentDate <= end;
           });
 

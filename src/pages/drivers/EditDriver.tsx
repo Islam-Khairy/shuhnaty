@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { drivers } from '../../lib/data';
 import licenseBackSideImage from '/images/adminDriver/driver/license/16.webp';
 import { toast } from 'sonner';
+import { MdCancelPresentation } from 'react-icons/md';
 
 const driverSectionInputsData = [
   {
@@ -74,6 +75,8 @@ const EditDriver = () => {
     imagePreview: '',
     licenseIssueDate: '',
     licenseExpirationDate: '',
+    medicalReport: null as File | null,
+    medicalReportName: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -91,10 +94,8 @@ const EditDriver = () => {
 
   return (
     <>
-     {isLoading && (
-        <div
-          className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}
-        >
+      {isLoading && (
+        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
           <span className='loader'></span>
         </div>
       )}
@@ -188,20 +189,43 @@ const EditDriver = () => {
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  console.log('Selected file:', file.name);
+                  setFormData((prev: any) => ({
+                    ...prev,
+                    medicalReport: file,
+                    medicalReportName: file.name,
+                  }));
                 }
               }}
             />
-            <label
-              htmlFor='medical-report-upload'
-              className='flex items-center gap-2 text-[#DD7E1F] border-2 border-[#DD7E1F] py-2 px-3 text-sm rounded-lg font-Rubik mt-2 mb-12 cursor-pointer'
-            >
-              <span>تحميل التقرير الطبي</span>
-              <img
-                src={uploadImage}
-                alt='upload icon'
-              />
-            </label>
+            {formData.medicalReport ? (
+              <div className='flex items-center gap-2 bg-[#F5F5F5] py-2 px-3 border-2 border-[#DD7E1F] rounded-lg mt-2 mb-12'>
+                <span className='text-[#1A1A1A]'>{formData.medicalReportName}</span>
+                <button
+                  type='button'
+                  onClick={() =>
+                    setFormData((prev: any) => ({
+                      ...prev,
+                      medicalReport: null,
+                      medicalReportName: '',
+                    }))
+                  }
+                  className='text-[#DD7E1F] font-bold'
+                >
+                  <MdCancelPresentation size={20} />
+                </button>
+              </div>
+            ) : (
+              <label
+                htmlFor='medical-report-upload'
+                className='flex items-center gap-2 text-[#DD7E1F] border-2 border-[#DD7E1F] py-2 px-3 text-sm rounded-lg font-Rubik mt-2 mb-12 cursor-pointer'
+              >
+                <span>تحميل التقرير الطبي</span>
+                <img
+                  src={uploadImage}
+                  alt='upload icon'
+                />
+              </label>
+            )}
           </div>
         </div>
         <hr className='border-0 border-t-2 border-dashed border-[#666] my-12' />

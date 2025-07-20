@@ -8,7 +8,6 @@ const Messages = ({
   setIsDialogVisible,
   selectedCategory,
 }: any) => {
-  console.log('data', messages);
   return (
     <div className='mt-6'>
       {messages
