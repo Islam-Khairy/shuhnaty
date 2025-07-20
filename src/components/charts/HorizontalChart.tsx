@@ -1,11 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { UseScreenSize } from '../../context/ScreenSizeProvider';
+import { UseSidebar } from '../../context/SidebarContext';
 
 const HorizontalChart = React.memo(({ data }: any) => {
+  const { isSidebarOpen } = UseSidebar();
   const { isSmallScreen } = UseScreenSize();
+  const chartRef = useRef<any>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (chartRef.current) {
+        // Two methods to ensure chart resizes properly
+        window.dispatchEvent(new Event('resize'));
+        setTimeout(() => {
+          chartRef.current?.updateOptions({
+            chart: {
+              width: '100%'
+            }
+          }, false, true);
+        }, 100);
+      }
+    };
+
+    handleResize();
+    
+    // Add event listener for future manual resizes
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isSidebarOpen, isSmallScreen]);
+
   const options: ApexOptions = {
     chart: {
       height: 350,
@@ -17,13 +46,18 @@ const HorizontalChart = React.memo(({ data }: any) => {
       animations: {
         enabled: true,
       },
+      events: {
+        mounted: (chart) => {
+          // Store chart instance reference
+          chartRef.current = chart;
+        }
+      }
     },
     plotOptions: {
       bar: {
         borderRadius: 10,
         horizontal: true,
         barHeight: '50%',
-        colors: {},
       },
     },
     colors: ['#2E853F', '#CCCCCC', '#E5B84D', '#CD2026', '#EA7B7E', '#B3E5BD'],
@@ -45,7 +79,6 @@ const HorizontalChart = React.memo(({ data }: any) => {
     },
     yaxis: {
       opposite: true,
-
       labels: {
         style: {
           colors: '#333',
@@ -60,17 +93,6 @@ const HorizontalChart = React.memo(({ data }: any) => {
     },
     tooltip: {
       enabled: true,
-      // followCursor: true,
-      fillSeriesColor: false,
-      onDatasetHover: {
-        highlightDataSeries: false,
-      },
-      x: {
-        show: false,
-      },
-      fixed: {
-        enabled: false,
-      },
       y: {
         formatter: function (val: number) {
           return val + ' شحنة';
@@ -103,12 +125,14 @@ const HorizontalChart = React.memo(({ data }: any) => {
   };
 
   return (
-    <ReactApexChart
-      options={options}
-      series={data.series}
-      type='bar'
-      height={300}
-    />
+    <div className="w-full pe-4" key={`chart-${isSidebarOpen}`}>
+      <ReactApexChart
+        options={options}
+        series={data.series}
+        type="bar"
+        height={300}
+      />
+    </div>
   );
 });
 

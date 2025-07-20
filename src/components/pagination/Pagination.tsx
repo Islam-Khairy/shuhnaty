@@ -58,8 +58,7 @@ const Pagination = React.memo(
             </Select>
           </FormControl>
         </div>
-        <div className='flex items-center justify-between mt-4'>
-          <div className='flex items-center gap-3'>
+     <div className='flex items-center gap-3 max-w-full overflow-x-auto'>
             <button
               onClick={() => {
                 setCurrentPage(currentPage - 1);
@@ -97,7 +96,6 @@ const Pagination = React.memo(
               التالي
             </button>
           </div>
-        </div>
       </div>
     );
   },

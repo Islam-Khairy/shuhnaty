@@ -213,7 +213,7 @@ const Dashboard = React.memo(() => {
       case 'year':
         return 'سنوي';
     }
-  }
+  };
 
   return (
     <div
