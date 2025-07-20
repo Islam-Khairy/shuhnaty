@@ -10,7 +10,7 @@ import truckIcon from '/images/truck.svg';
 import shippersIcon from '/images/sidebar/shippers.svg';
 import alertIcon from '/images/sidebar/alert.svg';
 import logOutIcon from '/images/sidebar/log-out.svg';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { UseScreenSize } from '../../context/ScreenSizeProvider';
 import { UseSidebar } from '../../context/SidebarContext';
 
@@ -177,9 +177,9 @@ const Sidebar = () => {
                       isSelected={isSelected}
                     />
                   ) : (
-                    <Link
+                    <button
                       key={index}
-                      to={item.nav}
+                      onClick={() => navigate(item.nav)}
                       className={`flex items-center w-full gap-2 mb-4 ${
                         isSidebarOpen ? 'p-3' : 'p-2'
                       } transition-all duration-200 ${
@@ -188,7 +188,7 @@ const Sidebar = () => {
                     >
                       <span className={isSelected(item.nav) ? iconsStyles : ''}>{item.icon}</span>
                       {isSidebarOpen && <span>{item.name}</span>}
-                    </Link>
+                    </button>
                   ),
                 )}
               </div>

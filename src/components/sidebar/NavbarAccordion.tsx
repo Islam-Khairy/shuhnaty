@@ -2,13 +2,14 @@
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import shipmentsIcon from '/images/box.svg';
 import arrowDownIcon from '/images/arrow-down.svg';
 import React from 'react';
 
 const NavbarAccordion = React.memo(
-  ({ items, title, selectedItem, setSelectedItem, isSidebarOpen, setIsSidebarOpen }: any) => {
+  ({ items, title, isSelected, isSidebarOpen, setIsSidebarOpen }: any) => {
+    const navigate = useNavigate();
     return (
       <div className='w-full mb-2'>
         <Accordion
@@ -39,24 +40,22 @@ const NavbarAccordion = React.memo(
             <AccordionDetails>
               {Array.isArray(items) &&
                 items.map((item, index) => (
-                  <Link
+                  <button
                     key={index}
-                    to={item.nav}
-                    onClick={() => setSelectedItem(item.nav.substring(1))}
+                    onClick={() => {
+                      navigate(item.nav);
+                     
+                    }}
                     className={`flex items-center w-full ${
                       index !== items.length - 1 && 'mb-4'
                     } px-3 py-2 transition-all duration-200 ${
                       isSidebarOpen ? 'justify-start' : 'justify-center'
-                    } ${
-                      selectedItem === item.nav.substring(1)
-                        ? 'bg-[#DD7E1F] text-white'
-                        : 'hover:bg-[#F9E6D2]'
-                    }`}
-                  >
+                    } ${isSelected(item.nav) && 'bg-[#DD7E1F] rounded-lg text-[#FCFCFC]'}`}
+                    >
                     {isSidebarOpen && (
                       <span className={`transition-all duration-200`}>{item.name}</span>
                     )}
-                  </Link>
+                  </button>
                 ))}
             </AccordionDetails>
           )}
