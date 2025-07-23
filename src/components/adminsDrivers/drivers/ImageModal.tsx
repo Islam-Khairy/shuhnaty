@@ -41,14 +41,14 @@ export default function ImageModal({ image, fileName, status }: any) {
       >
         <Box
           sx={style}
-          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-3xl w-[600px] lg:w-fit max-w-[90vw]'
+          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-[600px] lg:w-fit max-w-[90vw]'
         >
           <img
             src={image}
             alt='modal image'
             loading='eager'
             fetchPriority='high'
-            className='max-h-[400px] object-contain'
+            className='object-contain'
           />
         </Box>
       </Modal>
