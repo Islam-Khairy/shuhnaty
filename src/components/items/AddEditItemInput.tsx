@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
 
-const AddEditItemInput = React.memo(({ label, description, required = true, ...props }: any) => {
+const AddEditItemInput = ({ label, description, required = true, ...props }: any) => {
+
+  console.log('AddEditItemInput rendered');
   return (
     <div className='col-span-1 flex flex-col gap-1'>
       <span className='text-[#1A1A1A]'>{label}</span>
@@ -30,6 +31,6 @@ const AddEditItemInput = React.memo(({ label, description, required = true, ...p
       )}
     </div>
   );
-});
+};
 
 export default AddEditItemInput;

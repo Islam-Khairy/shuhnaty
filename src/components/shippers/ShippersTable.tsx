@@ -51,26 +51,23 @@ const ShippersTable = ({ data }: any) => {
               ))}
             </tr>
           </thead>
-          <div className='h-8'></div>
-          <tbody className='font-Rubik text-base font-medium'>
+          <tbody className='font-Rubik font-medium'>
             {paginatedData.map((item: any, index: any) => (
               <>
-                <tr className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}>
-                  <button
-                    key={index}
-                    onClick={() => {
-                      navigate(`/shippers/${item.id}`);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    style={{ display: 'contents' }}
-                  >
-                    <td className={tableRowStyles}>{item.id}</td>
-                    <td className={tableRowStyles}>{item.name}</td>
-                    <td className={tableRowStyles}>{item.primaryPhoneNumber}</td>
-                    <td className={tableRowStyles}>{item.secondaryPhoneNumber}</td>
-                    <td className={tableRowStyles}>{item.email}</td>
-                    <td className={tableRowStyles}>{item.address}</td>
-                  </button>
+                <tr
+                  key={item.id}
+                  onClick={() => {
+                    navigate(`/shippers/${item.id}`);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}
+                >
+                  <td className={tableRowStyles}>{item.id}</td>
+                  <td className={tableRowStyles}>{item.name}</td>
+                  <td className={tableRowStyles}>{item.primaryPhoneNumber}</td>
+                  <td className={tableRowStyles}>{item.secondaryPhoneNumber}</td>
+                  <td className={tableRowStyles}>{item.email}</td>
+                  <td className={tableRowStyles}>{item.address}</td>
                 </tr>
               </>
             ))}

@@ -99,6 +99,8 @@ const AddShipment = () => {
     formData.deduct,
   ]);
 
+  console.log('add shipment rendered');
+
   return (
     <>
      {isLoading && (

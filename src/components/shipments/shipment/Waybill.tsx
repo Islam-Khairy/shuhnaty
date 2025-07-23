@@ -2,10 +2,9 @@
 
 import { QRCodeSVG } from 'qrcode.react';
 import { baseURL } from '../../../../config';
-import React from 'react';
 import WaybillInfoRow from './WaybillInfoRow';
 
-const Waybill = React.memo(({ shipment, driver, shipper, recipient }: any) => {
+const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
   const driverDetails = [
     {
       value: 'الاسم',
@@ -269,6 +268,6 @@ const Waybill = React.memo(({ shipment, driver, shipper, recipient }: any) => {
       </div>
     </div>
   );
-});
+};
 
 export default Waybill;

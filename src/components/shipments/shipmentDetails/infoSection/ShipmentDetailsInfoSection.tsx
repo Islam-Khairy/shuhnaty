@@ -7,8 +7,9 @@ interface ShipmentDetailsInfoSectionProps {
   data: { label: string; value: string }[];
 }
 
-const ShipmentDetailsInfoSection = React.memo(
+const ShipmentDetailsInfoSection =
   ({ title, data }: ShipmentDetailsInfoSectionProps) => {
+    console.log('ShipmentDetailsInfoSection rendered');
     return (
       <div className='col-span-1'>
         {title && <h1 className='text-xl sm:text-2xl font-bold font-Almarai'>{title}</h1>}
@@ -23,6 +24,5 @@ const ShipmentDetailsInfoSection = React.memo(
         ))}
       </div>
     );
-  },
-);
+  };
 export default ShipmentDetailsInfoSection;

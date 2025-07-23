@@ -39,6 +39,8 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+
+  console.log('AdminsTable rendered');
   return (
     <>
       <div className={`w-full overflow-x-auto`}>
@@ -61,39 +63,33 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
               ))}
             </tr>
           </thead>
-          <div className='h-8'></div>
           <tbody className='font-Rubik text-base font-medium'>
             {paginatedData.map((item: any, index: any) => {
               return (
                 <tr
                   key={item.id}
+                  onClick={() => {
+                    navigate(`/admins/${item.id}`);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   className={`rounded-lg ${index % 2 === 0 ? 'bg-[#F2F2F2]' : ''}`}
                 >
-                  <button
-                    key={index}
-                    onClick={() => {
-                      navigate(`/admins/${item.id}`);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    style={{ display: 'contents' }}
-                  >
-                    <td className={tableRowStyles}>{item.id}</td>
-                    <td className={tableRowStyles}>{item.firstName}</td>
-                    <td className={tableRowStyles}>{item.lastName}</td>
-                    <td className={tableRowStyles}>{item.userName}</td>
-                    <td className={tableRowStyles}>{item?.email || '-'}</td>
-                    <td className={tableRowStyles}>{item.phoneNumber}</td>
-                    <td className={tableRowStyles}>{item?.nationality}</td>
-                    <td className={tableRowStyles}>
-                      <span
-                        className={`py-2 text-center font-medium inline-block rounded-md w-44 text-sm ${getAvailabilityStatusStyles(
-                          item.status,
-                        )}`}
-                      >
-                        {item.status === 'available' ? 'متاح' : 'غير متاح'}
-                      </span>
-                    </td>
-                  </button>
+                  <td className={tableRowStyles}>{item.id}</td>
+                  <td className={tableRowStyles}>{item.firstName}</td>
+                  <td className={tableRowStyles}>{item.lastName}</td>
+                  <td className={tableRowStyles}>{item.userName}</td>
+                  <td className={tableRowStyles}>{item?.email || '-'}</td>
+                  <td className={tableRowStyles}>{item.phoneNumber}</td>
+                  <td className={tableRowStyles}>{item?.nationality}</td>
+                  <td className={tableRowStyles}>
+                    <span
+                      className={`py-2 text-center font-medium inline-block rounded-md w-44 text-sm ${getAvailabilityStatusStyles(
+                        item.status,
+                      )}`}
+                    >
+                      {item.status === 'available' ? 'متاح' : 'غير متاح'}
+                    </span>
+                  </td>
                 </tr>
               );
             })}

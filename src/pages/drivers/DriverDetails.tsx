@@ -163,6 +163,8 @@ const DriverDetails = () => {
     [driverShipments, selectedOption],
   );
 
+  console.log('DriverDetails rendered');
+
   return (
     <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
       <div className='col-span-1 lg:col-span-2 h-fit shadow-lg rounded-3xl px-8 py-4 w-full overflow-x-auto'>
@@ -211,7 +213,7 @@ const DriverDetails = () => {
                 selectedDriver?.licenseStatus === 'active' ? 'text-[#1A1A1A]' : 'text-[#CD2026]'
               } text-center mt-8`}
             >
-              {selectedDriver?.licenseStatus === 'active' ? 'رخصة سارية' : 'منتهية'}
+              {selectedDriver?.licenseStatus === 'active' ? 'رخصة سارية' : 'رخصة منتهية'}
             </h1>
           </div>
         </div>

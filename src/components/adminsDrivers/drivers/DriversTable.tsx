@@ -90,11 +90,13 @@ const DriversTable = ({ selectedStatus, drivers, isSelectRecipientsPage = false 
               ))}
             </tr>
           </thead>
-          <div className='h-8'></div>
           <tbody className='font-Rubik text-base font-medium'>
             {paginatedData.map((item: any, index: any) => {
               return (
-                <tr className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}>
+                <tr
+                  key={item?.id}
+                  className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}
+                >
                   {isSelectRecipientsPage && (
                     <td className={tableRowStyles}>
                       <input

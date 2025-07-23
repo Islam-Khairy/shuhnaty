@@ -35,7 +35,7 @@ const AdminDetails = () => {
   const menuActions = [
     { label: 'تعديل البيانات', icon: editShipmentIcon, path: `/admins/edit/${adminId}` },
     {
-      label: 'حذف البيانات',
+      label: 'حذف المستخدم',
       icon: deleteShipmentIcon,
       path: `/admins/delete/${adminId}`,
     },

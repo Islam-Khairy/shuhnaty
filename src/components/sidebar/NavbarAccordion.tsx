@@ -5,9 +5,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { useNavigate } from 'react-router-dom';
 import shipmentsIcon from '/images/box.svg';
 import arrowDownIcon from '/images/arrow-down.svg';
-import React from 'react';
 
-const NavbarAccordion = React.memo(
+const NavbarAccordion = 
   ({ items, title, isSelected, isSidebarOpen, setIsSidebarOpen }: any) => {
     const navigate = useNavigate();
     return (
@@ -62,7 +61,6 @@ const NavbarAccordion = React.memo(
         </Accordion>
       </div>
     );
-  },
-);
+  };
 
 export default NavbarAccordion;

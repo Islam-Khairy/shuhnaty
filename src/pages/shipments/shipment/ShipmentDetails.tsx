@@ -85,6 +85,8 @@ const ShipmentDetails = () => {
     setIsLoading(false);
   }, 1000);
 
+  console.log('ShipmentDetails rendered');
+
   return (
     <>
       {isLoading && (
@@ -101,7 +103,7 @@ const ShipmentDetails = () => {
           >
             <div className='absolute -left-8 top-0 bottom-0 w-px bg-[#B3B3B3] hidden lg:block'></div>
             <div className='flex items-center justify-between'>
-              <h1 className='text-xl sm:text-2xl font-bold'>السائق</h1>
+              <h1 className='text-xl sm:text-2xl font-bold'>بيانات السائق</h1>
               <ActionsMenu
                 options={menuActions}
                 position='top-16 left-4'

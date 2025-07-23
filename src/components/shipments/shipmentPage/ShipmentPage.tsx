@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchInput from '../../searchInput/SearchInput';
 import SelectMenu from '../../SelectMenu';
 import ShipmentsTable from '../shipmentsTable/ShipmentsTable';
@@ -27,7 +27,7 @@ const fieldsToCheck = [
   'status',
 ];
 
-const ShipmentPage = React.memo(({ shipments, isAllShipmentsPage = false }: any) => {
+const ShipmentPage = ({ shipments, isAllShipmentsPage = false }: any) => {
   const [selectedShipmentStatus, setSelectedShipmentStatus] = useState('all');
 
   const [searchValue, setSearchValue] = useState('');
@@ -55,9 +55,12 @@ const ShipmentPage = React.memo(({ shipments, isAllShipmentsPage = false }: any)
     return filtered;
   }, [shipments, searchValue, selectedShipmentStatus, isAllShipmentsPage]);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  console.log('shipment page rendered');
 
   return (
     <>
@@ -99,5 +102,5 @@ const ShipmentPage = React.memo(({ shipments, isAllShipmentsPage = false }: any)
       </div>
     </>
   );
-});
+};
 export default ShipmentPage;

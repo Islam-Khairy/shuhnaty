@@ -40,7 +40,7 @@ const tableHeading = [
   { label: 'حالة الشحنة', key: 'status' },
 ];
 
-const ShipmentsTable = React.memo(({ shipments }: any) => {
+const ShipmentsTable = ({ shipments }: any) => {
   const navigate = useNavigate();
   const [dateSort, setDateSort] = useState<'asc' | 'desc' | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
@@ -136,6 +136,8 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
     };
   }, []);
 
+  console.log('ShipmentsTable rendered');
+
   return (
     <>
       <div className='w-full overflow-x-auto min-h-[40vh]'>
@@ -201,42 +203,36 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
               ))}
             </tr>
           </thead>
-          <div className='h-8'></div>
           <tbody className='font-Rubik text-base font-medium'>
             {paginatedData.map((shipment: any, index: any) => (
               <tr
                 key={shipment.id}
-                className={`rounded-lg ${index % 2 === 0 ? 'bg-[#F2F2F2]' : ''}`}
+                onClick={() => {
+                  navigate(`/shipments/${shipment.id}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`cursor-pointer rounded-lg ${index % 2 === 0 ? 'bg-[#F2F2F2]' : ''}`}
               >
-                <button
-                  key={index}
-                  onClick={() => {
-                    navigate(`/shipments/${shipment.id}`);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  style={{ display: 'contents' }}
-                >
-                  <td className={tableRowStyles}>{shipment.trackingNumber}</td>
-                  <td className={tableRowStyles}>{shipment.driver}</td>
-                  <td className={tableRowStyles}>{shipment.shipper}</td>
-                  <td className={tableRowStyles}>{shipment.shipperBranch}</td>
-                  <td className={tableRowStyles}>{shipment.recipient}</td>
-                  <td className={tableRowStyles}>{shipment.admin}</td>
-                  <td className={tableRowStyles}>{shipment.pickupCity}</td>
-                  <td className={tableRowStyles}>{shipment.dropOffCity}</td>
-                  <td className={tableRowStyles}>
-                    {(shipment.pickupDate && arabicDateStringToISO(shipment.pickupDate)) || '-'}
-                  </td>
-                  <td className={tableRowStyles}>
-                    <span
-                      className={`py-2 text-center font-medium inline-block rounded-md w-36 text-sm ${getShipmentStatusStyles(
-                        getShipmentStatusLabel(shipment.status),
-                      )}`}
-                    >
-                      {getShipmentStatusLabel(shipment.status)}
-                    </span>
-                  </td>
-                </button>
+                <td className={tableRowStyles}>{shipment.trackingNumber}</td>
+                <td className={tableRowStyles}>{shipment.driver}</td>
+                <td className={tableRowStyles}>{shipment.shipper}</td>
+                <td className={tableRowStyles}>{shipment.shipperBranch}</td>
+                <td className={tableRowStyles}>{shipment.recipient}</td>
+                <td className={tableRowStyles}>{shipment.admin}</td>
+                <td className={tableRowStyles}>{shipment.pickupCity}</td>
+                <td className={tableRowStyles}>{shipment.dropOffCity}</td>
+                <td className={tableRowStyles}>
+                  {(shipment.pickupDate && arabicDateStringToISO(shipment.pickupDate)) || '-'}
+                </td>
+                <td className={tableRowStyles}>
+                  <span
+                    className={`py-2 text-center font-medium inline-block rounded-md w-36 text-sm ${getShipmentStatusStyles(
+                      getShipmentStatusLabel(shipment.status),
+                    )}`}
+                  >
+                    {getShipmentStatusLabel(shipment.status)}
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -250,6 +246,6 @@ const ShipmentsTable = React.memo(({ shipments }: any) => {
       />
     </>
   );
-});
+};
 
 export default ShipmentsTable;

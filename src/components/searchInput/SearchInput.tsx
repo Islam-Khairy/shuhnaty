@@ -2,6 +2,7 @@
 import searchIcon from '/images/search.svg';
 
 const SearchInput = ({ value, onChange, styles = '' }: any) => {
+  console.log('SearchInput rendered');
   return (
     <div
       dir='rtl'

@@ -11,11 +11,10 @@ import {
   ChartOptions,
   Filler,
 } from 'chart.js';
-import React from 'react';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Filler);
 
-const LineChartComponent = React.memo(({data}: any) => {
+const LineChartComponent = ({data}: any) => {
   const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
@@ -52,6 +51,7 @@ const LineChartComponent = React.memo(({data}: any) => {
       },
     },
   };
+  console.log('line chart')
 
   return (
     <Line
@@ -59,6 +59,6 @@ const LineChartComponent = React.memo(({data}: any) => {
       options={options}
     />
   );
-});
+};
 
 export default LineChartComponent;

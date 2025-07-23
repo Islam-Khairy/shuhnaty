@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import HorizontalChart from '../components/charts/HorizontalChart';
 import { UseSidebar } from '../context/SidebarContext';
 import boxSearch from '/images/box-search.svg';
@@ -186,7 +186,7 @@ function getHorizontalChartData(range: string) {
   };
 }
 
-const Dashboard = React.memo(() => {
+const Dashboard = () => {
   const { isSidebarOpen } = UseSidebar();
   const [selectedRange, setSelectedRange] = useState('week');
   const { start, end } = useMemo(() => getRangeDates(selectedRange), [selectedRange]);
@@ -339,6 +339,6 @@ const Dashboard = React.memo(() => {
       </div>
     </div>
   );
-});
+};
 
 export default Dashboard;

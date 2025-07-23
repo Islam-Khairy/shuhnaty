@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
 import Sidebar from './components/sidebar/Sidebar';
 import Header from './components/header/Header';
 
-const Layout = React.memo(({ children }: any) => {
+const Layout = ({ children }: any) => {
   return (
     <div className='flex h-screen'>
       <Sidebar />
@@ -13,6 +12,6 @@ const Layout = React.memo(({ children }: any) => {
       </div>
     </div>
   );
-});
+};
 
 export default Layout;

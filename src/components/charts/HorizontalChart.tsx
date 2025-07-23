@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { UseScreenSize } from '../../context/ScreenSizeProvider';
 import { UseSidebar } from '../../context/SidebarContext';
 
-const HorizontalChart = React.memo(({ data }: any) => {
+const HorizontalChart = ({ data }: any) => {
   const { isSidebarOpen } = UseSidebar();
   const { isSmallScreen } = UseScreenSize();
   const chartRef = useRef<any>(null);
@@ -137,6 +137,8 @@ const HorizontalChart = React.memo(({ data }: any) => {
     },
   };
 
+  console.log('horizontal chart');
+
   return (
     <div
       className='w-full pe-4'
@@ -150,6 +152,6 @@ const HorizontalChart = React.memo(({ data }: any) => {
       />
     </div>
   );
-});
+};
 
 export default HorizontalChart;

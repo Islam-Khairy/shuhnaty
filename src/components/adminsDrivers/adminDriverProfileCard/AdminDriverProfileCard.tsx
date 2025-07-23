@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
 import ActionsMenu from '../../actionsMenu/ActionsMenu';
 import InfoRow from './infoRow/InfoRow';
 
-const AdminDriverProfileCard = React.memo(
+const AdminDriverProfileCard = 
   ({ moreInfoData, personalInfoData, menuActions }: any) => {
+
+    console.log('AdminDriverProfileCard rendered');
     return (
       <>
         <div className='w-full flex justify-end'>
@@ -53,6 +54,5 @@ const AdminDriverProfileCard = React.memo(
         </div>
       </>
     );
-  },
-);
+  };
 export default AdminDriverProfileCard;

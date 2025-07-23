@@ -23,6 +23,8 @@ const DeleteShipment = () => {
     }, 2000);
   };
 
+  console.log('DeleteShipment rendered');
+
   return (
     <div className='flex flex-col gap-20'>
       <ShipmentStatusOverview selectedShipment={selectedShipment} />

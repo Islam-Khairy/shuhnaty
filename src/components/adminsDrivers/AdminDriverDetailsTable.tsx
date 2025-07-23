@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const tableRowStyles = 'py-2 px-4 text-right text-nowrap';
 const tableHeading = ['رقم الشحنة', 'المصدر', 'الوجهة', 'تاريخ التحميل'];
 
-const AdminDriverDetailsTable = React.memo(({ shipments }: any) => {
+const AdminDriverDetailsTable = ({ shipments }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const navigate = useNavigate();
@@ -30,6 +30,8 @@ const AdminDriverDetailsTable = React.memo(({ shipments }: any) => {
     setCurrentPage(1);
   };
 
+  console.log('AdminDriverDetailsTable rendered');
+
   return (
     <>
       <div className={`w-full overflow-x-auto`}>
@@ -47,35 +49,30 @@ const AdminDriverDetailsTable = React.memo(({ shipments }: any) => {
               <th className='py-2 px-4 text-center text-nowrap'>حالة الشحنة</th>
             </tr>
           </thead>
-          <div className='h-8'></div>
           <tbody className='font-Rubik text-base font-medium'>
             {paginatedData.map((shipment: any, index: any) => (
-              <>
-                <tr className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}>
-                  <button
-                    key={index}
-                    onClick={() => {
-                      navigate(`/shipments/${shipment.id}`);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    style={{ display: 'contents' }}
+              <tr
+                key={shipment.id}
+                onClick={() => {
+                  navigate(`/shipments/${shipment.id}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}
+              >
+                <td className={tableRowStyles}>{shipment.trackingNumber}</td>
+                <td className={tableRowStyles}>{shipment.pickupCity}</td>
+                <td className={tableRowStyles}>{shipment.dropOffCity}</td>
+                <td className={tableRowStyles}>{arabicDateStringToISO(shipment.pickupDate)}</td>
+                <td className='py-2 px-4 text-center'>
+                  <span
+                    className={`p-2.5 inline-block rounded-md w-44 text-sm ${getShipmentStatusStyles(
+                      getShipmentStatusLabel(shipment.status),
+                    )}`}
                   >
-                    <td className={tableRowStyles}>{shipment.trackingNumber}</td>
-                    <td className={tableRowStyles}>{shipment.pickupCity}</td>
-                    <td className={tableRowStyles}>{shipment.dropOffCity}</td>
-                    <td className={tableRowStyles}>{arabicDateStringToISO(shipment.pickupDate)}</td>
-                    <td className='py-2 px-4 text-center'>
-                      <span
-                        className={`p-2.5 inline-block rounded-md w-44 text-sm ${getShipmentStatusStyles(
-                          getShipmentStatusLabel(shipment.status),
-                        )}`}
-                      >
-                        {getShipmentStatusLabel(shipment.status)}
-                      </span>
-                    </td>
-                  </button>
-                </tr>
-              </>
+                    {getShipmentStatusLabel(shipment.status)}
+                  </span>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
@@ -88,6 +85,6 @@ const AdminDriverDetailsTable = React.memo(({ shipments }: any) => {
       />
     </>
   );
-});
+};
 
 export default AdminDriverDetailsTable;

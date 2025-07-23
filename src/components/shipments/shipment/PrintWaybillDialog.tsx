@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Waybill from './Waybill';
 
-const PrintWaybillDialog = React.memo(
+const PrintWaybillDialog = 
   ({ shipment, driver, shipper, recipient, open, setOpen }: any) => {
     const descriptionElementRef = React.useRef<HTMLElement>(null);
     React.useEffect(() => {
@@ -74,7 +74,6 @@ const PrintWaybillDialog = React.memo(
         </Dialog>
       </>
     );
-  },
-);
+  };
 
 export default PrintWaybillDialog;

@@ -6,7 +6,6 @@ import Modal from '@mui/material/Modal';
 import imageIcon from '/images/gallery.svg';
 const style = {
   bgcolor: 'background.paper',
-  p: 4,
 };
 
 export default function ImageModal({ image, fileName, status }: any) {
@@ -25,10 +24,13 @@ export default function ImageModal({ image, fileName, status }: any) {
         <span> {fileName}</span>
         <span>
           {' '}
-          <img
-            src={imageIcon}
-            alt='license image'
-          />
+          <div className='xs:hidden block w-4 h-4'>
+            <img
+              src={imageIcon}
+              alt='license image'
+              className='w-full h-full'
+            />
+          </div>
         </span>
       </Button>
       <Modal
@@ -39,13 +41,14 @@ export default function ImageModal({ image, fileName, status }: any) {
       >
         <Box
           sx={style}
-          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl'
+          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-3xl w-[600px] lg:w-fit max-w-[90vw]'
         >
           <img
             src={image}
             alt='modal image'
             loading='eager'
             fetchPriority='high'
+            className='max-h-[400px] object-contain'
           />
         </Box>
       </Modal>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -10,7 +10,7 @@ const staticChartData = {
   backgroundColor: ['#2E853F', '#EA7B7E', '#CD2026', '#E5B84D', '#B3E5BD', '#CCCCCC'],
 };
 
-const PieChart = React.memo(({ pieChartData, sum }: any) => {
+const PieChart = ({ pieChartData, sum }: any) => {
   const ChartData = useMemo(() => {
     return {
       labels: staticChartData.labels,
@@ -46,6 +46,7 @@ const PieChart = React.memo(({ pieChartData, sum }: any) => {
     spacing: -5,
   };
 
+  console.log('pie chart')
   return (
     <div className='flex justify-center items-center'>
       <div className='relative'>
@@ -60,6 +61,6 @@ const PieChart = React.memo(({ pieChartData, sum }: any) => {
       </div>
     </div>
   );
-});
+};
 
 export default PieChart;

@@ -2,12 +2,13 @@
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import React from 'react';
 
-const SelectMenu = React.memo(({ selectedItem, setSelectedItem, options }: any) => {
+const SelectMenu = ({ selectedItem, setSelectedItem, options }: any) => {
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedItem(event.target.value);
   };
+
+  console.log('SelectMenu rendered')
 
   return (
     <FormControl
@@ -53,6 +54,6 @@ const SelectMenu = React.memo(({ selectedItem, setSelectedItem, options }: any) 
       </Select>
     </FormControl>
   );
-});
+};
 
 export default SelectMenu;

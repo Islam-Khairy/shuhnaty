@@ -45,7 +45,7 @@ const getVerticalLineBgColor = (status: string) => {
   }
 };
 
-const ShipmentHistory = React.memo(({ shipment }: any) => {
+const ShipmentHistory = ({ shipment }: any) => {
   const history = shipment.history || [];
   return (
     <div className='py-8 px-6'>
@@ -117,6 +117,6 @@ const ShipmentHistory = React.memo(({ shipment }: any) => {
       </h1>
     </div>
   );
-});
+};
 
 export default ShipmentHistory;

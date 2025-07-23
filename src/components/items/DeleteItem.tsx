@@ -6,7 +6,7 @@ import DeleteItemCard from './DeleteItemCard';
 import { toast } from 'sonner';
 import InfoRow from '../adminsDrivers/adminDriverProfileCard/infoRow/InfoRow';
 
-const DeleteItem = React.memo(({ moreInfoData, personalData, isActive, item }: any) => {
+const DeleteItem = ({ moreInfoData, personalData, isActive, item }: any) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -76,6 +76,6 @@ const DeleteItem = React.memo(({ moreInfoData, personalData, isActive, item }: a
       </div>
     </div>
   );
-});
+};
 
 export default DeleteItem;
