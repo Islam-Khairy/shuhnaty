@@ -6,7 +6,7 @@ const NoSelectedMessages = () => {
       <div className='flex flex-col justify-center items-center gap-16'>
         <img
           src={noSelectedMessageIcon}
-          alt=''
+          alt='no selected message icon'
         />
         <h1 className='text-lg lg:text-3xl font-normal text-[#333333]'>
           اختر رسالة للاطلاع على تفاصيلها

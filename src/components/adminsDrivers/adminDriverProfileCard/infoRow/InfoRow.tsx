@@ -4,13 +4,17 @@ const InfoRow = ({ image, label, value }: any) => (
     <div className='flex items-center gap-2 '>
       <img
         src={image}
-        alt=''
+        alt={label}
       />
-      <span className='font-medium text-sm sm:text-base overflow-hidden text-ellipsis whitespace-nowrap'>{label}</span>
+      <span className='font-medium text-sm sm:text-base overflow-hidden text-ellipsis whitespace-nowrap'>
+        {label}
+      </span>
     </div>
     <div className='md:grow flex items-center gap-2'>
       <div className='md:grow border-t-2 border-[#999999] border-dashed mx-2'></div>
-      <span className='text-sm sm:text-base overflow-hidden text-ellipsis whitespace-nowrap'>{value}</span>
+      <span className='text-sm sm:text-base overflow-hidden text-ellipsis whitespace-nowrap'>
+        {value}
+      </span>
     </div>
   </div>
 );
