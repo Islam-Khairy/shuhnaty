@@ -106,6 +106,11 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <div className='absolute bottom-6 w-full text-center'>
+  <p className='text-gray-500 text-sm font-Rubik'>
+    © {new Date().getFullYear()} Shuhnaty Dashboard Demo by <span className='text-[#DD7E1F]'>Islam Khairy</span>
+  </p>
+</div>
     </div>
   );
 };
