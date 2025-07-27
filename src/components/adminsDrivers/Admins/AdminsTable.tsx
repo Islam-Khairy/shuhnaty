@@ -70,7 +70,6 @@ const AdminsTable = ({ selectedStatus, data }: any) => {
                   key={item.id}
                   onClick={() => {
                     navigate(`/admins/${item.id}`);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className={`rounded-lg ${index % 2 === 0 ? 'bg-[#F2F2F2]' : ''}`}
                 >

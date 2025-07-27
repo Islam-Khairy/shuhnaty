@@ -11,7 +11,6 @@ const AddNewItemButton = React.memo(({ title, path }: any) => {
       className='flex items-center py-2 px-6 gap-2 rounded-lg bg-[#DD7E1F] text-[#FCFCFC] text-lg'
       onClick={() => {
         navigate(path);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }}
     >
       {title}

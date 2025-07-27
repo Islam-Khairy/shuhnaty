@@ -18,13 +18,11 @@ const DeleteItem = ({ moreInfoData, personalData, isActive, item }: any) => {
       switch (item) {
         case 'admin':
           navigate('/admins');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
           toast.success('تم حذف المسئول بنجاح');
           break;
         case 'driver':
           navigate('/drivers');
           toast.success('تم حذف السائق بنجاح');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
           break;
       }
     }, 2000);

@@ -401,7 +401,6 @@ const AlertMessages = () => {
         <button
           onClick={() => {
             navigate('/alert-messages/select-recipients');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`p-3 rounded-full bg-[#DD7E1F] fixed bottom-2 transition-all duration-200 lg:right-12`}
         >

@@ -30,7 +30,6 @@ const ShipmentStatusOverview = ({ selectedShipment }: any) => {
         <button
           onClick={() => {
             navigate(-1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className='col-span-1 w-full flex justify-end items-end'
         >

@@ -111,7 +111,6 @@ const DriversTable = ({ selectedStatus, drivers, isSelectRecipientsPage = false 
                     key={index}
                     onClick={() => {
                       navigate(`/drivers/${item.id}`);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     style={{ display: 'contents' }}
                   >

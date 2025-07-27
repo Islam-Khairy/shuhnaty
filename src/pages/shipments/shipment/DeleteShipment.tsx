@@ -18,7 +18,6 @@ const DeleteShipment = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shipments');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم حذف الشحنة بنجاح');
     }, 2000);
   };

@@ -82,7 +82,6 @@ const AddShipment = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shipments');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم إضاافة الشحنة بنجاح');
     }, 2000);
   };

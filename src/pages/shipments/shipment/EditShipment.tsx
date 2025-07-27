@@ -137,7 +137,6 @@ const EditShipment = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shipments');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم تعديل بيانات الشحنة بنجاح');
     }, 2000);
   };

@@ -55,7 +55,6 @@ const EditDriver = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shippers');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم إضاافة السائق بنجاح');
     }, 2000);
   };

@@ -55,7 +55,6 @@ const AdminDriverDetailsTable = ({ shipments }: any) => {
                 key={shipment.id}
                 onClick={() => {
                   navigate(`/shipments/${shipment.id}`);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className={`rounded-lg ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}
               >

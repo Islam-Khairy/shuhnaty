@@ -16,7 +16,6 @@ const DeleteShipper = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shippers');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم حذف العميل بنجاح');
     }, 2000);
   };

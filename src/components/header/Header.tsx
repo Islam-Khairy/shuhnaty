@@ -59,7 +59,6 @@ const Header = () => {
 
   const handleBackClick = () => {
     navigate(-1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

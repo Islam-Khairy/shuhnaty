@@ -41,7 +41,6 @@ const AddAdmin = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/admins');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم إضاافة المستخدم بنجاح');
     }, 2000);
   };

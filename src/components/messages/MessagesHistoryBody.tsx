@@ -42,7 +42,6 @@ const MessagesHistoryBody = ({
           <button
             onClick={() => {
               navigate('/alert-messages/select-recipients');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className='text-[#DD7E1F] font-Rubik text-sm underline'
           >

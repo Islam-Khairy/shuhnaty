@@ -51,7 +51,6 @@ const ActionsMenu = ({ options, position = 'top-16 left-4' }: any) => {
               className='flex items-center gap-2'
               onClick={() => {
                 navigate(item.path);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
               <img

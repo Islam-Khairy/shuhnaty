@@ -67,7 +67,6 @@ const SelectRecipients = () => {
             className='flex items-center py-2 px-10 gap-2 rounded-lg bg-[#DD7E1F] text-white text-lg'
             onClick={() => {
               navigate('/alert-messages');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
             متابعة

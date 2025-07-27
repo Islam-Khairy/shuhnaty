@@ -16,7 +16,6 @@ const Login = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/dashboard');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 2000);
   };
 

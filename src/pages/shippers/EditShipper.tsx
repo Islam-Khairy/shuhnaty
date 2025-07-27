@@ -115,7 +115,6 @@ const EditShipper = () => {
     setTimeout(() => {
       setIsLoading(false);
       navigate('/shippers');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('تم تحديث بيانات العميل بنجاح');
     }, 2000);
   };
