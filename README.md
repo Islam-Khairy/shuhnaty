@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+# Shuhnaty Dashboard:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+A comprehensive shipment management system developed for Saudi Arabian transportation company, featuring advanced tracking and management capabilities. The system provides insightful analytics with interactive charts displaying shipment statuses across customizable time ranges (weekly, monthly, yearly) and per branch. It enables complete CRUD operations for managing shipments, administrators, shippers, recipients, and drivers with advanced filtering options. An integrated messaging system supports both one-time and recurring communications to drivers, all within a modern, fully responsive interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 🌟 Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 📊 Analytics Dashboard
+- Interactive charts: Dynamic visualization of shipment data
+- Customizable time ranges: View data by week, month, or year
+- Branch-wise Analysis: Track performance across different branches
+- Real-time Analytics
 
-- Configure the top-level `parserOptions` property like this:
+### 🛠️ Shipment Management
+- Complete CRUD Operations: Create, read, update, and delete shipments
+- Advanced Filtering: Search and filter shipments by multiple criteria
+- Status Tracking: Real-time updates on shipment statuses
+- History Tracking: Complete audit trail of all shipment changes
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 🛠️ User Management
+- Complete CRUD operations for:
+  - Administrators
+  - Shippers
+  - Recipients
+  - Drivers
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 📨 Communication System
+- Direct Messaging: administrator-to-driver communication
+- Scheduled Messages: One-time and recurring message scheduling
+- Bulk messaging: Send messages to multiple recipients
+- Message templates and history: Save and reuse common messages
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 🎨 Modern Interface
+- Fully responsive design
+- Clean, intuitive UI/UX
+- Accessibility optimized
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 🚀 Technologies Stack
+
+React.js | TypeScript | Redux Toolkit | Chart.js/Recharts | Material UI | Tailwind CSS  
