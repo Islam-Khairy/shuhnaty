@@ -19,7 +19,7 @@ A comprehensive shipment management system developed for Saudi Arabian transport
 - History Tracking: Complete audit trail of all shipment changes
 
 ### 🛠️ User Management
-- Complete CRUD operations for:
+ Complete CRUD operations for:
   - Administrators
   - Shippers
   - Recipients
