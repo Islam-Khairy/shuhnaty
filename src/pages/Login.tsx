@@ -21,10 +21,8 @@ const Login = () => {
 
   return (
     <div className='flex justify-center items-center w-screen h-screen'>
-     {isLoading && (
-        <div
-          className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}
-        >
+      {isLoading && (
+        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
           <span className='loader'></span>
         </div>
       )}
@@ -107,10 +105,16 @@ const Login = () => {
         </form>
       </div>
       <div className='absolute bottom-6 w-full text-center'>
-  <p className='text-gray-500 text-sm font-Rubik'>
-    © {new Date().getFullYear()} Shuhnaty Dashboard Demo by <span className='text-[#DD7E1F]'>Islam Khairy</span>
-  </p>
-</div>
+        <p className='text-gray-500 text-sm font-Rubik'>
+          © {new Date().getFullYear()} Shuhnaty Dashboard Demo by{' '}
+          <a
+            href='https://www.linkedin.com/in/islam-khairy-364793307/'
+            className='text-[#DD7E1F] hover:underline'
+          >
+            Islam Khairy
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

@@ -112,7 +112,7 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
       id='waybill-printable'
       className='m-0 bg-[#fff] rounded-2xl p-4 font-Rubik text-[#1a1a1a] text-right'
     >
-      <div className='flex gap-0 text-left flex-row justify-between items-start '>
+      <div className='flex flex-col md:flex-row gap-4 md:gap-0 text-center md:text-left md:justify-between md:items-start '>
         <div className='font-light'>
           <div className='font-bold'>AL Jeed Transportation</div>
           <div>
@@ -125,14 +125,12 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
             <span>date:</span> {shipment.pickupDate}
           </div>
         </div>
-        <div>
-          <img
+        <img
             src='/images/truck-Logo.svg'
             alt='logo'
-            className='w-24'
+            className='w-24 mx-auto'
           />
-        </div>
-        <div className='font-Almarai text-right'>
+        <div className='font-Almarai text-center md:text-right'>
           <div className='font-bold'>مؤسسة الجيد للنقليات</div>
           <div>
             فرع <span>جدة</span>
@@ -140,7 +138,7 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
           <div>
             س ت: <span>4030172574</span>
           </div>
-          <div className='mt-2 px-2 py-1 rounded-lg bg-[#DD7E1F] text-[#FCFCFC]'>
+          <div className='mt-2 px-2 py-1 rounded-lg bg-[#DD7E1F] text-[#FCFCFC] w-fit mx-auto'>
             <span>رقم الشحنة: </span> <span>{shipment.trackingNumber}</span>
           </div>
         </div>
@@ -148,7 +146,7 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
       <hr className='border-0 border-t-2 border-solid border-[#666] mt-2 mb-6' />
       <div className='text-center font-Almarai font-bold text-lg mb-6'>
         كشف تحميل شاحنة
-        <div className='font-semibold text-base'>Truck Loading Sheet</div>
+        {/* <div className='font-semibold text-base'>Truck Loading Sheet</div> */}
       </div>
 
       <div className=''>
@@ -247,7 +245,7 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
 
       <div className='w-full grid grid-cols-3 mt-6'>
         <div className='col-span-1'>
-          <p className='text-center'>توقيع الموظف</p>
+          <p className='text-center whitespace-nowrap overflow-hidden text-ellipsis'>توقيع الموظف</p>
           <hr className='border-0 border-t-2 border-dashed border-[#666] mt-6' />
         </div>
         <div className='col-span-1 text-center'>
@@ -262,7 +260,7 @@ const Waybill = ({ shipment, driver, shipper, recipient }: any) => {
           </div>
         </div>
         <div className='col-span-1'>
-          <p className='text-center'>توقيع السائق</p>
+          <p className='text-center whitespace-nowrap overflow-hidden text-ellipsis'>توقيع السائق</p>
           <hr className='border-0 border-t-2 border-dashed border-[#666] mt-6' />
         </div>
       </div>
