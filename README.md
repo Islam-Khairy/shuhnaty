@@ -1,5 +1,6 @@
 # Shuhnaty Dashboard:
 
+https://github.com/Islam-Khairy/personal-portfolio/blob/main/src/assets/images/dashboard.webp
 
 A comprehensive shipment management system developed for Saudi Arabian transportation company, featuring advanced tracking and management capabilities. The system provides insightful analytics with interactive charts displaying shipment statuses across customizable time ranges (weekly, monthly, yearly) and per branch. It enables complete CRUD operations for managing shipments, administrators, shippers, recipients, and drivers with advanced filtering options. An integrated messaging system supports both one-time and recurring communications to drivers, all within a modern, fully responsive interface.
 
