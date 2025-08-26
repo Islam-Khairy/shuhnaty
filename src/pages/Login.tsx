@@ -108,6 +108,7 @@ const Login = () => {
         <p className='text-gray-500 text-sm font-Rubik'>
           © {new Date().getFullYear()} Shuhnaty Dashboard Demo by{' '}
           <a
+            target='_blank'
             href='https://www.linkedin.com/in/islam-khairy-364793307/'
             className='text-[#DD7E1F] hover:underline'
           >
