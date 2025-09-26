@@ -20,13 +20,13 @@ const Login = () => {
   };
 
   return (
-    <div className='flex justify-center items-center w-screen h-screen'>
+    <div className='flex justify-center items-center w-screen h-screen max-h-screen overflow-y-hidden'>
       {isLoading && (
         <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
           <span className='loader'></span>
         </div>
       )}
-      <div className='w-full max-w-lg shadow-2xl border bg-[#FCFCFC] mx-2 md:mx-0 px-8 py-6 rounded-xl'>
+      <div className='w-full max-w-lg shadow-2xl border bg-[#FCFCFC] mx-2 md:mx-0 px-8 py-6 rounded-xl -mt-6'>
         <div className='flex justify-center items-center mb-4'>
           <img
             src={logo}
@@ -104,7 +104,7 @@ const Login = () => {
           </button>
         </form>
       </div>
-      <div className='absolute bottom-6 w-full text-center'>
+      <div className='absolute bottom-8 w-full text-center'>
         <p className='text-gray-500 text-sm font-Rubik'>
           © {new Date().getFullYear()} Shuhnaty Dashboard Demo by{' '}
           <a

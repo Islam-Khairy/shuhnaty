@@ -11,7 +11,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, onItemsPerPageChan
   return (
     <div
       dir='rtl'
-      className='my-8 flex flex-col md:flex-row justify-between gap-4 md:gap-0 md:items-center'
+      className='my-8 flex flex-col sm:flex-row justify-between gap-5 md:gap-0 md:items-center'
     >
       <div className='flex items-center'>
         <span className='me-2 text-[#666666]'>عرض النتائج:</span>
@@ -64,7 +64,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, onItemsPerPageChan
             onPageChange(currentPage - 1);
           }}
           disabled={currentPage === 1}
-          className='text-[#DD7E1F] disabled:text-gray-400'
+          className='hidden md:block text-[#DD7E1F] disabled:text-gray-400'
         >
           السابق
         </button>
@@ -88,7 +88,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, onItemsPerPageChan
             onPageChange(currentPage + 1);
           }}
           disabled={currentPage === totalPages}
-          className='text-[#DD7E1F] disabled:text-gray-400'
+          className='hidden md:block text-[#DD7E1F] disabled:text-gray-400'
         >
           التالي
         </button>
