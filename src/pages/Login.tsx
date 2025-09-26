@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div className='flex justify-center items-center w-screen h-screen max-h-screen overflow-y-hidden'>
+    <div className='flex justify-center items-center w-screen h-screen max-h-screen overflow-y-hidden scroll-container'>
       {isLoading && (
         <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
           <span className='loader'></span>
