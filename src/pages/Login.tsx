@@ -104,7 +104,7 @@ const Login = () => {
           </button>
         </form>
       </div>
-      <div className='absolute bottom-6 w-full text-center'>
+      <div className='fixed bottom-6 w-full text-center'>
         <p className='text-gray-500 text-sm font-Rubik'>
           © {new Date().getFullYear()} Shuhnaty Dashboard Demo by{' '}
           <a
