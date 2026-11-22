@@ -1,14 +1,13 @@
-import AddEditItemInput from '../shared/AddEditItemInput';
+import FormInput from '../shared/FormInput';
 import PhoneNumberInput from '../shipments/addShipment/addShipmentInputs/phoneNumberInput/PhoneNumberInput';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const AddEditShipperDataSection = ({ title, inputs, value, onChange }: any) => {
+const ShipperFormSection = ({ title, inputs, value, onChange }: any) => {
   return (
     <>
       {title && <h1 className='font-bold text-xl sm:text-2xl'>{title}</h1>}
       <div className='w-full grid gap-10 my-10 grid-cols-1 md:grid-cols-2'>
-        {inputs.map((input: any, index: number) => (
-          <AddEditItemInput
+        {inputs.map((input: { label: string; name: string; type?: string; description?: string }, index: number) => (
+          <FormInput
             key={index}
             label={input.label}
             name={input.name}
@@ -33,4 +32,4 @@ const AddEditShipperDataSection = ({ title, inputs, value, onChange }: any) => {
   );
 };
 
-export default AddEditShipperDataSection;
+export default ShipperFormSection;

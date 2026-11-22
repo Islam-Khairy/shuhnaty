@@ -1,8 +1,6 @@
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '/images/arrow.svg';
 import { useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import ExpandMoreIcon from '/images/arrow.svg';
 
 const messageTitleOptions = [
   'شحنة متأخرة',
@@ -10,36 +8,42 @@ const messageTitleOptions = [
   'مشكلة في المستندات',
   'تصرف غير لائق',
   'خصم من الراتب',
-  'حالة طارئة',
+  'حالة طارئة',
 ];
 
 const MessageTitleAccordion = () => {
   const [messageSelectedTitle, setMessageSelectedTitle] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
-      <Accordion className='!rounded-2xl'>
-        <AccordionSummary
-          expandIcon={<img src={ExpandMoreIcon} />}
-          aria-controls='panel1-content'
-          id='panel1-header'
-          className='!bg-[#FCF2E9] !rounded-2xl'
-        >
+      <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        className='rounded-2xl overflow-hidden'
+      >
+        <CollapsibleTrigger className='w-full flex items-center justify-between bg-[#FCF2E9] rounded-2xl px-4 py-3'>
           <span className='text-primary'>{messageSelectedTitle || 'اختر عنوانًا للرسالة'}</span>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div className='flex flex-col gap-4'>
-            {messageTitleOptions.map((option, index) => (
+          <img
+            src={ExpandMoreIcon}
+            alt=''
+            className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className='bg-white border border-t-0 border-gray-100 rounded-b-2xl max-h-48 overflow-y-auto'>
+          <div className='flex flex-col gap-4 px-4 py-3'>
+            {messageTitleOptions.map((option) => (
               <span
-                key={index}
-                onClick={() => setMessageSelectedTitle(option)}
-                className='text-primary cursor-pointer'
+                key={option}
+                onClick={() => { setMessageSelectedTitle(option); setIsOpen(false); }}
+                className='text-primary cursor-pointer hover:underline'
               >
                 {option}
               </span>
             ))}
           </div>
-        </AccordionDetails>
-      </Accordion>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };

@@ -1,12 +1,17 @@
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 interface Option {
   label: string;
   value: string;
 }
-const SelectMenu = ({
+
+export function SelectMenu({
   selectedItem,
   setSelectedItem,
   options,
@@ -14,55 +19,30 @@ const SelectMenu = ({
   selectedItem: string;
   setSelectedItem: (value: string) => void;
   options: Option[];
-}) => {
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelectedItem(event.target.value);
-  };
+}) {
+  const currentLabel = options.find((opt) => opt.value === selectedItem)?.label;
 
   return (
-    <FormControl
-      sx={{ m: 1, minWidth: 120 }}
-      size='small'
-    >
-      <Select
-        value={selectedItem}
-        onChange={handleChange}
-        sx={{
-          color: '#666666',
-          fontSize: '14px',
-          justifyContent: 'end',
-          fontFamily: 'Rubik',
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#DD7E1F',
-          },
-        }}
-      >
-        {options.map((option: Option) => (
-          <MenuItem
-            key={option.value}
-            value={option.value}
-            sx={{
-              color: '#666666',
-              fontSize: '14px',
-              justifyContent: 'end',
-              fontFamily: 'Rubik',
-              ':hover': { backgroundColor: '#DD7E1F', color: '#FCFCFC' },
-              '&.Mui-selected': {
-                backgroundColor: '#FCFCFC !important',
-                color: '#666666',
-              },
-              '&.Mui-selected:hover': {
-                backgroundColor: '#DD7E1F !important',
-                color: '#FCFCFC',
-              },
-            }}
-          >
-            {option.label}
-          </MenuItem>
-        ))}
+    <div className='m-1' dir='rtl'>
+      <Select value={selectedItem} onValueChange={setSelectedItem} dir='rtl'>
+        <SelectTrigger dir='rtl' className='min-w-[130px] h-9 text-[#666666] text-sm font-Rubik border-gray-300 bg-white hover:border-gray-400 text-right'>
+          <SelectValue>{currentLabel}</SelectValue>
+        </SelectTrigger>
+        <SelectContent align='end' dir='rtl' className='font-Rubik text-right'>
+          {options.map((option) => (
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              dir='rtl'
+              className='font-Rubik text-right'
+            >
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
-    </FormControl>
+    </div>
   );
-};
+}
 
 export default SelectMenu;

@@ -1,45 +1,48 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-const AddShipmentTextArea = ({
+interface NotesAreaProps {
+  name?: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  mode?: 'add' | 'edit';
+  /** 'shipper' shows facility-description labels; 'shipment'/'recipient' show generic notes labels. */
+  variant?: 'shipment' | 'shipper' | 'recipient';
+  existingNotes?: boolean;
+  placeholder?: string;
+}
+
+const NotesArea = ({
   name,
   value,
   onChange,
-  page,
+  mode = 'add',
+  variant = 'shipment',
   existingNotes,
   placeholder = 'يمكنك هنا إضافة ملاحظات يجب أن ينتبه لها السائق',
-}: {
-  name?: string | undefined;
-  value: string;
-  onChange: any;
-  page?: string | undefined;
-  existingNotes?: boolean | undefined;
-  placeholder?: string | undefined;
-}) => {
+}: NotesAreaProps) => {
   const [isNotesAreaVisible, setIsNotesAreaVisible] = useState(false);
-  const getButtonLabel = () => {
-    if (page === 'addShipper') return 'أضف وصف للمنشأة';
-    else if (page === 'editShipper') {
-      if (existingNotes) {
-        return 'تعديل وصف المنشأة';
-      }
-      return 'أضف وصف للمنشأة';
-    } else if (page === 'editShipment' && existingNotes) return 'تعديل الملاحظات';
-    else return 'إضافة ملاحظات';
-  };
+
+  const buttonLabel = (() => {
+    if (variant === 'shipper') {
+      return mode === 'edit' && existingNotes ? 'تعديل وصف المنشأة' : 'أضف وصف للمنشأة';
+    }
+    return mode === 'edit' && existingNotes ? 'تعديل الملاحظات' : 'إضافة ملاحظات';
+  })();
+
+  const areaLabel = variant === 'shipper' ? 'وصف المنشأة' : 'ملاحظات';
 
   return (
     <>
       {isNotesAreaVisible ? (
         <div className='w-full flex flex-col items-start mb-12'>
-          <span>{page === 'addShipper' ? 'وصف المنشأة' : 'ملاحظات'}</span>
+          <span>{areaLabel}</span>
           <textarea
             name={name}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
             className='w-full h-56 mt-4 mb-2 p-4 border border-[#CCCCCC] rounded-lg focus:outline-none focus:ring-1 focus:ring-primary resize-none font-Rubik'
-          ></textarea>
+          />
           <div className='w-full flex items-center justify-end'>
             <button
               type='button'
@@ -56,11 +59,11 @@ const AddShipmentTextArea = ({
           onClick={() => setIsNotesAreaVisible(true)}
           className='col-span-1 bg-primary text-[#FCFCFC] border border-primary p-2 rounded-lg mb-6'
         >
-          {getButtonLabel()}
+          {buttonLabel}
         </button>
       )}
     </>
   );
 };
 
-export default AddShipmentTextArea;
+export default NotesArea;

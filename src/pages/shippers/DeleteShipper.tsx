@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import DeleteItemCard from '../../components/shared/DeleteItemCard';
 import { shippers } from '../../lib/data/mainData';
-import { useFormSubmission } from '../../hooks/useFormSubmission ';
+import { useFormSubmission } from '../../hooks/useFormSubmission';
 
 const DeleteShipper = () => {
   const { shipperId } = useParams();

@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { UseScreenSize } from '../../context/ScreenSizeContext';
-import { UseSidebar } from '../../context/SidebarContext';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useSidebar } from '../../context/SidebarContext';
 
 const HorizontalChart = ({
   data,
 }: {
   data: { series: { name: string; data: number[] }[] };
 }) => {
-  const { isSidebarOpen } = UseSidebar();
-  const { isSmallScreen } = UseScreenSize();
+  const { isSidebarOpen } = useSidebar();
+  const isSmallScreen = useMediaQuery('(max-width: 767px)');
   const chartRef = useRef<any>(null);
 
   useEffect(() => {
@@ -98,7 +97,6 @@ const HorizontalChart = ({
     },
     tooltip: {
       enabled: true,
-      // followCursor: true,
       fillSeriesColor: false,
       onDatasetHover: {
         highlightDataSeries: false,

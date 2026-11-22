@@ -1,34 +1,40 @@
-import { UseScreenSize } from '../../../context/ScreenSizeContext';
-import AddEditItemDataSection from '../../shared/AddEditItemDataSection';
-import AddEditItemInput from '../../shared/AddEditItemInput';
+import FormSection from '../../shared/FormSection';
+import FormInput from '../../shared/FormInput';
+import { ShipmentFormData } from '../../../types/shipments';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const AddEditShipmentCostSection = ({
+interface ShipmentCostSectionProps {
+  inputs: { label: string; name: string; type?: string }[];
+  value: ShipmentFormData;
+  onChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | { target: { name: string; value: string | number | object } },
+  ) => void;
+  totalCost: number;
+}
+
+const ShipmentCostSection = ({
   inputs,
   value,
   onChange,
-  nights,
-  setNights,
-  costPerNight,
-  setCostPerNight,
   totalCost,
-  page,
-}: any) => {
-  const { isSmallScreen } = UseScreenSize();
+}: ShipmentCostSectionProps) => {
+
   const handleNightsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10) || 0;
-    setNights(value);
+    onChange({ target: { name: 'stayedNights', value: parseInt(e.target.value, 10) || 0 } });
   };
 
-  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10) || 0;
-    setCostPerNight(value);
+  const handleCostPerNightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange({ target: { name: 'costPerNight', value: parseInt(e.target.value, 10) || 0 } });
   };
+
+  const nights = value.stayedNights;
+  const costPerNight = value.costPerNight;
 
   return (
     <>
       <div>
-        <AddEditItemDataSection
+        <FormSection
           title='التكلفة ر.س'
           inputs={inputs}
           value={value}
@@ -40,25 +46,19 @@ const AddEditShipmentCostSection = ({
             <label className='text-[#1A1A1A]'>المبيت</label>
             <div className='flex border border-[#CCCCCC] rounded-lg overflow-hidden py-1'>
               <input
-                type='text'
+                type='number'
                 required
-                placeholder={page === 'addShipment' ? (isSmallScreen ? 'عدد' : ' عدد الليالي') : ''}
-                value={page === 'editShipment' ? `${nights} ليلة` : undefined}
+                placeholder='عدد الليالي'
+                value={nights || ''}
                 onChange={handleNightsChange}
                 className='w-2/6 lg:w-1/6 p-2 text-center border-l border-[#666666] focus:outline-none no-arrows'
               />
               <input
-                type={page === 'editShipment' ? 'text' : 'number'}
+                type='number'
                 required
-                placeholder={
-                  page === 'addShipment'
-                    ? isSmallScreen
-                      ? 'تكلفة المبيت لليلة'
-                      : 'تكلفة المبيت لليلة الواحدة'
-                    : ''
-                }
-                value={page === 'editShipment' ? `${costPerNight} لليلة الواحدة` : undefined}
-                onChange={handleCostChange}
+                placeholder='تكلفة المبيت لليلة الواحدة'
+                value={costPerNight || ''}
+                onChange={handleCostPerNightChange}
                 className='w-4/6 lg:w-5/6 py-2 ps-2 md:ps-4 lg:ps-10 text-start focus:outline-none no-arrows'
               />
             </div>
@@ -71,7 +71,7 @@ const AddEditShipmentCostSection = ({
             )}
           </div>
           <div className='col-span-1'>
-            <AddEditItemInput
+            <FormInput
               label='الخصم'
               type='number'
               name='deduct'
@@ -90,4 +90,4 @@ const AddEditShipmentCostSection = ({
   );
 };
 
-export default AddEditShipmentCostSection;
+export default ShipmentCostSection;

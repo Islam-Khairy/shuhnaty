@@ -1,4 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 import ShippingShipmentIcon from '/images/shipmentStatus/shipping-shipment-truck.svg';
 import delayedShipmentIcon from '/images/shipmentStatus/delayed-shipment-truck.svg';
 import deliveredShipmentIcon from '/images/shipmentStatus/delivered-shipment-truck.svg';
@@ -24,7 +30,7 @@ export const getShipmentStatusStyles = (status: string) => {
     case 'مرتجعة':
       return 'bg-[#F8D3D4] text-[#CD2026]';
     case 'مكتملة':
-      return 'bg-[#2E853F] text-[#B3E5BD]'; // FCFCFC
+      return 'bg-[#2E853F] text-[#B3E5BD]';
     default:
       return 'bg-gray-300 text-[#071309]';
   }
@@ -92,7 +98,6 @@ export const getRangeDates = (range: string): { start: Date; end: Date } => {
   } else if (range === 'month') {
     start = new Date(now.getFullYear(), now.getMonth(), 1);
     start.setHours(0, 0, 0, 0);
-    // End is last day of month
     end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     end.setHours(23, 59, 59, 999);
   } else if (range === 'year') {
@@ -110,7 +115,17 @@ export const getRangeDates = (range: string): { start: Date; end: Date } => {
 
 export const tableRowStyles = 'py-2 px-4 text-nowrap text-right';
 
-export const statusIcons:any = {
+export function parsePickupDate(dateStr: string): Date {
+  if (dateStr.includes('/')) {
+    const [day, month, year] = dateStr.split('/');
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  }
+  const isoDate = arabicDateStringToISO(dateStr);
+  if (isoDate) return new Date(isoDate);
+  return new Date(dateStr);
+}
+
+export const statusIcons: Record<string, string> = {
   'قيد الشحن': ShippingShipmentIcon,
   متأخرة: delayedShipmentIcon,
   'تم التوصيل': deliveredShipmentIcon,

@@ -2,19 +2,19 @@ import {
   arabicDateStringToISO,
   getShipmentStatusLabel,
   getShipmentStatusStyles,
+  tableRowStyles,
 } from '../../lib/utils';
 import Pagination from '../pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
 import { usePagination } from '../../hooks/usePagination';
 import { Shipment } from '../../types/shipments';
 
-const tableRowStyles = 'py-2 px-4 text-right text-nowrap';
 const tableHeading = ['رقم الشحنة', 'المصدر', 'الوجهة', 'تاريخ التحميل'];
 
 const AdminDriverDetailsTable = ({ shipments }: { shipments: Shipment[] }) => {
   const navigate = useNavigate();
 
-  const { itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate } = usePagination();
+  const { currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate } = usePagination({ totalItems: shipments.length });
   const paginatedData = paginate(shipments) as Shipment[];
 
   return (
@@ -63,6 +63,7 @@ const AdminDriverDetailsTable = ({ shipments }: { shipments: Shipment[] }) => {
       </div>
       <Pagination
         totalItems={shipments.length}
+        currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}

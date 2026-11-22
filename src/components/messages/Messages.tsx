@@ -10,7 +10,7 @@ const Messages = ({
 }: {
   messagesData: Message[];
   selectedMessageId: number;
-  setSelectedMessageId: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedMessageId: (id: number) => void;
   setIsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
   selectedCategory: string;
 }) => {

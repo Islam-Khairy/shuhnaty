@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { Branch, newBranchData } from '../types/shippers';
+import { EMPTY_SHIPPER_FORM_DATA } from '../lib/data/shippers';
 
-export const useShippers = () => {
-  const [mainFormData, setMainFormData] = useState<Branch>({
-    name: '',
-    email: '',
-    address: '',
-    primaryPhoneNumber: '',
-    secondaryPhoneNumber: '',
-    description: '',
-  });
-  const [branches, setBranches] = useState<newBranchData[]>([]);
+export interface ShipperInitialData {
+  main: Branch;
+  branches: newBranchData[];
+}
+
+export const useShippers = (initialData?: ShipperInitialData) => {
+  const [mainFormData, setMainFormData] = useState<Branch>(
+    initialData?.main ?? EMPTY_SHIPPER_FORM_DATA.main,
+  );
+  const [branches, setBranches] = useState<newBranchData[]>(
+    initialData?.branches ?? EMPTY_SHIPPER_FORM_DATA.branches,
+  );
 
   const handleMainFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

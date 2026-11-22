@@ -1,113 +1,231 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import MessagesHistoryBody from '../../components/messages/MessagesHistoryBody';
 import MessagesHistoryPanel from '../../components/messages/MessagesHistoryPanel';
 import NoSelectedMessages from '../../components/messages/NoSelectedMessages';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { messageHistoryData, drivers } from '../../lib/data/mainData';
+import { PageLoader } from '../../components/shared/PageLoader';
+import { Message } from '../../types/alertMessages';
+import { Driver } from '../../types/drivers';
+import addMessageIcon from '/images/add-message.svg';
 
-import { useNavigate } from 'react-router-dom';
-import { messageHistoryData } from '../../lib/data/mainData';
+const LAST_MESSAGE_STORAGE_KEY = 'lastSelectedAlertMessageId';
 
 const AlertMessages = () => {
-  const [selectedCategory, setSelectedCategory] = useState('once');
-  const [selectedMessageId, setSelectedMessageId] = useState<null | number>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const locationState = location.state as {
+    messageId?: number;
+    selectedDriverIds?: number[];
+  } | null;
+
+
+  const currentMessageId = useMemo(() => {
+    const param = searchParams.get('messageId');
+    if (param) return Number(param);
+    if (locationState?.messageId) return locationState.messageId;
+    const saved = sessionStorage.getItem(LAST_MESSAGE_STORAGE_KEY);
+    return saved ? Number(saved) : (messageHistoryData[0]?.id ?? null);
+  }, [searchParams, locationState?.messageId]);
+
+  const [selectedMessageId, setSelectedMessageId] = useState<number | null>(currentMessageId);
+  const [messages, setMessages] = useState<Message[]>(messageHistoryData);
+
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    const targetId = currentMessageId;
+    if (targetId) {
+      const msg = messageHistoryData.find((m) => m.id === targetId);
+      if (msg?.category) return msg.category;
+    }
+    return 'once';
+  });
+
   const [isRepeatMessageDialogVisible, setIsRepeatMessageDialogVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [mobileView, setMobileView] = useState<'panel' | 'body'>('panel');
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  useEffect(() => {
+    const state = location.state as {
+      messageId?: number;
+      selectedDriverIds?: number[];
+    } | null;
+
+    const targetId =
+      state?.messageId ||
+      currentMessageId ||
+      (sessionStorage.getItem(LAST_MESSAGE_STORAGE_KEY)
+        ? Number(sessionStorage.getItem(LAST_MESSAGE_STORAGE_KEY))
+        : null);
+
+    if (targetId) {
+      setSelectedMessageId(targetId);
+      sessionStorage.setItem(LAST_MESSAGE_STORAGE_KEY, String(targetId));
+
+      if (state?.selectedDriverIds) {
+        const updatedDrivers = drivers.filter((d: Driver) =>
+          state.selectedDriverIds!.includes(d.id),
+        );
+
+        const targetInMainData = messageHistoryData.find((m) => m.id === targetId);
+        if (targetInMainData) {
+          targetInMainData.drivers = updatedDrivers;
+        }
+
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === targetId ? { ...msg, drivers: updatedDrivers } : msg,
+          ),
+        );
+      } else {
+        setMessages([...messageHistoryData]);
+      }
+
+      const targetMsg = messageHistoryData.find((m) => m.id === targetId);
+      if (targetMsg?.category) {
+        setSelectedCategory(targetMsg.category);
+      }
+    }
+  }, [currentMessageId, location.state]);
+
+  const handleSelectMessage = (id: number) => {
+    setSelectedMessageId(id);
+    setSearchParams({ messageId: String(id) }, { replace: true });
+    sessionStorage.setItem(LAST_MESSAGE_STORAGE_KEY, String(id));
+    const targetMsg = messages.find((m) => m.id === id);
+    if (targetMsg?.category) {
+      setSelectedCategory(targetMsg.category);
+    }
+    setMobileView('body');
+  };
+
+  const handleCategoryChange = (newCategory: string) => {
+    setSelectedCategory(newCategory);
+    const currentMsg = messages.find((m) => m.id === selectedMessageId);
+    if (!currentMsg || currentMsg.category !== newCategory) {
+      const firstInCategory = messages.find((m) => m.category === newCategory);
+      if (firstInCategory) {
+        setSelectedMessageId(firstInCategory.id);
+        setSearchParams({ messageId: String(firstInCategory.id) }, { replace: true });
+        sessionStorage.setItem(LAST_MESSAGE_STORAGE_KEY, String(firstInCategory.id));
+      }
+    }
+  };
+
+  const handleOpenRecipients = () => {
+    const targetId =
+      selectedMessageId ??
+      messages.find((m) => m.category === selectedCategory)?.id ??
+      messages[0]?.id;
+    const targetMsg = messages.find((m) => m.id === targetId);
+
+    if (targetId) {
+      sessionStorage.setItem(LAST_MESSAGE_STORAGE_KEY, String(targetId));
+    }
+
+    navigate(`/alert-messages/select-recipients?messageId=${targetId}`, {
+      state: {
+        messageId: targetId,
+        initialDriverIds: targetMsg?.drivers?.map((d: Driver) => d.id) || [],
+      },
+    });
+  };
 
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
+      <PageLoader isLoading={isLoading} />
+      <div className='flex flex-col h-[calc(100%-1rem)] lg:h-full lg:ms-4 border border-primary rounded-2xl mx-4 lg:mx-0 overflow-hidden'>
+        <div className='flex flex-1 min-h-0'>
+
+          <div
+            className={`
+              flex flex-col
+              w-full lg:w-[25%] lg:flex-none
+              lg:border-l border-primary
+              ${mobileView === 'panel' ? 'flex' : 'hidden'} lg:flex
+            `}
+          >
+            <div className='flex-none p-6 pb-0 flex items-center'>
+              {[
+                { label: 'مرة واحدة', value: 'once' },
+                { label: 'مكررة', value: 'repeated' },
+              ].map((item) => (
+                <button
+                  key={item.value}
+                  type='button'
+                  onClick={() => handleCategoryChange(item.value)}
+                  className={`w-1/2 text-lg transition-all duration-200 ${
+                    selectedCategory === item.value
+                      ? 'text-primary border-b-4 border-primary'
+                      : 'text-[#666666] border-b-2 border-[#CCCCCC]'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            <div className='flex-1 overflow-y-auto'>
+              <MessagesHistoryPanel
+                messagesData={messages}
+                selectedMessageId={selectedMessageId!}
+                selectedCategory={selectedCategory}
+                setSelectedMessageId={handleSelectMessage}
+                setSelectedCategory={handleCategoryChange}
+                setIsDialogVisible={setIsRepeatMessageDialogVisible}
+              />
+            </div>
+          </div>
+
+          <div
+            className={`
+              flex-1 min-w-0 overflow-hidden
+              ${mobileView === 'body' ? 'flex flex-col' : 'hidden'} lg:flex lg:flex-col
+            `}
+          >
+            <button
+              type='button'
+              onClick={() => setMobileView('panel')}
+              className='lg:hidden flex-none flex items-center gap-2 px-4 pt-2.5 pb-1 text-primary font-semibold text-sm hover:opacity-80 transition-opacity'
+            >
+              <span className='text-base'>←</span>
+              <span>قائمة الرسائل</span>
+            </button>
+
+            <div className='flex-1 min-h-0 h-full px-4 py-2'>
+              {selectedMessageId !== null ? (
+                <MessagesHistoryBody
+                  data={messages}
+                  selectedMessageId={selectedMessageId}
+                  selectedCategory={selectedCategory}
+                  isDialogVisible={isRepeatMessageDialogVisible}
+                  setIsDialogVisible={setIsRepeatMessageDialogVisible}
+                />
+              ) : (
+                <NoSelectedMessages />
+              )}
+            </div>
+          </div>
         </div>
-      )}
-      <div className='grid grid-cols-1 lg:grid-cols-12 lg:ms-4 border border-primary rounded-2xl px-4 mx-4 lg:mx-0 h-full overflow-auto'>
-        {' '}
-        <div className='col-span-1 lg:col-span-3 h-screen overflow-y-auto  lg:border-l border-primary pe-2'>
-          <MessagesHistoryPanel
-            messagesData={messageHistoryData}
-            selectedMessageId={selectedMessageId!}
-            selectedCategory={selectedCategory}
-            setSelectedMessageId={
-              setSelectedMessageId as React.Dispatch<React.SetStateAction<number>>
-            }
-            setSelectedCategory={setSelectedCategory}
-            setIsDialogVisible={setIsRepeatMessageDialogVisible}
-          />
-        </div>
-        <div className='col-span-1 lg:col-span-9'>
-          {selectedMessageId !== null ? (
-            <MessagesHistoryBody
-              data={messageHistoryData}
-              selectedMessageId={selectedMessageId!}
-              selectedCategory={selectedCategory}
-              isDialogVisible={isRepeatMessageDialogVisible}
-              setIsDialogVisible={setIsRepeatMessageDialogVisible}
-            />
-          ) : (
-            <NoSelectedMessages />
-          )}
-        </div>
-        {/* <div className='absolute inset-0 w-px bg-primary hidden lg:block'></div> */}
+
         <button
           type='button'
-          onClick={() => {
-            navigate('/alert-messages/select-recipients');
-          }}
-          className={`p-3 rounded-full bg-primary fixed bottom-2 transition-all duration-200 lg:right-12`}
+          onClick={handleOpenRecipients}
+          className='p-3 rounded-full bg-primary fixed bottom-2 transition-all duration-200 lg:right-12'
         >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='40'
-            height='40'
-            viewBox='0 0 40 40'
-            fill='none'
-          >
-            <path
-              d='M36.6666 12.3841V22.3841C36.6666 24.8841 35.8332 26.9675 34.3666 28.4341C32.9166 29.8841 30.8333 30.7174 28.3333 30.7174V34.2675C28.3333 35.6008 26.8499 36.4008 25.7499 35.6675L18.3333 30.7174H14.7999C14.9333 30.2174 14.9999 29.7008 14.9999 29.1675C14.9999 27.4675 14.3499 25.9008 13.2833 24.7175C12.0833 23.3508 10.2999 22.5008 8.33325 22.5008C6.46659 22.5008 4.76659 23.2675 3.54993 24.5175C3.39993 23.8508 3.33325 23.1341 3.33325 22.3841V12.3841C3.33325 7.38411 6.66659 4.05078 11.6666 4.05078H28.3333C33.3333 4.05078 36.6666 7.38411 36.6666 12.3841Z'
-              stroke='#FCFCFC'
-              stroke-width='2.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            />
-            <path
-              d='M15.0001 29.1667C15.0001 29.7 14.9334 30.2167 14.8001 30.7167C14.6501 31.3833 14.3834 32.0333 14.0334 32.6C12.8834 34.5333 10.7667 35.8333 8.33341 35.8333C6.61675 35.8333 5.06674 35.1833 3.90008 34.1166C3.40008 33.6833 2.96673 33.1667 2.63339 32.6C2.01673 31.6 1.66675 30.4167 1.66675 29.1667C1.66675 27.3667 2.38342 25.7167 3.55009 24.5167C4.76676 23.2667 6.46675 22.5 8.33341 22.5C10.3001 22.5 12.0834 23.35 13.2834 24.7167C14.3501 25.9 15.0001 27.4667 15.0001 29.1667Z'
-              stroke='#FCFCFC'
-              stroke-width='2.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            />
-            <path
-              d='M10.8167 29.1328H5.8501'
-              stroke='#FCFCFC'
-              stroke-width='2.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            />
-            <path
-              d='M8.3335 26.6992V31.6825'
-              stroke='#FCFCFC'
-              stroke-width='2.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            />
-            <path
-              d='M14.1667 17.5H25.8334'
-              stroke='#FCFCFC'
-              stroke-width='2.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            />
-          </svg>
+          <img
+            src={addMessageIcon}
+            alt='add message'
+            className='w-10 h-10'
+          />
         </button>
       </div>
     </>

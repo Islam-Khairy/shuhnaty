@@ -12,7 +12,7 @@ import AdminDriverProfileCard from '../../components/adminsDrivers/adminDriverPr
 import { useParams } from 'react-router-dom';
 import { drivers, shipments } from '../../lib/data/mainData';
 import AdminDriverDetailsTable from '../../components/adminsDrivers/AdminDriverDetailsTable';
-import { useMenuActions } from '../../hooks/useMenuActions';
+import { buildMenuActions } from '../../lib/menuActions';
 import { selectMenuOptions } from '../../lib/data/drivers';
 import { useChartData } from '../../hooks/useChartData';
 
@@ -23,10 +23,12 @@ const DriverDetails = () => {
   const selectedDriver = drivers.find((driver) => driver?.id === Number(driverId));
   const driverShipments = shipments.filter((shipment) => shipment?.driverId === Number(driverId));
 
-  const { menuActions } = useMenuActions([
-    { editLabel: 'تعديل البيانات', editPath: `/drivers/edit/${driverId}` },
-    { deleteLabel: 'حذف البيانات', deletePath: `/drivers/delete/${driverId}` },
-  ]);
+  const menuActions = buildMenuActions({
+    editLabel: 'تعديل البيانات',
+    editPath: `/drivers/edit/${driverId}`,
+    deleteLabel: 'حذف البيانات',
+    deletePath: `/drivers/delete/${driverId}`,
+  });
 
   const licenseInfo = [
     {

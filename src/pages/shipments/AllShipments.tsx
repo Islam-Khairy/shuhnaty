@@ -3,13 +3,10 @@ import { shipments } from '../../lib/data/mainData';
 
 const AllShipments = () => {
   return (
-    <>
-      {/* <ShipmentsFilterDialog /> */}
-      <ShipmentsPage
-        shipments={shipments}
-        isAllShipmentsPage={true}
-      />
-    </>
+    <ShipmentsPage
+      shipments={shipments}
+      isAllShipmentsPage
+    />
   );
 };
 

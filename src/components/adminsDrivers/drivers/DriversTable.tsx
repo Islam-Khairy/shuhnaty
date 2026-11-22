@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { getAvailabilityStatusStyles, tableRowStyles } from '../../../lib/utils';
 import Pagination from '../../pagination/Pagination';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePagination } from '../../../hooks/usePagination';
 import { Driver } from '../../../types/drivers';
-
+import { Checkbox } from '../../ui/checkbox';
 
 const tableHeading = [
   { key: 'id', label: '(ID)' },
@@ -18,19 +18,38 @@ const tableHeading = [
   { key: 'vehicleNumber', label: 'رقم الشاحنة' },
   { key: 'status', label: 'الحالة' },
 ];
+interface DriversTableProps {
+  selectedStatus: string;
+  drivers: Driver[];
+  isSelectRecipientsPage?: boolean;
+  selectedDriverIds?: number[];
+  onSelectedDriverIdsChange?: (ids: number[]) => void;
+}
+
 const DriversTable = ({
   selectedStatus,
   drivers,
-  searchValue,
   isSelectRecipientsPage = false,
-}: {
-  selectedStatus: string;
-  drivers: Driver[];
-  searchValue: string;
-  isSelectRecipientsPage?: boolean;
-}) => {
+  selectedDriverIds: controlledSelectedDriverIds,
+  onSelectedDriverIdsChange,
+}: DriversTableProps) => {
   const navigate = useNavigate();
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [internalSelectedDriverIds, setInternalSelectedDriverIds] = useState<number[]>(() =>
+    isSelectRecipientsPage ? drivers.map((d) => d.id) : [],
+  );
+
+  const isControlled = controlledSelectedDriverIds !== undefined;
+  const selectedDriverIds = isControlled
+    ? controlledSelectedDriverIds
+    : internalSelectedDriverIds;
+
+  const updateSelectedDriverIds = (next: number[]) => {
+    if (isControlled) {
+      onSelectedDriverIdsChange?.(next);
+    } else {
+      setInternalSelectedDriverIds(next);
+    }
+  };
 
   const filteredData = drivers.filter(
     (driver: Driver) =>
@@ -39,26 +58,30 @@ const DriversTable = ({
 
   const sortedData = [...filteredData].sort((a: Driver, b: Driver) => a.id - b.id);
 
-  const { itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate, setCurrentPage } =
-    usePagination();
+  const { currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate } =
+    usePagination({ totalItems: sortedData.length });
+
   const paginatedData = paginate(sortedData) as Driver[];
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchValue, setCurrentPage]);
+  const isAllPageSelected =
+    paginatedData.length > 0 &&
+    paginatedData.every((item) => selectedDriverIds.includes(item.id));
 
-  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setSelectedRows(paginatedData.map((_, index: number) => index));
+  const handleSelectAll = (checked: boolean) => {
+    const pageIds = paginatedData.map((d) => d.id);
+    if (checked) {
+      updateSelectedDriverIds(Array.from(new Set([...selectedDriverIds, ...pageIds])));
     } else {
-      setSelectedRows([]);
+      updateSelectedDriverIds(selectedDriverIds.filter((id) => !pageIds.includes(id)));
     }
   };
 
-  const handleSelectRow = (index: number) => {
-    setSelectedRows((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
-    );
+  const handleSelectRow = (id: number) => {
+    if (selectedDriverIds.includes(id)) {
+      updateSelectedDriverIds(selectedDriverIds.filter((i) => i !== id));
+    } else {
+      updateSelectedDriverIds([...selectedDriverIds, id]);
+    }
   };
 
   return (
@@ -69,19 +92,14 @@ const DriversTable = ({
             <tr className='border-b-2 border-[#CCCCCC]'>
               {isSelectRecipientsPage && (
                 <th className={tableRowStyles}>
-                  <input
-                    className='w-4 h-4'
-                    type='checkbox'
-                    checked={selectedRows.length === paginatedData.length}
-                    onChange={handleSelectAll}
+                  <Checkbox
+                    checked={isAllPageSelected}
+                    onCheckedChange={(checked) => handleSelectAll(Boolean(checked))}
                   />
                 </th>
               )}
               {tableHeading.map((col, index) => (
-                <th
-                  key={col.key}
-                  className={tableRowStyles}
-                >
+                <th key={col.key} className={tableRowStyles}>
                   <div
                     className={`flex items-center gap-1 ${
                       index === tableHeading.length - 1 && 'ms-20'
@@ -101,12 +119,10 @@ const DriversTable = ({
                   className={`rounded-lg cursor-pointer ${index % 2 === 0 && 'bg-[#F2F2F2]'}`}
                 >
                   {isSelectRecipientsPage && (
-                    <td className={tableRowStyles}>
-                      <input
-                        className='w-4 h-4'
-                        type='checkbox'
-                        checked={selectedRows.includes(index)}
-                        onChange={() => handleSelectRow(index)}
+                    <td className={tableRowStyles} onClick={(e) => e.stopPropagation()}>
+                      <Checkbox
+                        checked={selectedDriverIds.includes(item.id)}
+                        onCheckedChange={() => handleSelectRow(item.id)}
                       />
                     </td>
                   )}
@@ -145,6 +161,7 @@ const DriversTable = ({
       </div>
       <Pagination
         totalItems={sortedData.length}
+        currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { getAvailabilityStatusStyles, tableRowStyles } from '../../../lib/utils';
 import Pagination from '../../pagination/Pagination';
-import { useEffect } from 'react';
 import { usePagination } from '../../../hooks/usePagination';
 import { Admin } from '../../../types/admins';
 
@@ -18,11 +17,9 @@ const tableHeading = [
 const AdminsTable = ({
   selectedStatus,
   data,
-  searchValue,
 }: {
   selectedStatus: string;
   data: Admin[];
-  searchValue: string;
 }) => {
   const navigate = useNavigate();
 
@@ -33,13 +30,15 @@ const AdminsTable = ({
 
   const sortedData = [...filteredData].sort((a: Admin, b: Admin) => a.id - b.id);
 
-  const { itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate, setCurrentPage } =
-    usePagination();
-  const paginatedData = paginate(filteredData) as Admin[];
+  const {
+    currentPage,
+    itemsPerPage,
+    handlePageChange,
+    handleItemsPerPageChange,
+    paginate,
+  } = usePagination({ totalItems: filteredData.length });
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchValue, setCurrentPage]);
+  const paginatedData = paginate(filteredData) as Admin[];
 
   return (
     <>
@@ -48,10 +47,7 @@ const AdminsTable = ({
           <thead>
             <tr className='border-b-2 border-[#CCCCCC]'>
               {tableHeading.map((col, index) => (
-                <th
-                  key={col.key}
-                  className={tableRowStyles}
-                >
+                <th key={col.key} className={tableRowStyles}>
                   <div
                     className={`flex items-center gap-1 ${
                       index === tableHeading.length - 1 && 'ms-16'
@@ -97,6 +93,7 @@ const AdminsTable = ({
       </div>
       <Pagination
         totalItems={sortedData.length}
+        currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}

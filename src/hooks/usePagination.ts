@@ -1,37 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface UsePaginationProps {
-  initialPage?: number;
+  totalItems: number;
   initialItemsPerPage?: number;
 }
 
-export const usePagination = <T>({
-  initialPage = 1,
+export const usePagination = ({
+  totalItems,
   initialItemsPerPage = 10,
-}: UsePaginationProps = {}) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
+}: UsePaginationProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [totalItems]);
 
-  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const paginate = useCallback(
+    <T>(data: T[]): T[] => {
+      const start = (currentPage - 1) * itemsPerPage;
+      return data.slice(start, start + itemsPerPage);
+    },
+    [currentPage, itemsPerPage]
+  );
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
+
+  const handleItemsPerPageChange = useCallback((newItemsPerPage: number) => {
     setItemsPerPage(newItemsPerPage);
     setCurrentPage(1);
-  };
-
-  const paginate = (data: T[]): T[] => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return data.slice(startIndex, endIndex);
-  };
+  }, []);
 
   return {
+    currentPage,
     itemsPerPage,
+    totalPages,
+    paginate,
     handlePageChange,
     handleItemsPerPageChange,
-    paginate,
-    setCurrentPage,
   };
 };

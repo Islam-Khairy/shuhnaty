@@ -1,9 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-export const useFilteredSearchValue = (fieldsToCheck: any, items: any) => {
+
+export function useFilteredSearchValue<T extends object>(
+  fieldsToCheck: (keyof T)[],
+  items: T[],
+) {
   const [searchValue, setSearchValue] = useState('');
-  const filteredData = items.filter((item: any) =>
-    fieldsToCheck.some((field: string) => {
+
+  const filteredData = items.filter((item) =>
+    fieldsToCheck.some((field) => {
       const fieldValue = item[field];
       return (
         typeof fieldValue === 'string' &&
@@ -12,9 +16,5 @@ export const useFilteredSearchValue = (fieldsToCheck: any, items: any) => {
     }),
   );
 
-  return {
-    filteredData,
-    searchValue,
-    setSearchValue,
-  };
-};
+  return { filteredData, searchValue, setSearchValue };
+}

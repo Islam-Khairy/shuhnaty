@@ -1,9 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ActionsMenu from '../../actionsMenu/ActionsMenu';
 import InfoRow from './infoRow/InfoRow';
 
-const AdminDriverProfileCard = 
-  ({ moreInfoData, personalInfoData, menuActions }: any) => {
+const AdminDriverProfileCard = ({
+  moreInfoData,
+  personalInfoData,
+  menuActions,
+}: {
+  moreInfoData: any[];
+  personalInfoData: any;
+  menuActions: any[];
+}) => {
 
     return (
       <>
@@ -41,7 +47,7 @@ const AdminDriverProfileCard =
           </h6>
         </div>
         <div className='mt-6 flex flex-col gap-4'>
-          {moreInfoData.map((row: any, index: any) => (
+          {moreInfoData.map((row: any, index: number) => (
             <div key={index}>
               <InfoRow
                 image={row.image}

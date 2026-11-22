@@ -1,68 +1,88 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import shipmentsIcon from '/images/box.svg';
-import arrowDownIcon from '/images/arrow-down.svg';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { ChevronDown, Package } from 'lucide-react';
 
-const SidebarAccordion = ({ items, title, isSelected, isSidebarOpen, setIsSidebarOpen }: any) => {
+interface SidebarAccordionProps {
+  items: { name: string; nav: string }[];
+  title: string;
+  isSelected: (path: string) => boolean;
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (open: boolean) => void;
+}
+
+export function SidebarAccordion({
+  items,
+  title,
+  isSelected,
+  isSidebarOpen,
+  setIsSidebarOpen,
+}: SidebarAccordionProps) {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const isShipmentsSelected = isSelected('/shipments');
+
+  const handleOpenChange = (open: boolean) => {
+    if (!isSidebarOpen) {
+      setIsSidebarOpen(true);
+    }
+    setIsOpen(open);
+  };
+
   return (
     <div className='w-full mb-2'>
-      <Accordion
-        onClick={() => !isSidebarOpen && setIsSidebarOpen(true)}
-        sx={{
-          width: '100%',
-          background: 'transparent',
-          boxShadow: 'none',
-        }}
+      <Collapsible
+        open={isSidebarOpen ? isOpen : false}
+        onOpenChange={handleOpenChange}
       >
-        <AccordionSummary
-          expandIcon={isSidebarOpen && <img src={arrowDownIcon} />}
-          aria-controls='shipment-status'
-        >
-          <div
-            className={` flex items-center w-full transition-all duration-200 ${
-              isSidebarOpen ? 'justify-start gap-2 -ms-1.5' : 'justify-center min-w-10'
+        <CollapsibleTrigger asChild className='w-full'>
+          <button
+            type='button'
+            className={`flex items-center w-full gap-2 transition-colors duration-200 ${
+              isSidebarOpen ? 'p-3 justify-start' : 'p-2 justify-center'
             } ${
-              isShipmentsSelected && !isSidebarOpen && 'bg-primary rounded-lg text-[#FCFCFC] p-2'
-            }`}
+              isShipmentsSelected && !isSidebarOpen
+                ? 'bg-primary rounded-lg text-[#FCFCFC]'
+                : ''
+            } rounded-lg hover:bg-black/5 cursor-pointer text-[#333333]`}
           >
-            {' '}
-            <img
-              src={shipmentsIcon}
-              alt='shipments'
-              className={isShipmentsSelected && !isSidebarOpen ? 'filter invert brightness-0' : ''}
+            <Package
+              className={`size-6 transition-colors ${
+                isShipmentsSelected && !isSidebarOpen ? 'text-white' : 'text-[#333333]'
+              }`}
             />
-            {isSidebarOpen && <span>{title}</span>}
-          </div>
-        </AccordionSummary>
+            {isSidebarOpen && (
+              <span className='flex-1 text-right font-medium'>{title}</span>
+            )}
+            {isSidebarOpen && (
+              <ChevronDown
+                className={`size-6 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+              />
+            )}
+          </button>
+        </CollapsibleTrigger>
+
         {isSidebarOpen && (
-          <AccordionDetails>
-            {Array.isArray(items) &&
-              items.map((item, index) => (
-                <button
-                  type='button'
-                  key={index}
-                  onClick={() => {
-                    navigate(item.nav);
-                  }}
-                  className={`flex items-center w-full ${
-                    index !== items.length - 1 && 'mb-4'
-                  } px-3 py-2 ${isSidebarOpen ? 'justify-start' : 'justify-center'} ${
-                    isSelected(item.nav) && 'bg-primary rounded-lg text-[#FCFCFC]'
-                  }`}
-                >
-                  {isSidebarOpen && <span>{item.name}</span>}
-                </button>
-              ))}
-          </AccordionDetails>
+          <CollapsibleContent className='pt-2 px-4 pb-2'>
+            {items.map((item, index) => (
+              <button
+                type='button'
+                key={item.nav}
+                onClick={() => navigate(item.nav)}
+                className={`flex items-center w-full ${
+                  index !== items.length - 1 ? 'mb-4' : ''
+                } px-3 py-2 justify-start cursor-pointer rounded-lg transition-colors ${
+                  isSelected(item.nav) ? 'bg-primary text-[#FCFCFC]' : 'hover:bg-black/5'
+                }`}
+              >
+                <span>{item.name}</span>
+              </button>
+            ))}
+          </CollapsibleContent>
         )}
-      </Accordion>
+      </Collapsible>
     </div>
   );
-};
+}
 
 export default SidebarAccordion;

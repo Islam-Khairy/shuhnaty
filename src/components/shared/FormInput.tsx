@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const AddEditItemInput = ({
+const FormInput = ({
   label,
   description,
   required = true,
   ...props
 }: {
   label: string;
-  description?: string;
+  description?: string | string[];
   required?: boolean;
   [key: string]: any;
 }) => {
@@ -41,4 +40,4 @@ const AddEditItemInput = ({
   );
 };
 
-export default AddEditItemInput;
+export default FormInput;

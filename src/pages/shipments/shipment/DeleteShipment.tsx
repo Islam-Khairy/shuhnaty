@@ -2,7 +2,8 @@ import ShipmentStatusOverview from '../../../components/shipments/shipment/delet
 import { useParams } from 'react-router-dom';
 import DeleteItemCard from '../../../components/shared/DeleteItemCard';
 import { shipments } from '../../../lib/data/mainData';
-import { useFormSubmission } from '../../../hooks/useFormSubmission ';
+import { useFormSubmission } from '../../../hooks/useFormSubmission';
+import { PageLoader } from '../../../components/shared/PageLoader';
 
 const DeleteShipment = () => {
   const { shipmentId } = useParams();
@@ -15,13 +16,9 @@ const DeleteShipment = () => {
 
   return (
     <div className='flex flex-col gap-20'>
+      <PageLoader isLoading={isLoading} />
       <ShipmentStatusOverview selectedShipment={selectedShipment!} />
       <div className='flex justify-center items-start h-[70vh] mx-4'>
-        {isLoading && (
-          <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-            <span className='loader'></span>
-          </div>
-        )}
         <DeleteItemCard handleSubmit={handleSubmit} />
       </div>
     </div>

@@ -9,98 +9,66 @@ import shippersIcon from '/images/sidebar/shippers.svg';
 import alertIcon from '/images/sidebar/alert.svg';
 import logOutIcon from '/images/sidebar/log-out.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { UseScreenSize } from '../../context/ScreenSizeContext';
-import { UseSidebar } from '../../context/SidebarContext';
+import { useSidebar } from '../../context/SidebarContext';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import SidebarAccordion from './SidebarAccordion';
 
 const iconsStyles = 'filter invert brightness-0';
 
-const items = [
+type NavLink = { type: 'link'; nav: string; name: string; icon: React.ReactNode };
+type NavAccordion = { type: 'accordion'; name: string; icon: React.ReactNode; children: { nav: string; name: string }[] };
+type NavItem = NavLink | NavAccordion;
+
+const items: NavItem[] = [
   {
+    type: 'link',
     nav: '/dashboard',
     name: 'لوحة المعلومات',
-    icon: (
-      <img
-        src={statisticsIcon}
-        alt='statistics'
-      />
-    ),
+    icon: <img src={statisticsIcon} alt='statistics' />,
   },
-  [
-    {
-      nav: '/shipments/all',
-      name: 'كل الشحنات',
-    },
-    {
-      nav: '/shipments/shipping',
-      name: 'قيد الشحن',
-    },
-    {
-      nav: '/shipments/delivered',
-      name: 'تم التوصيل',
-    },
-    {
-      nav: '/shipments/completed',
-      name: 'مكتملة',
-    },
-    {
-      nav: '/shipments/delayed',
-      name: 'متأخرة',
-    },
-    {
-      nav: '/shipments/canceled',
-      name: 'ملغية',
-    },
-    {
-      nav: '/shipments/returned',
-      name: 'مرتجعة',
-    },
-  ],
   {
+    type: 'accordion',
+    name: 'الشحنات',
+    icon: null,
+    children: [
+      { nav: '/shipments/all', name: 'كل الشحنات' },
+      { nav: '/shipments/shipping', name: 'قيد الشحن' },
+      { nav: '/shipments/delivered', name: 'تم التوصيل' },
+      { nav: '/shipments/completed', name: 'مكتملة' },
+      { nav: '/shipments/delayed', name: 'متأخرة' },
+      { nav: '/shipments/canceled', name: 'ملغية' },
+      { nav: '/shipments/returned', name: 'مرتجعة' },
+    ],
+  },
+  {
+    type: 'link',
     nav: '/admins',
     name: 'المستخدمين',
-    icon: (
-      <img
-        src={usersIcon}
-        alt='admins'
-      />
-    ),
+    icon: <img src={usersIcon} alt='admins' />,
   },
   {
+    type: 'link',
     nav: '/drivers',
     name: 'السائقين',
-    icon: (
-      <img
-        src={truckIcon}
-        alt='drivers'
-      />
-    ),
+    icon: <img src={truckIcon} alt='drivers' />,
   },
   {
+    type: 'link',
     nav: '/shippers',
     name: 'العملاء',
-    icon: (
-      <img
-        src={shippersIcon}
-        alt='shippers'
-      />
-    ),
+    icon: <img src={shippersIcon} alt='shippers' />,
   },
   {
+    type: 'link',
     nav: '/alert-messages',
     name: 'رسائل التنبيه',
-    icon: (
-      <img
-        src={alertIcon}
-        alt='alert-messages'
-      />
-    ),
+    icon: <img src={alertIcon} alt='alert-messages' />,
   },
 ];
 
 const Sidebar = () => {
-  const { isSidebarOpen, setIsSidebarOpen } = UseSidebar();
-  const { isMediumScreen } = UseScreenSize();
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
+  const isMediumScreen = useMediaQuery('(max-width: 1023px)');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -172,11 +140,11 @@ const Sidebar = () => {
               )}
               <div className='w-full mt-10'>
                 {items.map((item, index) =>
-                  Array.isArray(item) ? (
+                  item.type === 'accordion' ? (
                     <SidebarAccordion
                       key={index}
-                      title='الشحنات'
-                      items={item}
+                      title={item.name}
+                      items={item.children}
                       isSidebarOpen={isSidebarOpen}
                       setIsSidebarOpen={setIsSidebarOpen}
                       isSelected={isSelected}
@@ -185,12 +153,7 @@ const Sidebar = () => {
                     <button
                       type='button'
                       key={index}
-                      onClick={() => {
-                        navigate(item.nav);
-                        // if (isMediumScreen && isSidebarOpen) {
-                        //   setIsSidebarOpen(false);
-                        // }
-                      }}
+                      onClick={() => navigate(item.nav)}
                       className={`flex items-center w-full gap-2 mb-4 ${
                         isSidebarOpen ? 'p-3' : 'p-2'
                       } transition-all duration-200 ${

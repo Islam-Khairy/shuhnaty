@@ -1,80 +1,80 @@
-import { useState } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { useMemo, useEffect } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 
-const Pagination = ({
-  totalItems,
-  itemsPerPage,
-  onPageChange,
-  onItemsPerPageChange,
-}: {
+interface PaginationProps {
   totalItems: number;
+  currentPage: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (itemsPerPage: number) => void;
-}) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+}
+
+export function Pagination({
+  totalItems,
+  currentPage,
+  itemsPerPage,
+  onPageChange,
+  onItemsPerPageChange,
+}: PaginationProps) {
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+
+  const pageSizeOptions = useMemo(() => {
+    if (totalItems <= 0) return [10];
+    const baseSteps = [10, 20, 30];
+    const maxStepNeeded =
+      baseSteps.find((step) => step >= totalItems) ?? baseSteps[baseSteps.length - 1];
+    const available = baseSteps.filter((step) => step <= maxStepNeeded);
+    return available.length > 0 ? available : [10];
+  }, [totalItems]);
+
+  useEffect(() => {
+    if (!pageSizeOptions.includes(itemsPerPage)) {
+      onItemsPerPageChange(pageSizeOptions[pageSizeOptions.length - 1]);
+    }
+  }, [pageSizeOptions, itemsPerPage, onItemsPerPageChange]);
 
   return (
     <div
       dir='rtl'
       className='my-8 flex flex-col sm:flex-row justify-between gap-5 md:gap-0 md:items-center'
     >
-      <div className='flex items-center'>
-        <span className='me-2 text-[#666666]'>عرض النتائج:</span>
-        <FormControl
-          sx={{ minWidth: 70 }}
-          size='small'
+      <div className='flex items-center gap-2' dir='rtl'>
+        <span className='text-sm text-[#666666]'>عرض النتائج:</span>
+        <Select
+          dir='rtl'
+          value={String(itemsPerPage)}
+          onValueChange={(val) => onItemsPerPageChange(Number(val))}
         >
-          <Select
-            sx={{
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#DD7E1F',
-              },
-            }}
-            labelId='items-per-page-select-label '
-            id='items-per-page-select'
-            value={itemsPerPage}
-            onChange={(e) => {
-              onItemsPerPageChange(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-          >
-            {[10, 20, 30].map((option) => (
-              <MenuItem
+          <SelectTrigger dir='rtl' className='w-[76px] h-9 font-Rubik text-center justify-between'>
+            <SelectValue>{itemsPerPage}</SelectValue>
+          </SelectTrigger>
+          <SelectContent align='end' dir='rtl' className='font-Rubik min-w-[76px]'>
+            {pageSizeOptions.map((option) => (
+              <SelectItem
+                dir='rtl'
                 key={option}
-                value={option}
-                sx={{
-                  justifyContent: 'end',
-                  fontFamily: 'Rubik',
-                  ':hover': { backgroundColor: '#DD7E1F', color: '#FCFCFC' },
-                  '&.Mui-selected': {
-                    backgroundColor: '#FCFCFC !important',
-                    color: '#1A1A1A',
-                  },
-                  '&.Mui-selected:hover': {
-                    backgroundColor: '#DD7E1F !important',
-                    color: '#FCFCFC',
-                  },
-                }}
+                value={String(option)}
+                className='font-Rubik text-center justify-center cursor-pointer'
               >
                 {option}
-              </MenuItem>
+              </SelectItem>
             ))}
-          </Select>
-        </FormControl>
+          </SelectContent>
+        </Select>
       </div>
-      <div className='flex items-center gap-3 max-w-full overflow-x-auto'>
+
+      <div className='flex items-center gap-3 max-w-full overflow-x-auto' dir='rtl'>
         <button
           type='button'
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            onPageChange(currentPage - 1);
-          }}
+          onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className='hidden md:block text-primary disabled:text-gray-400'
+          className='hidden md:block text-primary disabled:text-gray-400 font-medium cursor-pointer disabled:cursor-not-allowed'
         >
           السابق
         </button>
@@ -82,12 +82,11 @@ const Pagination = ({
           <button
             type='button'
             key={index}
-            onClick={() => {
-              setCurrentPage(index + 1);
-              onPageChange(index + 1);
-            }}
-            className={`px-3.5 font-bold py-1.5 text-center text-sm rounded-lg ${
-              currentPage === index + 1 ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'
+            onClick={() => onPageChange(index + 1)}
+            className={`px-3.5 font-bold py-1.5 text-center text-sm rounded-lg transition-colors cursor-pointer ${
+              currentPage === index + 1
+                ? 'bg-primary text-white shadow-sm'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
             {index + 1}
@@ -95,18 +94,15 @@ const Pagination = ({
         ))}
         <button
           type='button'
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            onPageChange(currentPage + 1);
-          }}
-          disabled={currentPage === totalPages}
-          className='hidden md:block text-primary disabled:text-gray-400'
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages || totalPages === 0}
+          className='hidden md:block text-primary disabled:text-gray-400 font-medium cursor-pointer disabled:cursor-not-allowed'
         >
           التالي
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default Pagination;

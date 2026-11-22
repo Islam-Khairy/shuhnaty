@@ -2,16 +2,18 @@ import ActionsMenu from '../../components/actionsMenu/ActionsMenu';
 import ShipperBranchDetailsSection from '../../components/shippers/ShipperBranchDetailsSection';
 import { useParams } from 'react-router-dom';
 import { shippers } from '../../lib/data/mainData';
-import { useMenuActions } from '../../hooks/useMenuActions';
+import { buildMenuActions } from '../../lib/menuActions';
 
 const ShipperDetails = () => {
   const { shipperId } = useParams();
   const selectedShipper = shippers.find((shipper) => shipper?.id === Number(shipperId));
 
-  const { menuActions } = useMenuActions([
-    { editLabel: 'تعديل البيانات', editPath: `/shippers/edit/${shipperId}` },
-    { deleteLabel: 'حذف البيانات', deletePath: `/shippers/delete/${shipperId}` },
-  ]);
+  const menuActions = buildMenuActions({
+    editLabel: 'تعديل البيانات',
+    editPath: `/shippers/edit/${shipperId}`,
+    deleteLabel: 'حذف البيانات',
+    deletePath: `/shippers/delete/${shipperId}`,
+  });
 
   return (
     <div className='border border-primary rounded-lg px-6 pt-10 pb-4 mx-4 md:mx-0'>

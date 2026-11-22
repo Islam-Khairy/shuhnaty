@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import { ColumnFilterDropdown } from './ColumnFilterDropdown';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +5,7 @@ import {
   arabicDateStringToISO,
   getShipmentStatusLabel,
   getShipmentStatusStyles,
+  parsePickupDate,
   tableRowStyles,
 } from '../../../lib/utils';
 import { BiFilterAlt } from 'react-icons/bi';
@@ -25,9 +25,10 @@ const columnsToFilter: { key: string; label: string }[] = [
   { key: 'status', label: 'حالة الشحنة' },
 ];
 
-const initialFilters: any = {};
-
-columnsToFilter.forEach((col) => (initialFilters[col.key] = []));
+const initialFilters = Object.fromEntries(columnsToFilter.map((col) => [col.key, []])) as Record<
+  string,
+  string[]
+>;
 
 const tableHeading = [
   { label: 'رقم الشحنة', key: 'id' },
@@ -44,23 +45,17 @@ const tableHeading = [
 
 const ShipmentsTable = ({
   shipments,
-  searchValue,
 }: {
   shipments: Shipment[];
-  searchValue: string;
 }) => {
   const navigate = useNavigate();
   const [dateSort, setDateSort] = useState<'asc' | 'desc' | undefined>();
   const [filters, setFilters] = useState(initialFilters);
-  const [showFilter, setShowFilter] = useState<any>({});
+  const [showFilter, setShowFilter] = useState<Record<string, boolean>>({});
 
   const filteredData = shipments.filter((shipment: Shipment) =>
     Object.keys(filters).every((key) => {
-      if (key === 'date') {
-        if (!filters[key] || filters[key].length === 0) return true;
-        return filters[key].includes(shipment.pickupDate);
-      }
-
+      
       if (key === 'status') {
         if (!filters[key] || filters[key].length === 0) return true;
         const arabicStatus = getShipmentStatusLabel((shipment as Shipment)[key]);
@@ -68,65 +63,46 @@ const ShipmentsTable = ({
       }
 
       return (
-        !filters[key] || filters[key].length === 0 || filters[key].includes((shipment as any)[key])
+        !filters[key] ||
+        filters[key].length === 0 ||
+        filters[key].includes(String((shipment as unknown as Record<string, unknown>)[key]))
       );
     }),
   );
 
-  const uniqueOptions: any = {};
+  const uniqueOptions: Record<string, string[]> = {};
   columnsToFilter.forEach((col) => {
-    let values = filteredData.map((shipment: any) => {
+    const values = filteredData.map((shipment) => {
       if (col.key === 'status') {
-        return getShipmentStatusLabel(shipment[col.key]);
+        return getShipmentStatusLabel(shipment[col.key as keyof Shipment] as string);
       }
-      return shipment[col.key];
+      return shipment[col.key as keyof Shipment] as string;
     });
-
-    if (col.key === 'date') {
-      values = values.filter(Boolean).map((dateStr: string) => dateStr);
-    }
+    
     uniqueOptions[col.key] = Array.from(new Set(values)).filter(Boolean);
   });
 
   const sortedData = [...filteredData];
 
-  const parseDate = (dateStr: string): Date => {
-    if (dateStr.includes('/')) {
-      const [day, month, year] = dateStr.split('/');
-      return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-    }
-
-    const isoDate = arabicDateStringToISO(dateStr);
-    if (isoDate) {
-      return new Date(isoDate);
-    }
-
-    return new Date(dateStr);
-  };
-
   if (dateSort === 'asc') {
     sortedData.sort((a, b) => {
-      const dateA = parseDate(a.pickupDate);
-      const dateB = parseDate(b.pickupDate);
+      const dateA = parsePickupDate(a.pickupDate);
+      const dateB = parsePickupDate(b.pickupDate);
       return dateA.getTime() - dateB.getTime();
     });
   }
 
   if (dateSort === 'desc') {
     sortedData.sort((a, b) => {
-      const dateA = parseDate(a.pickupDate);
-      const dateB = parseDate(b.pickupDate);
+      const dateA = parsePickupDate(a.pickupDate);
+      const dateB = parsePickupDate(b.pickupDate);
       return dateB.getTime() - dateA.getTime();
     });
   }
 
-  const { itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate, setCurrentPage } =
-    usePagination();
+  const { currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate } =
+    usePagination({ totalItems: sortedData.length });
   const paginatedData = paginate(sortedData) as Shipment[];
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchValue, setCurrentPage]);
 
   useEffect(() => {
     const handleClickOutside = () => {
@@ -145,10 +121,7 @@ const ShipmentsTable = ({
           <thead>
             <tr className='border-b-2 border-[#CCCCCC]'>
               {tableHeading.map((col, index) => (
-                <th
-                  key={col.key}
-                  className={tableRowStyles + ' relative'}
-                >
+                <th key={col.key} className={tableRowStyles + ' relative'}>
                   <div
                     className={`flex items-center gap-1 ${
                       index === tableHeading.length - 1 && 'ms-4'
@@ -162,34 +135,28 @@ const ShipmentsTable = ({
                         onMouseDown={(e) => e.stopPropagation()}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowFilter((prev: any) => (prev[col.key] ? {} : { [col.key]: true }));
+                          setShowFilter((prev) => (prev[col.key] ? {} : { [col.key]: true }));
                         }}
                       >
-                        <BiFilterAlt
-                          size={22}
-                          color='#CC8B3D'
-                        />
+                        <BiFilterAlt size={22} color='#CC8B3D' />
                       </button>
                     )}
                     {showFilter[col.key] && (
-                      <div
-                        className='z-50'
-                        onMouseDown={(e) => e.stopPropagation()}
-                      >
+                      <div className='z-50' onMouseDown={(e) => e.stopPropagation()}>
                         <ColumnFilterDropdown
                           isPickupDate={col.key === 'date'}
                           dateSort={dateSort}
                           setDateSort={setDateSort}
                           options={uniqueOptions[col.key]}
                           selectedValues={filters[col.key] || []}
-                          onChange={(vals: any) =>
-                            setFilters((f: any) => ({
+                          onChange={(vals: string[]) =>
+                            setFilters((f) => ({
                               ...f,
                               [col.key]: vals,
                             }))
                           }
                           onClose={() =>
-                            setShowFilter((f: any) => ({
+                            setShowFilter((f) => ({
                               ...f,
                               [col.key]: false,
                             }))
@@ -239,6 +206,7 @@ const ShipmentsTable = ({
       </div>
       <Pagination
         totalItems={sortedData.length}
+        currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}

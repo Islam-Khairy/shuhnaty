@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchInput from '../../components/searchInput/SearchInput';
 import ShippersTable from '../../components/shippers/ShippersTable';
 import { shippers } from '../../lib/data/mainData';
 import AddNewItemButton from '../../components/shared/AddNewItemButton';
 import { useFilteredSearchValue } from '../../hooks/useFilteredSearchValue';
 import { fieldsToCheck } from '../../lib/data/shippers';
+import { PageLoader } from '../../components/shared/PageLoader';
 
 const Shippers = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,17 +15,14 @@ const Shippers = () => {
      shippers,
    );
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+      <PageLoader isLoading={isLoading} />
       <div className='p-4'>
         <div
           className={`flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between mb-10`}
@@ -45,7 +43,6 @@ const Shippers = () => {
           </div>
           <ShippersTable
             data={filteredData}
-            searchValue={searchValue}
           />
         </div>
       </div>

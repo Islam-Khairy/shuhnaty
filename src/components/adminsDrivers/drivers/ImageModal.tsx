@@ -1,12 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import { useState } from 'react';
 import imageIcon from '/images/gallery.svg';
-const style = {
-  bgcolor: 'background.paper',
-};
 
 export default function ImageModal({
   image,
@@ -17,49 +10,42 @@ export default function ImageModal({
   fileName: string;
   status: string | undefined;
 }) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      <Button
-        onClick={handleOpen}
+    <>
+      <button
+        type='button'
+        onClick={() => setOpen(true)}
         className={`${
-          status === 'active' ? '!text-[#1A1A1A]' : '!text-primary'
-        } !normal-case flex items-center gap-2 !px-0`}
+          status === 'active' ? 'text-[#1A1A1A]' : 'text-primary'
+        } normal-case flex items-center gap-2 px-0 text-sm`}
       >
-        <span> {fileName}</span>
-        <span>
-          {' '}
-          <div className='xs:hidden block w-4 h-4'>
+        <span>{fileName}</span>
+        <div className='xs:hidden block w-4 h-4'>
+          <img src={imageIcon} alt='license image' className='w-full h-full' />
+        </div>
+      </button>
+
+      {open && (
+        <div
+          className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'
+          onMouseDown={() => setOpen(false)}
+        >
+          <div
+            className='bg-white w-[600px] max-w-[90vw] rounded-xl overflow-hidden'
+            onMouseDown={(e) => e.stopPropagation()}
+          >
             <img
-              src={imageIcon}
-              alt='license image'
-              className='w-full h-full'
+              src={image}
+              alt='modal image'
+              loading='eager'
+              fetchPriority='high'
+              className='object-contain w-full'
             />
           </div>
-        </span>
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box
-          sx={style}
-          className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-[600px] lg:w-fit max-w-[90vw]'
-        >
-          <img
-            src={image}
-            alt='modal image'
-            loading='eager'
-            fetchPriority='high'
-            className='object-contain'
-          />
-        </Box>
-      </Modal>
-    </div>
+        </div>
+      )}
+    </>
   );
 }

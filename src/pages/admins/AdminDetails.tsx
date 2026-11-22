@@ -11,7 +11,7 @@ import AdminDriverProfileCard from '../../components/adminsDrivers/adminDriverPr
 import { useParams } from 'react-router-dom';
 import { admins, shipments } from '../../lib/data/mainData';
 import AdminDriverDetailsTable from '../../components/adminsDrivers/AdminDriverDetailsTable';
-import { useMenuActions } from '../../hooks/useMenuActions';
+import { buildMenuActions } from '../../lib/menuActions';
 import { useChartData } from '../../hooks/useChartData';
 import { selectMenuOptions } from '../../lib/data/drivers';
 
@@ -22,10 +22,12 @@ const AdminDetails = () => {
   const selectedAdmin = admins.find((admin) => admin.id === Number(adminId));
   const adminShipments = shipments.filter((shipment) => shipment.adminId === selectedAdmin?.id);
 
-  const { menuActions } = useMenuActions([
-    { editLabel: 'تعديل البيانات', editPath: `/admins/edit/${adminId}` },
-    { deleteLabel: 'حذف البيانات', deletePath: `/admins/delete/${adminId}` },
-  ]);
+  const menuActions = buildMenuActions({
+    editLabel: 'تعديل البيانات',
+    editPath: `/admins/edit/${adminId}`,
+    deleteLabel: 'حذف البيانات',
+    deletePath: `/admins/delete/${adminId}`,
+  });
 
   const personalInfoData = {
     image: selectedAdmin?.image,

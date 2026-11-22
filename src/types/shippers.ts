@@ -6,6 +6,7 @@ export interface Branch {
   secondaryPhoneNumber: string;
   email: string;
   description: string;
+  commercialRegistration?: string;
 }
 
 export interface Shipper {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import './styles.css';
@@ -10,7 +9,7 @@ const PhoneNumberInput = ({
 }: {
   label: string;
   value: string;
-  onChange: any;
+  onChange: (phone: string) => void;
 }) => {
   return (
     <div className='flex flex-col gap-1 relative'>

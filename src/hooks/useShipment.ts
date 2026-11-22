@@ -1,49 +1,23 @@
-// hooks/useDriversImageUpload.ts
 import { useState } from 'react';
 import { ShipmentFormData } from '../types/shipments';
+import { EMPTY_SHIPMENT_FORM_DATA } from '../lib/data/shipments';
 
-export const useShipment = () => {
-  const [formData, setFormData] = useState<ShipmentFormData>({
-    driverId: 0,
-    driverVehicleId: 0,
-    driverVehicleNumber: '',
-    driverPhoneNumber: '',
-    shipmentPickupCityId: 0,
-    shipmentDropOffCityId: 0,
-    shipmentPickupDate: '',
-    shipmentExpectedDeliveryDate: '',
-    shipmentContent: '',
-    shipmentWeight: 0,
-    shipmentNotes: '',
-    shipperId: 0,
-    shipperBranchId: 0,
-    shipperAddress: '',
-    shipperPrimaryPhoneNumber: '',
-    shipperSecondaryPhoneNumber: '',
-    shipperNotes: '',
-    recipientId: 0,
-    recipientAddress: '',
-    recipientPrimaryPhoneNumber: '',
-    recipientSecondaryPhoneNumber: '',
-    recipientNotes: '',
-    baseCost: 0,
-    extraCost: 0,
-    stayedNights: 0,
-    costPerNight: 0,
-    deduct: 0,
-  });
+export const useShipment = (initialData?: ShipmentFormData) => {
+  const [formData, setFormData] = useState<ShipmentFormData>(
+    initialData ?? EMPTY_SHIPMENT_FORM_DATA,
+  );
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | { target: { value: object; name: string } },
+      | { target: { name: string; value: string | number | object } },
   ) => {
     const { name, value } = e.target;
 
     if (value && typeof value === 'object' && !Array.isArray(value)) {
-      setFormData((prev: ShipmentFormData) => ({ ...prev, ...value }));
+      setFormData((prev) => ({ ...prev, ...value }));
     } else {
-      setFormData((prev: ShipmentFormData) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 

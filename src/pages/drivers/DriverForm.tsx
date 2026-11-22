@@ -1,60 +1,47 @@
-import { useEffect, useState } from 'react';
-import AddEditItemDataSection from '../../components/shared/AddEditItemDataSection';
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import FormSection from '../../components/shared/FormSection';
+import { driverFormSelectMenus } from '../../lib/data/selectMenuConfigs';
 import uploadImage from '/images/upload.svg';
 import infoIcon from '/images/info-circle.svg';
 import FileUploadInput from '../../components/adminsDrivers/Admins/FileUploadInput';
-import { useParams } from 'react-router-dom';
+import { PageLoader } from '../../components/shared/PageLoader';
+import { MdCancelPresentation } from 'react-icons/md';
 import { drivers } from '../../lib/data/mainData';
 import licenseBackSideImage from '/images/adminDriver/driver/license/16.webp';
-import { MdCancelPresentation } from 'react-icons/md';
 import { DriverFormData } from '../../types/drivers';
-import { driverSectionInputsData } from '../../lib/data/drivers';
+import { driverSectionInputsData, driverToFormData } from '../../lib/data/drivers';
 import { useDrivers } from '../../hooks/useDrivers';
-import { useFormSubmission } from '../../hooks/useFormSubmission ';
+import { useFormSubmission } from '../../hooks/useFormSubmission';
 
-const EditDriver = () => {
+interface DriverFormProps {
+  mode: 'add' | 'edit';
+}
+
+const DriverForm = ({ mode }: DriverFormProps) => {
+  const isEdit = mode === 'edit';
+  const { driverId } = useParams();
   const [isHovered, setIsHovered] = useState(false);
 
-  const { formData, setFormData, handleFileChange, handleChange } = useDrivers();
+  const selectedDriver = useMemo(() => {
+    if (!isEdit) return undefined;
+    return drivers.find((driver) => driver?.id === Number(driverId));
+  }, [isEdit, driverId]);
+
+  const initialData = useMemo(() => {
+    return selectedDriver ? driverToFormData(selectedDriver) : undefined;
+  }, [selectedDriver]);
+
+  const { formData, setFormData, handleFileChange, handleChange } = useDrivers(initialData);
+
   const { isLoading, handleSubmit } = useFormSubmission({
-    successMessage: 'تم تحديث بيانات السائق بنجاح',
+    successMessage: isEdit ? 'تم تحديث بيانات السائق بنجاح' : 'تم إضافة السائق بنجاح',
     redirectPath: '/drivers',
   });
 
-  const { driverId } = useParams();
-  const selectedDriver = drivers.find((driver) => driver?.id === Number(driverId));
-
-  useEffect(() => {
-    if (selectedDriver) {
-      setFormData((prev: DriverFormData) => ({
-        ...prev,
-        id: selectedDriver.id,
-        name: selectedDriver.name,
-        nationalityId: selectedDriver.nationalityId ?? 0,
-        languageId: selectedDriver.languageId ?? 0,
-        identityNumber: selectedDriver.identityNumber ?? '',
-        phoneNumber: selectedDriver.phoneNumber ?? '',
-        branch: selectedDriver.branch ?? '',
-        vehicleId: selectedDriver.vehicleId ?? 0,
-        vehicleType: selectedDriver.vehicleType ?? '',
-        vehicleNumber: selectedDriver.vehicleNumber ?? '',
-        image: null,
-        imagePreview: selectedDriver.image ?? '',
-        licenseIssueDate: selectedDriver.licenseIssueDate ?? '',
-        licenseExpirationDate: selectedDriver.licenseExpirationDate ?? '',
-        medicalReport: null,
-        medicalReportName: '',
-      }));
-    }
-  }, [selectedDriver, setFormData]);
-
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+      <PageLoader isLoading={isLoading} />
       <form
         onSubmit={handleSubmit}
         className='border border-primary rounded-lg p-8 mx-4 md:mx-0'
@@ -63,11 +50,11 @@ const EditDriver = () => {
           initialImage={selectedDriver?.image}
           onChange={handleFileChange}
         />
-        <AddEditItemDataSection
+        <FormSection
           inputs={driverSectionInputsData}
           value={formData}
           onChange={handleChange}
-          page='editDriver'
+          selectMenus={driverFormSelectMenus(formData)}
         />
 
         <div>
@@ -83,7 +70,7 @@ const EditDriver = () => {
               {
                 uploadImageTitle: 'إضافة الوجه الخلفي للرخصة',
                 inputLabel: 'تاريخ الانتهاء',
-                image: licenseBackSideImage,
+                image: isEdit ? licenseBackSideImage : undefined,
                 name: 'licenseExpirationDate',
               },
             ].map((item, index) => (
@@ -184,16 +171,15 @@ const EditDriver = () => {
             )}
           </div>
         </div>
-        <hr className='border-0 border-t-2 border-dashed border-[#666] my-12' />
         <button
           type='submit'
           className='w-full py-4 rounded-lg text-xl bg-primary text-[#FCFCFC] mt-4'
         >
-          تحديث بيانات السائق
+          {isEdit ? 'تحديث بيانات السائق' : 'إضافة السائق'}
         </button>
       </form>
     </>
   );
 };
 
-export default EditDriver;
+export default DriverForm;

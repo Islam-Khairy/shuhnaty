@@ -51,12 +51,20 @@ const Header = () => {
     return matchingPath ? pageTitles[matchingPath] : 'الشحنات';
   };
 
-  // Usage in component:
   const title = getTitle(location.pathname);
 
   const showBackButton = backButtonPaths.some((path) => location.pathname.includes(path));
 
   const handleBackClick = () => {
+    if (location.pathname.includes('/alert-messages/select-recipients')) {
+      const searchParams = new URLSearchParams(location.search);
+      const messageId =
+        searchParams.get('messageId') ||
+        sessionStorage.getItem('lastSelectedAlertMessageId');
+
+      navigate(messageId ? `/alert-messages?messageId=${messageId}` : '/alert-messages');
+      return;
+    }
     navigate(-1);
   };
 
@@ -76,7 +84,6 @@ const Header = () => {
               <span className='-mt-1 xs:text-base'>عودة</span>
               <FaArrowLeft
                 color='#DD7E1F'
-                // size={20}
               />
             </>
           )}

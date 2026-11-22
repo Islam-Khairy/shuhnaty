@@ -3,7 +3,8 @@ import { CgProfile } from 'react-icons/cg';
 import { CiLock } from 'react-icons/ci';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import logo from '/images/truck-Logo.svg';
-import { useFormSubmission } from '../hooks/useFormSubmission ';
+import { useFormSubmission } from '../hooks/useFormSubmission';
+import { PageLoader } from '../components/shared/PageLoader';
 
 const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -14,12 +15,8 @@ const Login = () => {
   });
 
   return (
-    <div className='flex justify-center items-center w-screen h-screen max-h-screen overflow-y-hidden scroll-container'>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+    <div className='flex justify-center items-center w-screen h-screen max-h-screen overflow-y-hidden'>
+      <PageLoader isLoading={isLoading} />
       <div className='w-full max-w-lg shadow-2xl border bg-[#FCFCFC] mx-2 md:mx-0 px-8 py-6 rounded-xl -mt-24 sm:-mt-12'>
         <div className='flex justify-center items-center mb-4'>
           <img

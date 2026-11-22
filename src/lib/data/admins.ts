@@ -1,4 +1,4 @@
-import { Admin } from "../../types/admins";
+import { Admin, AdminFormData } from "../../types/admins";
 
 export const addEditAdminInputsData = [
   {
@@ -38,3 +38,27 @@ export const fieldsToCheck: (keyof Admin)[] = [
   'nationality',
   'status',
 ];
+
+export const EMPTY_ADMIN_FORM_DATA: AdminFormData = {
+  nationalityId: 1,
+  firstName: '',
+  lastName: '',
+  userName: '',
+  phoneNumber: '',
+  email: '',
+  password: '',
+  image: null,
+  imagePreview: '',
+};
+
+export const adminToFormData = (admin: Admin): AdminFormData => ({
+  nationalityId: admin.nationalityId ?? 1,
+  firstName: admin.firstName ?? '',
+  lastName: admin.lastName ?? '',
+  userName: admin.userName ?? '',
+  phoneNumber: admin.phoneNumber ?? '',
+  email: admin.email ?? '',
+  password: admin.password ?? '',
+  image: null,
+  imagePreview: admin.image ?? '',
+});

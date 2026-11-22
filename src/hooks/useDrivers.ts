@@ -1,26 +1,11 @@
-// hooks/useDriversImageUpload.ts
 import { useState } from 'react';
 import { DriverFormData } from '../types/drivers';
+import { EMPTY_DRIVER_FORM_DATA } from '../lib/data/drivers';
 
-export const useDrivers = () => {
-  const [formData, setFormData] = useState<DriverFormData>({
-    id: 0,
-    name: '',
-    nationalityId: 0,
-    languageId: 0,
-    identityNumber: '',
-    phoneNumber: '',
-    branch: '',
-    vehicleId: 0,
-    vehicleType: '',
-    vehicleNumber: '',
-    image: null as File | null,
-    imagePreview: '',
-    licenseIssueDate: '',
-    licenseExpirationDate: '',
-    medicalReport: null as File | null,
-    medicalReportName: '',
-  });
+export const useDrivers = (initialData?: DriverFormData) => {
+  const [formData, setFormData] = useState<DriverFormData>(
+    initialData ?? EMPTY_DRIVER_FORM_DATA,
+  );
 
   const handleFileChange = (file: File | null, previewUrl: string | null) => {
     setFormData((prev) => ({

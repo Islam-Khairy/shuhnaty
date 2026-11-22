@@ -44,7 +44,8 @@ const getVerticalLineBgColor = (status: string) => {
   }
 };
 
-const ShipmentHistory = ({ shipment }: { shipment: Shipment }) => {
+const ShipmentHistory = ({ shipment }: { shipment?: Shipment }) => {
+  if (!shipment) return null;
   const history = shipment.history || [];
   return (
     <div className='py-8 px-6'>

@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import Pagination from '../pagination/Pagination';
 import { tableRowStyles } from '../../lib/utils';
 import { usePagination } from '../../hooks/usePagination';
 import { Shipper } from '../../types/shippers';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const tableHeading = [
   { key: 'id', label: '(ID)' },
@@ -15,16 +12,13 @@ const tableHeading = [
   { key: 'email', label: 'البريد الالكتروني' },
   { key: 'address', label: 'العنوان' },
 ];
-const ShippersTable = ({ data, searchValue }: { data: Shipper[]; searchValue: string }) => {
+const ShippersTable = ({ data }: { data: Shipper[] }) => {
   const navigate = useNavigate();
 
-  const { itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate, setCurrentPage } =
-    usePagination();
-  const paginatedData = paginate(data) as Shipper[];
+  const { currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange, paginate } =
+    usePagination({totalItems: data.length});
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchValue, setCurrentPage]);
+  const paginatedData = paginate(data) as Shipper[];
 
   return (
     <>
@@ -72,6 +66,7 @@ const ShippersTable = ({ data, searchValue }: { data: Shipper[]; searchValue: st
       </div>
       <Pagination
         totalItems={data.length}
+        currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onItemsPerPageChange={handleItemsPerPageChange}

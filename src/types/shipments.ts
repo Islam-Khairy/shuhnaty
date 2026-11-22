@@ -1,3 +1,11 @@
+export type ShipmentStatus =
+  | 'shipping'
+  | 'delayed'
+  | 'delivered'
+  | 'canceled'
+  | 'returned'
+  | 'completed';
+
 export interface History {
   id?: number;
   label: string;
@@ -18,7 +26,7 @@ export interface Shipment {
   driver: string;
   shipperBranch: string;
   shipperBranchId: number;
-  status: string;
+  status: ShipmentStatus;
   statusId: number;
   pickupCity: string;
   dropOffCity: string;

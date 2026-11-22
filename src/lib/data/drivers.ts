@@ -1,4 +1,4 @@
-import { Driver } from "../../types/drivers";
+import { Driver, DriverFormData } from "../../types/drivers";
 
 export const driverSectionInputsData = [
   {
@@ -39,3 +39,41 @@ export const fieldsToCheck: (keyof Driver)[] = [
   'vehicleNumber',
   'status',
 ];
+
+export const EMPTY_DRIVER_FORM_DATA: DriverFormData = {
+  id: 0,
+  name: '',
+  nationalityId: 0,
+  languageId: 0,
+  identityNumber: '',
+  phoneNumber: '',
+  branch: '',
+  vehicleId: 0,
+  vehicleType: '',
+  vehicleNumber: '',
+  image: null,
+  imagePreview: '',
+  licenseIssueDate: '',
+  licenseExpirationDate: '',
+  medicalReport: null,
+  medicalReportName: '',
+};
+
+export const driverToFormData = (driver: Driver): DriverFormData => ({
+  id: driver.id,
+  name: driver.name ?? '',
+  nationalityId: driver.nationalityId ?? 0,
+  languageId: driver.languageId ?? 0,
+  identityNumber: driver.identityNumber ?? '',
+  phoneNumber: driver.phoneNumber ?? '',
+  branch: driver.branch ?? '',
+  vehicleId: driver.vehicleId ?? 0,
+  vehicleType: driver.vehicleType ?? '',
+  vehicleNumber: driver.vehicleNumber ?? '',
+  image: null,
+  imagePreview: driver.image ?? '',
+  licenseIssueDate: driver.licenseIssueDate ?? '',
+  licenseExpirationDate: driver.licenseExpirationDate ?? '',
+  medicalReport: null,
+  medicalReportName: '',
+});

@@ -1,15 +1,16 @@
 import ShipmentDetailsInfoSection from '../../../components/shipments/shipmentDetails/infoSection/ShipmentDetailsInfoSection';
 import ActionsMenu from '../../../components/actionsMenu/ActionsMenu';
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { UseSidebar } from '../../../context/SidebarContext';
+import { useParams, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSidebar } from '../../../context/SidebarContext';
 import { admins, drivers, recipients, shipments, shippers } from '../../../lib/data/mainData';
 import PrintWaybillDialog from '../../../components/shipments/shipment/PrintWaybillDialog';
 import ShipmentHistory from '../../../components/shipments/shipmentHistory/ShipmentHistory';
-import { useMenuActions } from '../../../hooks/useMenuActions';
+import { buildMenuActions } from '../../../lib/menuActions';
+import { PageLoader } from '../../../components/shared/PageLoader';
 
 const ShipmentDetails = () => {
-  const { isSidebarOpen } = UseSidebar();
+  const { isSidebarOpen } = useSidebar();
   const { shipmentId } = useParams();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,10 +26,17 @@ const ShipmentDetails = () => {
     (recipient) => recipient.id === selectedShipment?.recipientId,
   );
 
-  const { menuActions } = useMenuActions([
-    { editLabel: 'تعديل الشحنة', editPath: `/shipments/edit/${shipmentId}` },
-    { deleteLabel: 'حذف الشحنة', deletePath: `/shipments/delete/${shipmentId}` },
-  ]);
+  const menuActions = buildMenuActions({
+    editLabel: 'تعديل الشحنة',
+    editPath: `/shipments/edit/${shipmentId}`,
+    deleteLabel: 'حذف الشحنة',
+    deletePath: `/shipments/delete/${shipmentId}`,
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const shipperData = [
     { label: 'الاسم', value: selectedShipper?.name || '-' },
@@ -70,17 +78,13 @@ const ShipmentDetails = () => {
     },
   ];
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  if (!selectedShipment && !isLoading) {
+    return <Navigate to='/shipments/all' replace />;
+  }
 
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+      <PageLoader isLoading={isLoading} />
       <div className='border border-primary rounded-lg mx-4 bg-[#FCFCFC]'>
         <div className='grid xs:grid-cols-10 grid-cols-12 gap-8'>
           <div

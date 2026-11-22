@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SelectMenu from '../../components/SelectMenu';
 import SearchInput from '../../components/searchInput/SearchInput';
 import AdminsTable from '../../components/adminsDrivers/Admins/AdminsTable';
@@ -7,6 +7,7 @@ import AddNewItemButton from '../../components/shared/AddNewItemButton';
 import { useFilteredSearchValue } from '../../hooks/useFilteredSearchValue';
 import { selectMenuOptions } from '../../lib/data/shared';
 import { fieldsToCheck } from '../../lib/data/admins';
+import { PageLoader } from '../../components/shared/PageLoader';
 
 const Admins = () => {
   const [selectedAdminStatus, setSelectedAdminStatus] = useState('all');
@@ -17,17 +18,14 @@ const Admins = () => {
     admins,
   );
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+      <PageLoader isLoading={isLoading} />
       <div className='p-4'>
         <div
           className={`flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between mb-10`}
@@ -53,7 +51,6 @@ const Admins = () => {
           <AdminsTable
             selectedStatus={selectedAdminStatus}
             data={filteredData}
-            searchValue={searchValue}
           />
         </div>
       </div>

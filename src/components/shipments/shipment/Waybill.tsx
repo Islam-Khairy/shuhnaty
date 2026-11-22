@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { QRCodeSVG } from 'qrcode.react';
 import WaybillInfoRow from './WaybillInfoRow';
 import { Shipment } from '../../../types/shipments';

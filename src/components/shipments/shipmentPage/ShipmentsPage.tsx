@@ -5,10 +5,11 @@ import ShipmentsTable from '../shipmentsTable/ShipmentsTable';
 import AddNewItemButton from '../../shared/AddNewItemButton';
 import { Shipment } from '../../../types/shipments';
 import { fieldsToCheck, selectMenuOptions } from '../../../lib/data/shipments';
+import { PageLoader } from '../../shared/PageLoader';
 
 const ShipmentsPage = ({
   shipments,
-  isAllShipmentsPage = false,
+  isAllShipmentsPage,
 }: {
   shipments: Shipment[];
   isAllShipmentsPage?: boolean;
@@ -49,11 +50,7 @@ const ShipmentsPage = ({
 
   return (
     <>
-      {isLoading && (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 bg-opacity-15`}>
-          <span className='loader'></span>
-        </div>
-      )}
+      <PageLoader isLoading={isLoading} />
       <div className='p-4'>
         <div
           className={`flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between mb-10`}
@@ -81,7 +78,6 @@ const ShipmentsPage = ({
           </div>
           <ShipmentsTable
             shipments={filteredShipments}
-            searchValue={searchValue}
           />
         </div>
       </div>

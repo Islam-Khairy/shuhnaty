@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface WaybillInfoRowProps {
   label: string;
   value: string;

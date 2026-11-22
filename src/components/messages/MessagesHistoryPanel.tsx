@@ -3,51 +3,42 @@ import SearchInput from '../searchInput/SearchInput';
 import Messages from './Messages';
 import { Message } from '../../types/alertMessages';
 
+interface MessagesHistoryPanelProps {
+  messagesData: Message[];
+  selectedMessageId: number;
+  setSelectedMessageId: (id: number) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  setIsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 const MessagesHistoryPanel = ({
   messagesData,
   selectedMessageId,
   setSelectedMessageId,
   selectedCategory,
-  setSelectedCategory,
   setIsDialogVisible,
-}: {
-  messagesData: Message[];
-  selectedMessageId: number;
-  setSelectedMessageId: React.Dispatch<React.SetStateAction<number>>;
-  selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setIsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}: MessagesHistoryPanelProps) => {
   const [searchValue, setSearchValue] = useState('');
 
+  const filtered = searchValue.trim()
+    ? messagesData.filter((m) =>
+        m.title.toLowerCase().includes(searchValue.toLowerCase()),
+      )
+    : messagesData;
+
   return (
-    <div className='h-full'>
-      <div className='p-6 flex items-center'>
-        {[
-          { label: 'مرة واحدة', value: 'once' },
-          { label: 'مكررة', value: 'repeated' },
-        ].map((item: { label: string; value: string }, index: number) => (
-          <button
-            type='button'
-            onClick={() => setSelectedCategory(item.value)}
-            key={index}
-            className={`w-1/2 text-lg transition-all duration-200 ${
-              selectedCategory === item.value
-                ? 'text-primary border-b-4 border-primary'
-                : 'text-[#666666] border-b-2 border-[#CCCCCC]'
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
+    <div className='flex flex-col h-full px-3'>
+      <div className='pt-4 pb-2'>
+        <SearchInput
+          value={searchValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+          styles='!rounded-2xl'
+        />
       </div>
-      <SearchInput
-        value={searchValue}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
-        styles='!rounded-2xl'
-      />
+
       <Messages
-        messagesData={messagesData}
+        messagesData={filtered}
         selectedMessageId={selectedMessageId}
         setSelectedMessageId={setSelectedMessageId}
         selectedCategory={selectedCategory}

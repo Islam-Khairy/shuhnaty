@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -34,7 +33,6 @@ const LineChartComponent = ({
         display: false,
       },
       tooltip: {
-        // animations: { active: { duration: 10 } },
         callbacks: {
           label: function (context) {
             return `${context.raw} شحنة`;

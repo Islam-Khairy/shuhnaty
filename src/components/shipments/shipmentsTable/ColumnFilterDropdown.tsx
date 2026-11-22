@@ -1,106 +1,122 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// ColumnFilterDropdown.jsx
-import React from 'react';
+import { useState } from 'react';
 import { HiSortAscending, HiSortDescending } from 'react-icons/hi';
+import { Checkbox } from '../../ui/checkbox';
+
+interface ColumnFilterDropdownProps {
+  options: (string | number)[];
+  selectedValues: (string | number)[];
+  onChange: (values: string[]) => void;
+  onClose: () => void;
+  isPickupDate?: boolean;
+  dateSort?: 'asc' | 'desc';
+  setDateSort?: (sort: 'asc' | 'desc' | undefined) => void;
+  placeholder?: string;
+}
 
 export function ColumnFilterDropdown({
-  options,
-  selectedValues,
+  options = [],
+  selectedValues = [],
   onChange,
   onClose,
   isPickupDate,
   dateSort,
   setDateSort,
   placeholder = 'ابحث...',
-}: any) {
-  const [search, setSearch] = React.useState('');
+}: ColumnFilterDropdownProps) {
+  const [search, setSearch] = useState('');
+
+  const filteredOptions = options.filter(
+    (opt) => opt !== null && opt !== undefined && opt.toString().toLowerCase().includes(search.toLowerCase()),
+  );
+
   return (
-    <div className='absolute left-0 z-50 bg-white border p-4 rounded-lg shadow-lg w-60 mt-3'>
+    <div
+      dir='rtl'
+      className='absolute left-0 z-50 bg-white border border-gray-200 p-3 rounded-xl shadow-xl w-64 mt-2 font-Rubik text-right'
+    >
       {!isPickupDate && (
         <input
-          className='w-full mb-2 border rounded-md px-2 py-1 placeholder:text-current placeholder:opacity-30 border-[#CCCCCC] focus:outline-none focus:ring-1 focus:ring-primary font-Rubik font-medium'
+          className='w-full mb-3 border rounded-md px-3 py-1.5 text-sm placeholder:text-gray-400 border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/60 font-Rubik'
           placeholder={placeholder}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       )}
-      {isPickupDate && (
-        <div className='w-full flex items-center justify-between my-2'>
-          <div className='flex flex-col items-start font-Rubik font-medium'>
-            <div
-              className='flex items-center gap-2 cursor-pointer'
+
+      {isPickupDate && setDateSort && (
+        <div className='w-full flex items-center justify-between mb-3 px-1'>
+          <div className='flex flex-col items-start gap-1.5 font-Rubik font-medium text-sm'>
+            <button
+              type='button'
+              className={`flex items-center gap-2 cursor-pointer transition-colors ${
+                dateSort === 'asc' ? 'text-primary font-bold' : 'text-gray-600 hover:text-primary'
+              }`}
               onClick={() => setDateSort('asc')}
             >
-              <span
-                style={{
-                  fontSize: 10,
-                  lineHeight: 1,
-                  color: dateSort === 'asc' ? '#DD7E1F' : '#aaa',
-                }}
-              >
-                <HiSortAscending
-                  size={16}
-                  className={`${dateSort === 'asc' ? '#DD7E1F' : 'text-gray-500'}`}
-                />
-              </span>
+              <HiSortAscending size={18} />
               <span>الأحدث</span>
-            </div>
-            <div
-              className='flex items-center gap-2 cursor-pointer'
+            </button>
+            <button
+              type='button'
+              className={`flex items-center gap-2 cursor-pointer transition-colors ${
+                dateSort === 'desc' ? 'text-primary font-bold' : 'text-gray-600 hover:text-primary'
+              }`}
               onClick={() => setDateSort('desc')}
             >
-              <span
-                style={{
-                  fontSize: 10,
-                  lineHeight: 1,
-                  color: dateSort === 'desc' ? '#DD7E1F' : '#aaa',
-                }}
-              >
-                <HiSortDescending
-                  size={16}
-                  className={`${dateSort === 'desc' ? '#DD7E1F' : 'text-gray-500'}`}
-                />
-              </span>
+              <HiSortDescending size={18} />
               <span>الأقدم</span>
-            </div>
+            </button>
           </div>
         </div>
       )}
-      <div style={{ maxHeight: 140, overflowY: 'auto' }}>
-        {options
-          .filter((opt: any) => opt && opt.toString().toLowerCase().includes(search.toLowerCase()))
-          .map((opt: any) => (
-            <div
-              key={opt}
-              className='mb-2 flex items-center gap-2'
-            >
-              <input
-                type='checkbox'
-                checked={selectedValues.includes(opt)}
-                onChange={(e) => {
-                  onChange(
-                    e.target.checked
-                      ? [...selectedValues, opt]
-                      : selectedValues.filter((v: any) => v !== opt),
-                  );
-                }}
-              />
-              <span className='font-medium font-Rubik'>{opt}</span>
-            </div>
-          ))}
+
+      <div className='max-h-36 overflow-y-auto space-y-0.5 pe-1'>
+        {filteredOptions.length === 0 ? (
+          <div className='py-4 text-center text-xs text-gray-400'>لا توجد خيارات</div>
+        ) : (
+          filteredOptions.map((opt) => {
+            const isChecked = selectedValues.map(String).includes(String(opt));
+            return (
+              <label
+                key={String(opt)}
+                className='flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-black/5 cursor-pointer transition-colors select-none text-sm font-medium text-[#333333]'
+              >
+                <Checkbox
+                  checked={isChecked}
+                  onCheckedChange={(checked) => {
+                    const strOpt = String(opt);
+                    const current = selectedValues.map(String);
+                    onChange(
+                      checked
+                        ? [...current, strOpt]
+                        : current.filter((v) => v !== strOpt),
+                    );
+                  }}
+                />
+                <span className='truncate'>{opt}</span>
+              </label>
+            );
+          })
+        )}
       </div>
-      <div className='grid grid-cols-2 gap-4 w-full font-Rubik font-medium mt-2'>
+
+      <div className='grid grid-cols-2 gap-2.5 w-full font-Rubik font-medium mt-3 pt-2 border-t border-gray-100'>
         <button
           type='button'
-          className='col-span-1 bg-primary text-[#FCFCFC] border border-primary py-1 rounded-lg'
+          className='bg-primary text-white border border-primary py-1.5 text-sm rounded-lg hover:bg-[#c96f18] transition-colors cursor-pointer text-center'
           onClick={onClose}
         >
           تأكيد
         </button>
         <button
           type='button'
-          className='col-span-1 bg-[#FCFCFC] text-primary border border-primary py-1 rounded-lg'
-          onClick={() => (dateSort ? setDateSort(undefined) : onChange([]))}
+          className='bg-white text-primary border border-primary py-1.5 text-sm rounded-lg hover:bg-primary/5 transition-colors cursor-pointer text-center'
+          onClick={() => {
+            if (dateSort && setDateSort) {
+              setDateSort(undefined);
+            }
+            onChange([]);
+          }}
         >
           إعادة تعيين
         </button>

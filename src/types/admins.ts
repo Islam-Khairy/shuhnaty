@@ -23,13 +23,3 @@ export interface AdminFormData {
     image: File | null;
     imagePreview: string;
 }
-
-//  nationalityId: 1,
-//     firstName: '',
-//     lastName: '',
-//     userName: '',
-//     phoneNumber: '',
-//     email: '',
-//     password: '',
-//     image: null as File | null,
-//     imagePreview: selectedAdmin?.image || '',
