@@ -1,11 +1,8 @@
-import { useState } from 'react';
-import HorizontalChart from '../components/charts/HorizontalChart';
+import { useState, lazy, Suspense } from 'react';
 import { useSidebar } from '../context/SidebarContext';
 import boxSearch from '/images/box-search.svg';
 import boxTime from '/images/box-time.svg';
 import message from '/images/message.svg';
-import LineChartComponent from '../components/charts/LineChart';
-import PieChart from '../components/charts/PieChart';
 import { LuCalendarClock } from 'react-icons/lu';
 import { getRangeDates } from '../lib/utils';
 import {
@@ -16,6 +13,16 @@ import {
   rangeArabicLabels,
   formatDateLocale,
 } from '../lib/data/dashboard';
+
+const HorizontalChart = lazy(() => import('../components/charts/HorizontalChart'));
+const LineChartComponent = lazy(() => import('../components/charts/LineChart'));
+const PieChart = lazy(() => import('../components/charts/PieChart'));
+
+const ChartSkeleton = () => (
+  <div className='w-full h-48 flex items-center justify-center'>
+    <span className='loader' />
+  </div>
+);
 
 const shipmentsStatus = [
   {
@@ -168,7 +175,9 @@ const Dashboard = () => {
                 <span>إلى</span> <span className='text-orange-600'>{formatDateLocale(end)}</span>
               </div>{' '}
             </div>
-            <LineChartComponent data={lineChartData} />
+            <Suspense fallback={<ChartSkeleton />}>
+              <LineChartComponent data={lineChartData} />
+            </Suspense>
           </div>
           <div className='col-span-1 shadow-md rounded-3xl border'>
             <div className='flex items-center justify-between gap-2 my-12 mx-6'>
@@ -177,10 +186,12 @@ const Dashboard = () => {
                 {rangeArabicLabels[selectedRange]}
               </span>
             </div>
-            <PieChart
-              pieChartData={pieChartData.data}
-              sum={pieChartData.sum}
-            />
+            <Suspense fallback={<ChartSkeleton />}>
+              <PieChart
+                pieChartData={pieChartData.data}
+                sum={pieChartData.sum}
+              />
+            </Suspense>
           </div>
         </div>
         <div
@@ -199,7 +210,9 @@ const Dashboard = () => {
               </span>
             </div>
           </div>
-          <HorizontalChart data={horizontalChartData} />
+          <Suspense fallback={<ChartSkeleton />}>
+            <HorizontalChart data={horizontalChartData} />
+          </Suspense>
         </div>
       </div>
     </div>
