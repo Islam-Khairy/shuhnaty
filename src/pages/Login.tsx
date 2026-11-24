@@ -91,7 +91,6 @@ const Login = () => {
             هذه نسخة تجريبية، فقط قم بالضغط على زر تسجيل الدخول
           </span>
           <button
-            type='submit'
             className='w-full px-10 py-2 text-[#FCFCFC] font-thin bg-primary rounded-lg mt-4'
           >
             تسجيل الدخول

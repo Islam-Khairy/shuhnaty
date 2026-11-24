@@ -59,8 +59,7 @@ const Header = () => {
     if (location.pathname.includes('/alert-messages/select-recipients')) {
       const searchParams = new URLSearchParams(location.search);
       const messageId =
-        searchParams.get('messageId') ||
-        sessionStorage.getItem('lastSelectedAlertMessageId');
+        searchParams.get('messageId') || sessionStorage.getItem('lastSelectedAlertMessageId');
 
       navigate(messageId ? `/alert-messages?messageId=${messageId}` : '/alert-messages');
       return;
@@ -82,29 +81,16 @@ const Header = () => {
           ) : (
             <>
               <span className='-mt-1 xs:text-base'>عودة</span>
-              <FaArrowLeft
-                color='#DD7E1F'
-              />
+              <FaArrowLeft color='#DD7E1F' />
             </>
           )}
         </button>
       ) : (
         <div className='flex gap-2 items-center'>
-          <button
-            type='button'
-            className='xs:hidden p-2 rounded-full bg-[#E6E6E6]'
-          >
-            <img
-              src={notification}
-              alt='Notification icon'
-              className='w-5 h-5'
-            />
+          <button type='button' className='xs:hidden p-2 rounded-full bg-[#E6E6E6]'>
+            <img src={notification} alt='Notification icon' className='w-5 h-5' />
           </button>
-          <img
-            src={avatar}
-            alt='avatar pic'
-            className='w-8 h-8 rounded-full object-cover'
-          />
+          <img src={avatar} alt='avatar pic' className='w-8 h-8 rounded-full object-cover' />
           <h4 className='text-[#333333] text-sm font-semibold'>باسم العوفي</h4>
         </div>
       )}

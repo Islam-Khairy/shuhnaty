@@ -44,11 +44,7 @@ const shipmentsStatus = [
     count: '26',
     icon: (
       <div className='p-2 rounded-full bg-[#CA8B02] group-hover:bg-[#986801]'>
-        <img
-          src={boxTime}
-          alt='box time icon'
-          className='w-12 h-12 filter invert brightness-0'
-        />
+        <img src={boxTime} alt='box time icon' className='w-12 h-12 filter invert brightness-0' />
       </div>
     ),
     styles: 'hover:bg-[#CA8B02] text-[#CA8B02] font-bold hover:text-white',
@@ -58,11 +54,7 @@ const shipmentsStatus = [
     count: '12',
     icon: (
       <div className='p-2 rounded-full bg-primary group-hover:bg-[#864D13]'>
-        <img
-          src={message}
-          alt='Message icon'
-          className='w-12 h-12 text-[#F2F2F2]'
-        />
+        <img src={message} alt='Message icon' className='w-12 h-12 text-[#F2F2F2]' />
       </div>
     ),
     styles: 'hover:bg-primary text-primary hover:text-white',
@@ -83,11 +75,10 @@ const Dashboard = () => {
     { label: 'سنوي', value: 'year' },
   ];
 
+  const completedShipmentsPercentage = ((lineChartData.sum / pieChartData.sum) * 100).toFixed(1);
+
   return (
-    <div
-      className='flex'
-      dir='rtl'
-    >
+    <div className='flex' dir='rtl'>
       <div className='px-4 lg:px-8 min-h-screen w-full'>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-10'>
           {shipmentsStatus.map((item, index) => (
@@ -151,7 +142,7 @@ const Dashboard = () => {
                       selectedRange === 'month' ? 'text-red-500' : 'text-green-500'
                     } font-bold`}
                   >
-                    {((lineChartData.sum / pieChartData.sum) * 100).toFixed(1)}%
+                    {completedShipmentsPercentage}%
                   </span>
                   <span className='text-[#DE7F20] text-sm font-Rubik bg-[#FCF2E9] px-3 py-1 rounded-md'>
                     {' '}
@@ -159,8 +150,8 @@ const Dashboard = () => {
                       {selectedRange === 'week'
                         ? 'الأسبوع'
                         : selectedRange === 'month'
-                        ? 'الشهر'
-                        : 'العام'}
+                          ? 'الشهر'
+                          : 'العام'}
                     </span>{' '}
                     الماضي
                   </span>
@@ -187,10 +178,7 @@ const Dashboard = () => {
               </span>
             </div>
             <Suspense fallback={<ChartSkeleton />}>
-              <PieChart
-                pieChartData={pieChartData.data}
-                sum={pieChartData.sum}
-              />
+              <PieChart pieChartData={pieChartData.data} sum={pieChartData.sum} />
             </Suspense>
           </div>
         </div>

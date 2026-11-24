@@ -42,19 +42,13 @@ const DriverForm = ({ mode }: DriverFormProps) => {
   return (
     <>
       <PageLoader isLoading={isLoading} />
-      <form
-        onSubmit={handleSubmit}
-        className='border border-primary rounded-lg p-8 mx-4 md:mx-0'
-      >
-        <FileUploadInput
-          initialImage={selectedDriver?.image}
-          onChange={handleFileChange}
-        />
+      <form onSubmit={handleSubmit} className='border border-primary rounded-lg p-8 mx-4 md:mx-0'>
+        <FileUploadInput initialImage={selectedDriver?.image} onChange={handleFileChange} />
         <FormSection
+          selectMenus={driverFormSelectMenus(formData)}
           inputs={driverSectionInputsData}
           value={formData}
           onChange={handleChange}
-          selectMenus={driverFormSelectMenus(formData)}
         />
 
         <div>
@@ -74,10 +68,7 @@ const DriverForm = ({ mode }: DriverFormProps) => {
                 name: 'licenseExpirationDate',
               },
             ].map((item, index) => (
-              <div
-                key={index}
-                className='col-span-1'
-              >
+              <div key={index} className='col-span-1'>
                 <FileUploadInput
                   onChange={handleFileChange}
                   initialImage={item?.image}
@@ -107,11 +98,7 @@ const DriverForm = ({ mode }: DriverFormProps) => {
               onMouseLeave={() => setIsHovered(false)}
               className='relative'
             >
-              <img
-                src={infoIcon}
-                alt='Info'
-                className='cursor-pointer'
-              />
+              <img src={infoIcon} alt='Info' className='cursor-pointer' />
               {isHovered && (
                 <div className='absolute bottom-10 right-1/2 transform translate-x-1/2 mt-2 w-64 rounded-2xl shadow-lg p-6 z-10 font-Rubik text-[#864D13] border border-primary bg-[#FCF2E9]'>
                   <p>
@@ -163,10 +150,7 @@ const DriverForm = ({ mode }: DriverFormProps) => {
                 className='flex items-center gap-2 text-primary border-2 border-primary py-2 px-3 text-sm rounded-lg font-Rubik mt-2 mb-12 cursor-pointer'
               >
                 <span>تحميل التقرير الطبي</span>
-                <img
-                  src={uploadImage}
-                  alt='upload icon'
-                />
+                <img src={uploadImage} alt='upload icon' />
               </label>
             )}
           </div>

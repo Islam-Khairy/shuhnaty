@@ -2,7 +2,6 @@ import FormInput from './FormInput';
 import SearchableSelect from './SearchableSelect';
 
 export interface SelectMenuConfig {
- 
   sectionPrefix?: string;
   identifier?: string;
   options: any[];
@@ -13,24 +12,14 @@ export interface SelectMenuConfig {
 
 interface FormSectionProps {
   title?: string;
+  selectMenus?: SelectMenuConfig[];
   inputs: any;
   value: Record<string, any>;
   onChange: any;
-  selectMenus?: SelectMenuConfig[];
 }
 
-const FormSection = ({
-  title,
-  inputs,
-  value,
-  onChange,
-  selectMenus = [],
-}: FormSectionProps) => {
-
-  const handleSelectMenuChange = (
-    selectedItem: any,
-    config: SelectMenuConfig,
-  ) => {
+const FormSection = ({ title, selectMenus = [], inputs, value, onChange }: FormSectionProps) => {
+  const handleSelectMenuChange = (selectedItem: any, config: SelectMenuConfig) => {
     if (!selectedItem) return;
 
     if (config.sectionPrefix) {

@@ -58,15 +58,15 @@ function App() {
                   <Route index element={<AllShipments />} />
                   <Route path='all' element={<AllShipments />} />
                   <Route path='add' element={<ShipmentForm mode='add' />} />
+                  <Route path='edit/:shipmentId' element={<ShipmentForm mode='edit' />} />
+                  <Route path='delete/:shipmentId' element={<DeleteShipment />} />
+                  <Route path=':shipmentId' element={<ShipmentDetails />} />
                   <Route path='shipping' element={<ShippingShipments />} />
                   <Route path='delayed' element={<DelayedShipments />} />
                   <Route path='canceled' element={<CanceledShipments />} />
                   <Route path='delivered' element={<DeliveredShipments />} />
                   <Route path='completed' element={<CompletedShipments />} />
                   <Route path='returned' element={<ReturnedShipments />} />
-                  <Route path='edit/:shipmentId' element={<ShipmentForm mode='edit' />} />
-                  <Route path='delete/:shipmentId' element={<DeleteShipment />} />
-                  <Route path=':shipmentId' element={<ShipmentDetails />} />
                 </Route>
                 <Route path='admins'>
                   <Route index element={<Admins />} />

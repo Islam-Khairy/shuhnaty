@@ -36,19 +36,13 @@ const AdminForm = ({ mode }: AdminFormProps) => {
   return (
     <>
       <PageLoader isLoading={isLoading} />
-      <form
-        onSubmit={handleSubmit}
-        className='border border-primary rounded-lg p-8 mx-4 md:mx-0'
-      >
-        <FileUploadInput
-          onChange={handleFileChange}
-          initialImage={selectedAdmin?.image}
-        />
+      <form onSubmit={handleSubmit} className='border border-primary rounded-lg p-8 mx-4 md:mx-0'>
+        <FileUploadInput onChange={handleFileChange} initialImage={selectedAdmin?.image} />
         <FormSection
+          selectMenus={adminSelectMenus(formData)}
           inputs={addEditAdminInputsData}
           value={formData}
           onChange={handleChange}
-          selectMenus={adminSelectMenus(formData)}
         />
         <hr className='border-0 border-t-2 border-dashed border-[#666] my-12' />
         <button

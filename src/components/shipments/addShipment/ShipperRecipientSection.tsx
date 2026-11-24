@@ -39,10 +39,10 @@ const ShipperRecipientSection = ({
     <div>
       <FormSection
         title={title}
+        selectMenus={selectMenus}
         inputs={inputs}
         value={value}
         onChange={onChange}
-        selectMenus={selectMenus}
       />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-8 my-10'>
         {(['PrimaryPhoneNumber', 'SecondaryPhoneNumber'] as const).map((type, index) => (

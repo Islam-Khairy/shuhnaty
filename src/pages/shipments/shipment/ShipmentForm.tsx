@@ -51,19 +51,19 @@ const ShipmentForm = ({ mode }: ShipmentFormProps) => {
       <form onSubmit={handleSubmit} className='border border-primary rounded-lg p-8 mx-4 md:mx-0'>
         <FormSection
           title='السائق'
+          selectMenus={driverSectionSelectMenus(formData)}
           inputs={driverSectionInputsData}
           value={formData}
           onChange={handleChange}
-          selectMenus={driverSectionSelectMenus(formData)}
         />
         <hr className='border-0 border-t-2 border-dashed border-[#666] my-12' />
 
         <FormSection
           title='الشحنة'
+          selectMenus={shipmentSectionSelectMenus(formData)}
           inputs={shipmentSectionInputsData}
           value={formData}
           onChange={handleChange}
-          selectMenus={shipmentSectionSelectMenus(formData)}
         />
         <NotesArea
           name='shipmentNotes'
