@@ -68,7 +68,7 @@ const Header = () => {
   };
 
   return (
-    <header className='flex justify-between items-center mt-16 lg:mt-12 mb-10 px-8 gap-4'>
+    <header className='flex justify-between items-center mt-14 lg:mt-8 mb-4 sm:mb-6 px-4 sm:px-8 gap-4'>
       <h1 className='font-bold xs:text-base text-lg sm:text-3xl ml-4 text-nowrap'>{title}</h1>
       {showBackButton ? (
         <button

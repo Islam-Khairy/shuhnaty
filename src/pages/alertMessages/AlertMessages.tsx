@@ -142,12 +142,12 @@ const AlertMessages = () => {
   return (
     <>
       <PageLoader isLoading={isLoading} />
-      <div className='flex flex-col h-[calc(100%-1rem)] lg:h-full lg:ms-4 border border-primary rounded-2xl mx-4 lg:mx-0 overflow-hidden'>
+      <div className='flex flex-col flex-1 min-h-0 lg:ms-4 border border-primary rounded-2xl mx-2 sm:mx-4 lg:mx-0 overflow-hidden'>
         <div className='flex flex-1 min-h-0'>
 
           <div
             className={`
-              flex flex-col
+              flex flex-col min-h-0
               w-full lg:w-[25%] lg:flex-none
               lg:border-l border-primary
               ${mobileView === 'panel' ? 'flex' : 'hidden'} lg:flex
@@ -173,7 +173,7 @@ const AlertMessages = () => {
               ))}
             </div>
 
-            <div className='flex-1 overflow-y-auto'>
+            <div className='flex-1 min-h-0 overflow-y-auto'>
               <MessagesHistoryPanel
                 messagesData={messages}
                 selectedMessageId={selectedMessageId!}
