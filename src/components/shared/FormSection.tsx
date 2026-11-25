@@ -45,11 +45,9 @@ const FormSection = ({ title, selectMenus = [], inputs, value, onChange }: FormS
         {selectMenus.map((config, index) => (
           <SearchableSelect
             key={index}
-            options={config.options}
-            label={config.label}
-            title={config.title}
             onChange={(selectedItem) => handleSelectMenuChange(selectedItem, config)}
             value={config.selectedItem}
+            {...config}
           />
         ))}
 
@@ -58,15 +56,7 @@ const FormSection = ({ title, selectMenus = [], inputs, value, onChange }: FormS
             input: { label: string; name: string; type?: string; description?: string | string[] },
             index: number,
           ) => (
-            <FormInput
-              key={index}
-              label={input.label}
-              name={input.name}
-              value={value[input.name]}
-              onChange={onChange}
-              description={input.description}
-              type={input.type}
-            />
+            <FormInput key={index} value={value[input.name]} onChange={onChange} {...input} />
           ),
         )}
       </div>

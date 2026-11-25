@@ -5,7 +5,6 @@ interface NotesAreaProps {
   value: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   mode?: 'add' | 'edit';
-  /** 'shipper' shows facility-description labels; 'shipment'/'recipient' show generic notes labels. */
   variant?: 'shipment' | 'shipper' | 'recipient';
   existingNotes?: boolean;
   placeholder?: string;
